@@ -55,3 +55,6 @@
 [submodule "tb/common_verification"]
 	path = tb/common_verification
 	url = https://github.com/pulp-platform/common_verification.git
+[submodule "src/PAPER_hw"]
+	path = src/PAPER_hw
+	url = git@iis-git.ee.ethz.ch:georgr/PAPER_hw.git
