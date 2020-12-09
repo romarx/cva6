@@ -188,6 +188,9 @@ logic spi_clk_i;
 logic phy_tx_clk;
 logic sd_clk_sys;
 
+logic px_clk;
+logic px_rst_n;
+
 logic ddr_sync_reset;
 logic ddr_clock_out;
 
@@ -560,11 +563,13 @@ ariane_peripherals #(
     .spi_ss         ( spi_ss                      ),
     `ifdef KC705
       .leds_o         ( {led[3:0], unused_led[7:4]}),
-      .dip_switches_i ( {sw, unused_switches}     )
+      .dip_switches_i ( {sw, unused_switches}     ),
     `else
       .leds_o         ( led                       ),
-      .dip_switches_i ( sw                        )
+      .dip_switches_i ( sw                        ),
     `endif
+    .px_clk_i         ( px_clk                    ),
+    .px_rst_ni        ( px_rst_n                  )
 );
 
 
