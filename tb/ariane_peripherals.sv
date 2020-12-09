@@ -18,7 +18,8 @@ module ariane_peripherals #(
     parameter bit InclSPI      = 0,
     parameter bit InclEthernet = 0,
     parameter bit InclGPIO     = 0,
-    parameter bit InclTimer    = 1
+    parameter bit InclTimer    = 1,
+    parameter bit InclPAPER    = 1
 ) (
     input  logic       clk_i           , // Clock
     input  logic       rst_ni          , // Asynchronous reset active low
@@ -27,6 +28,8 @@ module ariane_peripherals #(
     AXI_BUS.Slave      spi             ,
     AXI_BUS.Slave      ethernet        ,
     AXI_BUS.Slave      timer           ,
+    AXI_BUS.Master     paper_ms        ,
+    AXI_BUS.Slave      paper_sl        ,
     output logic [1:0] irq_o           ,
     // UART
     input  logic       rx_i            ,
@@ -57,7 +60,7 @@ module ariane_peripherals #(
     output logic       paper_hsync_o   ,
     output logic       paper_vsync_o   ,
     output logic       paper_scempty_o ,
-    output logic       paper_dcempty_
+    output logic       paper_dcempty_o
 );
 
     // ---------------
@@ -666,7 +669,7 @@ module ariane_peripherals #(
             .AXIMaster(paper_ms),
             .LiteSlave(paper_lite_sl.Slave),
             .PixelClk_CI(px_clk_i),
-            .PxClkRst_RBI(px_rst_ni),
+            .PxClkRst_RBI(1'b1),
             .DOut_DO(paper_data_o),
             .DE_SO(paper_de_o),
             .HSync_SO(paper_hsync_o),
