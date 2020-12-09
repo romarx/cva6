@@ -154,11 +154,10 @@ module ariane_xilinx (
 );
 // 24 MByte in 8 byte words
 localparam NumWords = (24 * 1024 * 1024) / 8;
-localparam NBSlave = 2; // debug, ariane
 localparam AxiAddrWidth = 64;
 localparam AxiDataWidth = 64;
 localparam AxiIdWidthMaster = 4;
-localparam AxiIdWidthSlaves = AxiIdWidthMaster + $clog2(NBSlave); // 5
+localparam AxiIdWidthSlaves = AxiIdWidthMaster + $clog2(ariane_soc::NrSlaves); // 5
 localparam AxiUserWidth = 1;
 
 AXI_BUS #(
@@ -166,7 +165,7 @@ AXI_BUS #(
     .AXI_DATA_WIDTH ( AxiDataWidth     ),
     .AXI_ID_WIDTH   ( AxiIdWidthMaster ),
     .AXI_USER_WIDTH ( AxiUserWidth     )
-) slave[NBSlave-1:0]();
+) slave[ariane_soc::NrSlaves-1:0]();
 
 AXI_BUS #(
     .AXI_ADDR_WIDTH ( AxiAddrWidth     ),
@@ -230,7 +229,7 @@ logic dmactive;
 logic [1:0] irq;
 assign test_en    = 1'b0;
 
-logic [NBSlave-1:0] pc_asserted;
+logic [ariane_soc::NrSlaves-1:0] pc_asserted;
 
 rstgen i_rstgen_main (
     .clk_i        ( clk                      ),
@@ -248,7 +247,7 @@ assign rst = ddr_sync_reset;
 // ---------------
 axi_node_wrap_with_slices #(
     // three ports from Ariane (instruction, data and bypass)
-    .NB_SLAVE           ( NBSlave                    ),
+    .NB_SLAVE           ( ariane_soc::NrSlaves       ),
     .NB_MASTER          ( ariane_soc::NB_PERIPHERALS ),
     .NB_REGION          ( ariane_soc::NrRegion       ),
     .AXI_ADDR_WIDTH     ( AxiAddrWidth               ),
@@ -265,6 +264,7 @@ axi_node_wrap_with_slices #(
     .master       ( master     ),
     .start_addr_i ({
         ariane_soc::DebugBase,
+        ariane_soc::PaperBase,
         ariane_soc::ROMBase,
         ariane_soc::CLINTBase,
         ariane_soc::PLICBase,
@@ -277,6 +277,7 @@ axi_node_wrap_with_slices #(
     }),
     .end_addr_i   ({
         ariane_soc::DebugBase    + ariane_soc::DebugLength - 1,
+        ariane_soc::PaperBase    + ariane_soc::PaperLength - 1,
         ariane_soc::ROMBase      + ariane_soc::ROMLength - 1,
         ariane_soc::CLINTBase    + ariane_soc::CLINTLength - 1,
         ariane_soc::PLICBase     + ariane_soc::PLICLength - 1,
