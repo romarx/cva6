@@ -38,6 +38,7 @@ module ariane_tb;
     logic clk_i;
     logic rst_ni;
     logic rtc_i;
+    logic px_clk_i;
 
     longint unsigned cycles;
     longint unsigned max_cycles;
