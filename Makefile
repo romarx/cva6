@@ -173,6 +173,8 @@ src :=  $(filter-out src/ariane_regfile.sv, $(wildcard src/*.sv))              \
         src/axi/src/axi_cut.sv                                                 \
         src/axi/src/axi_join.sv                                                \
         src/axi/src/axi_delayer.sv                                             \
+        src/axi/src/axi_lite_to_axi.sv                                         \
+        src/axi/src/axi_atop_filter.sv                                         \
         src/axi/src/axi_to_axi_lite.sv                                         \
         src/fpga-support/rtl/SyncSpRamBeNx64.sv                                \
         src/common_cells/src/unread.sv                                         \
@@ -196,6 +198,11 @@ src :=  $(filter-out src/ariane_regfile.sv, $(wildcard src/*.sv))              \
         src/common_cells/src/delta_counter.sv                                  \
         src/common_cells/src/counter.sv                                        \
         src/common_cells/src/shift_reg.sv                                      \
+        src/common_cells/src/cf_math_pkg.sv                                    \
+        src/common_cells/src/stream_register.sv                                \
+        src/common_cells/src/id_queue.sv                                       \
+        src/common_cells/src/onehot_to_bin.sv                                  \
+        src/common_cells/src/cdc_fifo_gray.sv                                  \
         src/tech_cells_generic/src/pulp_clock_gating.sv                        \
         src/tech_cells_generic/src/cluster_clock_inverter.sv                   \
         src/tech_cells_generic/src/pulp_clock_mux2.sv                          \
@@ -203,7 +210,23 @@ src :=  $(filter-out src/ariane_regfile.sv, $(wildcard src/*.sv))              \
         tb/ariane_peripherals.sv                                               \
         tb/common/uart.sv                                                      \
         tb/common/SimDTM.sv                                                    \
-        tb/common/SimJTAG.sv
+        tb/common/SimJTAG.sv                                                   \
+        src/PAPER_hw/hdl/AXI2HDMI.sv                                           \
+        src/PAPER_hw/hdl/AXI_HDMICmdIf.sv                                      \
+        src/PAPER_hw/hdl/AXI_HDMIStreamer.sv                                   \
+        src/PAPER_hw/hdl/Stream2HDMI.sv                                        \
+        src/PAPER_hw/hdl/YCbCr444To422.sv                                      \
+        src/PAPER_hw/hdl/AXI_RdMaster.sv                                       \
+        src/PAPER_hw/hdl/Char2Px.sv                                            \
+        src/PAPER_hw/hdl/RGBto444.sv                                           \
+        src/PAPER_hw/hdl/AffineScalarProd3.sv                                  \
+        src/PAPER_hw/hdl/EmbdSyncGen.sv                                        \
+        src/PAPER_hw/hdl/StaleReader.sv                                        \
+        src/PAPER_hw/hdl/SerFIFO.sv                                            \
+        src/PAPER_hw/hdl/FontROM_wrap.sv                                       \
+        src/PAPER_hw/hdl/BehavRAM.sv                                           \
+        src/PAPER_hw/ips/common_cells/src/gray_to_binary.sv                    \
+        src/PAPER_hw/ips/common_cells/src/binary_to_gray.sv
 
 src := $(addprefix $(root-dir), $(src))
 
