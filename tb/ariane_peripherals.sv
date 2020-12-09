@@ -48,7 +48,16 @@ module ariane_peripherals #(
     output logic       spi_clk_o       ,
     output logic       spi_mosi        ,
     input  logic       spi_miso        ,
-    output logic       spi_ss
+    output logic       spi_ss          ,
+    // Paper
+    input  logic       px_clk_i        ,
+    input  logic       px_rst_ni       ,
+    output logic       paper_data_o    ,
+    output logic       paper_de_o      ,
+    output logic       paper_hsync_o   ,
+    output logic       paper_vsync_o   ,
+    output logic       paper_scempty_o ,
+    output logic       paper_dcempty_
 );
 
     // ---------------
@@ -612,4 +621,57 @@ module ariane_peripherals #(
             .irq_o   ( irq_sources[6:3] )
         );
     end
+    if (InclPAPER) begin : gen_paper
+        localparam int                            SC_DEPTH = 128;
+        localparam int                            FILL_THRESH = 64;
+        localparam int                            DC_DEPTH = 24;
+        localparam logic [AxiIdWidth-1:0]         ARID = 'd213; // random constant value because PAPER doesn't do out of order txs
+
+        AXI_LITE #(
+            .AXI_ADDR_WIDTH(AxiAddrWidth),
+            .AXI_DATA_WIDTH(AxiDataWidth)
+        ) paper_lite_sl ();
+
+        axi_to_axi_lite
+        #(
+            .NUM_PENDING_RD   ( 10   ),
+            .NUM_PENDING_WR   ( 10   )
+        )
+        i_axi_to_axi_lite_paper_sl
+        (
+            .clk_i                 ( clk_i              ),
+            .rst_ni                ( rst_ni             ),
+            .testmode_i            ( 1'b0               ),
+            .in                    ( paper_sl           ),
+            .out                   ( paper_lite_sl      )
+        );
+
+        AXI2HDMI
+        #(
+            .AXI4_ADDRESS_WIDTH(AxiAddrWidth),
+            .AXI4_DATA_WIDTH(AxiDataWidth),
+            .AXI4_LITE_DATA_WIDTH(AxiDataWidth),
+            .AXI4_ID_WIDTH(AxiIdWidth),
+            .SC_FIFO_DEPTH(SC_DEPTH),
+            .FILL_THRESH(FILL_THRESH),
+            .DC_FIFO_DEPTH(DC_DEPTH),
+            .AXI_ARID(ARID),
+            .FONT_MEMINIT_FILE(0),
+            .XILINX(1'b0)
+        )
+        i_paper
+        (
+            .AXI_ACLK_CI(clk_i),
+            .AXI_ARESETn_RBI(rst_ni),
+            .AXIMaster(paper_ms),
+            .LiteSlave(paper_lite_sl.Slave),
+            .PixelClk_CI(px_clk_i),
+            .PxClkRst_RBI(px_rst_ni),
+            .DOut_DO(paper_data_o),
+            .DE_SO(paper_de_o),
+            .HSync_SO(paper_hsync_o),
+            .VSync_SO(paper_vsync_o),
+            .SCEmpty_SO(paper_scempty_o),
+            .DCEmpty_SO(paper_dcempty_o)
+        );
 endmodule
