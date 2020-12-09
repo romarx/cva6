@@ -538,6 +538,8 @@ ariane_peripherals #(
     .eth_clk_i    ( eth_clk                      ),
     .ethernet     ( master[ariane_soc::Ethernet] ),
     .timer        ( master[ariane_soc::Timer]    ),
+    .paper_ms     ( slave[2]                     ),
+    .paper_sl     ( master[ariane_soc::Paper]    ),
     .irq_o        ( irq                          ),
     .rx_i         ( rx                           ),
     .tx_o         ( tx                           ),
