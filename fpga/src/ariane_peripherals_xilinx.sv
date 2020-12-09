@@ -58,7 +58,16 @@ module ariane_peripherals #(
     // SD Card
     input  logic       sd_clk_i        ,
     output logic [7:0] leds_o          ,
-    input  logic [7:0] dip_switches_i
+    input  logic [7:0] dip_switches_i  ,
+    // Paper
+    input  logic       px_clk_i        ,
+    input  logic       px_rst_ni       ,
+    output logic       paper_data_o    ,
+    output logic       paper_de_o      ,
+    output logic       paper_hsync_o   ,
+    output logic       paper_vsync_o   ,
+    output logic       paper_scempty_o ,
+    output logic       paper_dcempty_o
 );
 
     // ---------------
@@ -866,8 +875,7 @@ module ariane_peripherals #(
             .FILL_THRESH(FILL_THRESH),
             .DC_FIFO_DEPTH(DC_DEPTH),
             .AXI_ARID(ARID),
-            .XILINX(1'b0),
-            .FONT_MEMINIT_FILE(0)
+            .XILINX(1'b0)
         )
         i_paper
         (
@@ -875,14 +883,14 @@ module ariane_peripherals #(
             .AXI_ARESETn_RBI(rst_ni),
             .AXIMaster(paper_ms), // r_data is input -> here paper is the master
             .LiteSlave(paper_lite_sl.Slave), // lite <> normal issue still to be fixed
-            .PixelClk_CI(PxClk_C),
-            .PxClkRst_RBI(MMCMLocked_S),
-            .DOut_DO(Data422SDR_D),
-            .DE_SO(DE_S),
-            .HSync_SO(HSync_S),
-            .VSync_SO(VSync_S),
-            .SCEmpty_SO(SCEmpty_SO),
-            .DCEmpty_SO(DCEmpty_SO)
+            .PixelClk_CI(px_clk_i),
+            .PxClkRst_RBI(px_rst_ni),
+            .DOut_DO(paper_data_o),
+            .DE_SO(paper_de_o),
+            .HSync_SO(paper_hsync_o),
+            .VSync_SO(paper_vsync_o),
+            .SCEmpty_SO(paper_scempty_o),
+            .DCEmpty_SO(paper_dcempty_o)
         );
     end
 endmodule
