@@ -881,8 +881,8 @@ module ariane_peripherals #(
         (
             .AXI_ACLK_CI(clk_i),
             .AXI_ARESETn_RBI(rst_ni),
-            .AXIMaster(paper_ms), // r_data is input -> here paper is the master
-            .LiteSlave(paper_lite_sl.Slave), // lite <> normal issue still to be fixed
+            .AXIMaster(paper_ms),
+            .LiteSlave(paper_lite_sl.Slave),
             .PixelClk_CI(px_clk_i),
             .PxClkRst_RBI(px_rst_ni),
             .DOut_DO(paper_data_o),
