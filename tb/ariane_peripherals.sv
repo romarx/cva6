@@ -677,4 +677,5 @@ module ariane_peripherals #(
             .SCEmpty_SO(paper_scempty_o),
             .DCEmpty_SO(paper_dcempty_o)
         );
+    end
 endmodule
