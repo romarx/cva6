@@ -45,6 +45,8 @@ module ariane_xilinx (
   input  logic [ 7:0]  sw          ,
   output logic         fan_pwm     ,
   input  logic         trst_n      ,
+  // Paper
+  output logic         px_clk_o    ,
 `elsif KC705
   input  logic         sys_clk_p   ,
   input  logic         sys_clk_n   ,
@@ -789,10 +791,12 @@ xlnx_clk_gen i_xlnx_clk_gen (
   .clk_out2 ( phy_tx_clk    ), // 125 MHz (for RGMII PHY)
   .clk_out3 ( eth_clk       ), // 125 MHz quadrature (90 deg phase shift)
   .clk_out4 ( sd_clk_sys    ), // 50 MHz clock
+  .clk_out5 ( px_clk        ), // Paper pixel clock
   .reset    ( cpu_reset     ),
   .locked   ( pll_locked    ),
   .clk_in1  ( ddr_clock_out )
 );
+assign px_clk_o = px_clk;
 
 `ifdef KINTEX7
 fan_ctrl i_fan_ctrl (
