@@ -45,8 +45,6 @@ module ariane_xilinx (
   input  logic [ 7:0]  sw          ,
   output logic         fan_pwm     ,
   input  logic         trst_n      ,
-  // Paper
-  output logic         px_clk_o    ,
 `elsif KC705
   input  logic         sys_clk_p   ,
   input  logic         sys_clk_n   ,
