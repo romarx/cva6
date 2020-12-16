@@ -45,6 +45,11 @@ module ariane_xilinx (
   input  logic [ 7:0]  sw          ,
   output logic         fan_pwm     ,
   input  logic         trst_n      ,
+  // Paper
+  output logic		     hdmi_tx_clk_n,
+	output logic		     hdmi_tx_clk_p,
+	output logic [2:0]	 hdmi_tx_n   ,
+	output logic [2:0]	 hdmi_tx_p   ,
 `elsif KC705
   input  logic         sys_clk_p   ,
   input  logic         sys_clk_n   ,
@@ -188,7 +193,7 @@ logic spi_clk_i;
 logic phy_tx_clk;
 logic sd_clk_sys;
 
-logic px_clk;
+logic ser_px_clk;
 logic px_rst_n;
 
 logic ddr_sync_reset;
@@ -568,8 +573,11 @@ ariane_peripherals #(
       .leds_o         ( led                       ),
       .dip_switches_i ( sw                        ),
     `endif
-    .px_clk_i         ( px_clk                    ),
-    .px_rst_ni        ( px_rst_n                  )
+    .ser_px_clk_i     ( ser_px_clk                ),
+    .hdmi_tx_clk_n  ( hdmi_tx_clk_n           ),
+    .hdmi_tx_clk_p  ( hdmi_tx_clk_p           ),
+    .hdmi_tx_n      ( hdmi_tx_n               ),
+    .hdmi_tx_p      ( hdmi_tx_p               )
 );
 
 
@@ -789,12 +797,11 @@ xlnx_clk_gen i_xlnx_clk_gen (
   .clk_out2 ( phy_tx_clk    ), // 125 MHz (for RGMII PHY)
   .clk_out3 ( eth_clk       ), // 125 MHz quadrature (90 deg phase shift)
   .clk_out4 ( sd_clk_sys    ), // 50 MHz clock
-  .clk_out5 ( px_clk        ), // Paper pixel clock
+  .clk_out5 ( ser_px_clk    ), // Paper pixel clock
   .reset    ( cpu_reset     ),
   .locked   ( pll_locked    ),
   .clk_in1  ( ddr_clock_out )
 );
-assign px_clk_o = px_clk;
 
 `ifdef KINTEX7
 fan_ctrl i_fan_ctrl (

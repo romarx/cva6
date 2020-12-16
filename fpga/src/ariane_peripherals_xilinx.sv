@@ -1,4 +1,4 @@
-// Copyright 2018 ETH Zurich and University of Bologna.
+
 // Copyright and related rights are licensed under the Solderpad Hardware
 // License, Version 0.51 (the "License"); you may not use this file except in
 // compliance with the License.  You may obtain a copy of the License at
@@ -60,14 +60,11 @@ module ariane_peripherals #(
     output logic [7:0] leds_o          ,
     input  logic [7:0] dip_switches_i  ,
     // Paper
-    input  logic       px_clk_i        ,
-    input  logic       px_rst_ni       ,
-    output logic       paper_data_o    ,
-    output logic       paper_de_o      ,
-    output logic       paper_hsync_o   ,
-    output logic       paper_vsync_o   ,
-    output logic       paper_scempty_o ,
-    output logic       paper_dcempty_o
+    input  logic       ser_px_clk_i    ,
+    output logic       hdmi_tx_clk_n   ,	
+	output logic       hdmi_tx_clk_p   ,
+	output logic [2:0] hdmi_tx_n       ,
+	output logic [2:0] hdmi_tx_p
 );
 
     // ---------------
@@ -841,56 +838,24 @@ module ariane_peripherals #(
         );
     end
     if (InclPAPER) begin : gen_paper
-        localparam int                            SC_DEPTH = 128;
-        localparam int                            FILL_THRESH = 64;
-        localparam int                            DC_DEPTH = 24;
-        localparam logic [AxiIdWidth-1:0]         ARID = 'd213; // random constant value because PAPER doesn't do out of order txs
-
-        AXI_LITE #(
-            .AXI_ADDR_WIDTH(AxiAddrWidth),
-            .AXI_DATA_WIDTH(AxiDataWidth)
-        ) paper_lite_sl ();
-
-        axi_to_axi_lite
-        #(
-            .NUM_PENDING_RD   ( 10   ),
-            .NUM_PENDING_WR   ( 10   )
-        )
-        i_axi_to_axi_lite_paper_sl
-        (
-            .clk_i                 ( clk_i              ),
-            .rst_ni                ( rst_ni             ),
-            .testmode_i            ( 1'b0               ),
-            .in                    ( paper_sl           ),
-            .out                   ( paper_lite_sl      )
-        );
-
-        AXI2HDMI
-        #(
-            .AXI4_ADDRESS_WIDTH(AxiAddrWidth),
-            .AXI4_DATA_WIDTH(AxiDataWidth),
-            .AXI4_LITE_DATA_WIDTH(AxiDataWidth),
-            .AXI4_ID_WIDTH(AxiIdWidth),
-            .SC_FIFO_DEPTH(SC_DEPTH),
-            .FILL_THRESH(FILL_THRESH),
-            .DC_FIFO_DEPTH(DC_DEPTH),
-            .AXI_ARID(ARID),
-            .XILINX(1'b0)
-        )
-        i_paper
-        (
-            .AXI_ACLK_CI(clk_i),
-            .AXI_ARESETn_RBI(rst_ni),
-            .AXIMaster(paper_ms),
-            .LiteSlave(paper_lite_sl.Slave),
-            .PixelClk_CI(px_clk_i),
-            .PxClkRst_RBI(px_rst_ni),
-            .DOut_DO(paper_data_o),
-            .DE_SO(paper_de_o),
-            .HSync_SO(paper_hsync_o),
-            .VSync_SO(paper_vsync_o),
-            .SCEmpty_SO(paper_scempty_o),
-            .DCEmpty_SO(paper_dcempty_o)
+        paper_xilinx #(
+            .AxiAddrWidth        ( AxiAddrWidth      ),
+            .AxiDataWidth        ( AxiDataWidth      ),
+            .AxiIdWidth          ( AxiIdWidth        ),
+            .AxiUserWidth        ( AxiUserWidth      ),
+            .ScDepth             ( 128               ),
+            .FillThresh          ( 64                ),
+            .DcDepth             ( 24                )
+        ) i_paper (
+            .axi_clk_i          ( clk_i             ),
+            .ser_px_clk_i       ( ser_px_clk        ),
+            .rst_ni             ( rst_ni            ),
+            .paper_ms           ( paper_ms          ),
+            .paper_sl           ( paper_sl          ),
+            .hdmi_tx_clk_n      ( hdmi_tx_clk_n     ),
+            .hdmi_tx_clk_p      ( hdmi_tx_clk_p     ),
+            .hdmi_tx_n          ( hdmi_tx_n         ),
+            .hdmi_tx_p          ( hdmi_tx_p         )
         );
     end
 endmodule
