@@ -380,7 +380,7 @@ module paper_xilinx #(
         .AXI_ARESETn_RBI(rst_ni),
         .AXIMaster(paper_ms),
         .LiteSlave(paper_lite_sl.Slave),
-        .PixelClk_CI(px_clk_i), // TODO: add divided ser px clk
+        .PixelClk_CI(clk_px), // TODO: add divided ser px clk
         .PxClkRst_RBI(px_rst_ni),
         .DOut_DO(DataRGB),
         .DE_SO(DE),
