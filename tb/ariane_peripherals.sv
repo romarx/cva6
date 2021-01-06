@@ -53,14 +53,7 @@ module ariane_peripherals #(
     input  logic       spi_miso        ,
     output logic       spi_ss          ,
     // Paper
-    input  logic       px_clk_i        ,
-    input  logic       px_rst_ni       ,
-    output logic       paper_data_o    ,
-    output logic       paper_de_o      ,
-    output logic       paper_hsync_o   ,
-    output logic       paper_vsync_o   ,
-    output logic       paper_scempty_o ,
-    output logic       paper_dcempty_o
+    input  logic       px_clk_i
 );
 
     // ---------------
@@ -654,7 +647,7 @@ module ariane_peripherals #(
             .AXI4_ADDRESS_WIDTH(AxiAddrWidth),
             .AXI4_DATA_WIDTH(AxiDataWidth),
             .AXI4_LITE_DATA_WIDTH(AxiDataWidth),
-            .AXI4_ID_WIDTH(AxiIdWidth),
+            .AXI4_ID_WIDTH(ariane_soc::IdWidth), // ID width of master, therefore the shorter one
             .SC_FIFO_DEPTH(SC_DEPTH),
             .FILL_THRESH(FILL_THRESH),
             .DC_FIFO_DEPTH(DC_DEPTH),
@@ -667,15 +660,38 @@ module ariane_peripherals #(
             .AXI_ACLK_CI(clk_i),
             .AXI_ARESETn_RBI(rst_ni),
             .AXIMaster(paper_ms),
-            .LiteSlave(paper_lite_sl.Slave),
+            .LiteSlave(paper_lite_sl),
             .PixelClk_CI(px_clk_i),
-            .PxClkRst_RBI(1'b1),
-            .DOut_DO(paper_data_o),
-            .DE_SO(paper_de_o),
-            .HSync_SO(paper_hsync_o),
-            .VSync_SO(paper_vsync_o),
+            .PxClkRst_RBI(rst_ni),
+            .DOut_DO(rgb),
+            .DE_SO(de),
+            .HSync_SO(hsync),
+            .VSync_SO(vsync),
             .SCEmpty_SO(paper_scempty_o),
             .DCEmpty_SO(paper_dcempty_o)
         );
+
+        logic [23:0] rgb;
+        logic        hsync;
+        logic        vsync;
+        logic        de;
+    
+        RGB2DVI	#(
+        )
+        i_tmds_encoder
+            (
+            .clk_i(px_clk_i),
+            .rst_ni(rst_ni),
+            .data_i(rgb),
+            .DE_i(de),
+            .HSync_i(hsync),
+            .VSync_i(vsync),
+            .TMDS_CH0_o(tmds_0),
+            .TMDS_CH1_o(tmds_1),
+            .TMDS_CH2_o(tmds_2)
+        );
+        logic [9:0] tmds_0;
+        logic [9:0] tmds_1;
+        logic [9:0] tmds_2;
     end
 endmodule
