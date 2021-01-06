@@ -61,6 +61,7 @@ module ariane_peripherals #(
     input  logic [7:0] dip_switches_i  ,
     // Paper
     input  logic       ser_px_clk_i    ,
+    input  logic       px_clk_i        ,
     output logic       hdmi_tx_clk_n   ,	
 	output logic       hdmi_tx_clk_p   ,
 	output logic [2:0] hdmi_tx_n       ,
@@ -848,7 +849,8 @@ module ariane_peripherals #(
             .DcDepth             ( 24                )
         ) i_paper (
             .axi_clk_i          ( clk_i             ),
-            .ser_px_clk_i       ( ser_px_clk        ),
+            .ser_px_clk_i       ( ser_px_clk_i      ),
+            .px_clk_i           ( px_clk_i          ),
             .rst_ni             ( rst_ni            ),
             .paper_ms           ( paper_ms          ),
             .paper_sl           ( paper_sl          ),

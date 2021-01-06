@@ -194,7 +194,7 @@ logic phy_tx_clk;
 logic sd_clk_sys;
 
 logic ser_px_clk;
-logic px_rst_n;
+logic px_clk;
 
 logic ddr_sync_reset;
 logic ddr_clock_out;
@@ -573,7 +573,8 @@ ariane_peripherals #(
       .leds_o         ( led                       ),
       .dip_switches_i ( sw                        ),
     `endif
-    .ser_px_clk_i     ( ser_px_clk                ),
+    .ser_px_clk_i   ( ser_px_clk                ),
+    .px_clk_i       ( px_clk                  ),
     .hdmi_tx_clk_n  ( hdmi_tx_clk_n           ),
     .hdmi_tx_clk_p  ( hdmi_tx_clk_p           ),
     .hdmi_tx_n      ( hdmi_tx_n               ),
@@ -793,11 +794,12 @@ xlnx_axi_clock_converter i_xlnx_axi_clock_converter_ddr (
 );
 
 xlnx_clk_gen i_xlnx_clk_gen (
-  .clk_out1 ( clk           ), // 50 MHz
+  .clk_out1 ( clk           ), // 50  MHz
   .clk_out2 ( phy_tx_clk    ), // 125 MHz (for RGMII PHY)
   .clk_out3 ( eth_clk       ), // 125 MHz quadrature (90 deg phase shift)
-  .clk_out4 ( sd_clk_sys    ), // 50 MHz clock
-  .clk_out5 ( ser_px_clk    ), // Paper pixel clock
+  .clk_out4 ( sd_clk_sys    ), // 50  MHz clock
+  .clk_out5 ( ser_px_clk    ), // 200 MHz Paper serialized pixel clock
+  .clk_out6 ( px_clk        ), // 40  Mhz Paper divided pixel clock
   .reset    ( cpu_reset     ),
   .locked   ( pll_locked    ),
   .clk_in1  ( ddr_clock_out )
