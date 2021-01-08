@@ -24,7 +24,7 @@ module paper_xilinx #(
 // Signals
 // ---------------
 
-	logic [24:0]	DataRGB;
+	logic [23:0]	DataRGB;
 	logic 	    	DE, VSync, HSync;
 	logic		    SHIFT01, SHIFT02, SHIFT11, SHIFT12, SHIFT21, SHIFT22;
 	logic [9:0]	    TMDS_0, TMDS_1, TMDS_2;
@@ -74,7 +74,7 @@ module paper_xilinx #(
         .AXI_ARESETn_RBI(rst_ni),
         .AXIMaster(paper_ms),
         .LiteSlave(paper_lite_sl),
-        .PixelClk_CI(px_clk_i), // TODO: add divided ser px clk
+        .PixelClk_CI(px_clk_i),
         .PxClkRst_RBI(rst_ni),
         .DOut_DO(DataRGB),
         .DE_SO(DE),
@@ -94,7 +94,7 @@ module paper_xilinx #(
      	(
 		.clk_i(px_clk_i),
 		.rst_ni(rst_ni),
-   		.data_i(DataRGB[23:0]),
+   		.data_i(DataRGB),
 		.DE_i(DE),
 		.VSync_i(VSync),
 		.HSync_i(HSync),
