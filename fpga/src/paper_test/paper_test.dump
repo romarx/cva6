@@ -1,0 +1,3641 @@
+
+paper_test.elf:     file format elf64-littleriscv
+paper_test.elf
+architecture: riscv:rv64, flags 0x00000112:
+EXEC_P, HAS_SYMS, D_PAGED
+start address 0x000000008000025c
+
+Program Header:
+    LOAD off    0x0000000000001000 vaddr 0x0000000080000000 paddr 0x0000000080000000 align 2**12
+         filesz 0x0000000000000422 memsz 0x0000000000000422 flags rwx
+
+Sections:
+Idx Name          Size      VMA               LMA               File off  Algn
+  0 .text.init    00000088  0000000080000000  0000000080000000  00001000  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .text         0000015c  0000000080000100  0000000080000100  00001100  2**8
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .text.startup 0000005c  000000008000025c  000000008000025c  0000125c  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  3 .data         00000010  0000000080000300  0000000080000300  00001300  2**8
+                  CONTENTS, ALLOC, LOAD, DATA
+  4 .rodata       00000022  0000000080000400  0000000080000400  00001400  2**8
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  5 .riscv.attributes 0000002f  0000000000000000  0000000000000000  00001422  2**0
+                  CONTENTS, READONLY
+  6 .comment      00000012  0000000000000000  0000000000000000  00001451  2**0
+                  CONTENTS, READONLY
+  7 .debug_line   00000797  0000000000000000  0000000000000000  00001463  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+  8 .debug_info   00000876  0000000000000000  0000000000000000  00001bfa  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+  9 .debug_abbrev 000002ef  0000000000000000  0000000000000000  00002470  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 10 .debug_aranges 000000a0  0000000000000000  0000000000000000  00002760  2**4
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 11 .debug_str    0000023b  0000000000000000  0000000000000000  00002800  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 12 .debug_ranges 000000f0  0000000000000000  0000000000000000  00002a3b  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 13 .debug_frame  000001a0  0000000000000000  0000000000000000  00002b30  2**3
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+ 14 .debug_loc    0000054d  0000000000000000  0000000000000000  00002cd0  2**0
+                  CONTENTS, READONLY, DEBUGGING, OCTETS
+SYMBOL TABLE:
+0000000080000000 l    d  .text.init	0000000000000000 .text.init
+0000000080000100 l    d  .text	0000000000000000 .text
+000000008000025c l    d  .text.startup	0000000000000000 .text.startup
+0000000080000300 l    d  .data	0000000000000000 .data
+0000000080000400 l    d  .rodata	0000000000000000 .rodata
+0000000000000000 l    d  .riscv.attributes	0000000000000000 .riscv.attributes
+0000000000000000 l    d  .comment	0000000000000000 .comment
+0000000000000000 l    d  .debug_line	0000000000000000 .debug_line
+0000000000000000 l    d  .debug_info	0000000000000000 .debug_info
+0000000000000000 l    d  .debug_abbrev	0000000000000000 .debug_abbrev
+0000000000000000 l    d  .debug_aranges	0000000000000000 .debug_aranges
+0000000000000000 l    d  .debug_str	0000000000000000 .debug_str
+0000000000000000 l    d  .debug_ranges	0000000000000000 .debug_ranges
+0000000000000000 l    d  .debug_frame	0000000000000000 .debug_frame
+0000000000000000 l    d  .debug_loc	0000000000000000 .debug_loc
+0000000000000000 l    df *ABS*	0000000000000000 main.c
+0000000000000000 l    df *ABS*	0000000000000000 uart.c
+0000000080000120 g     F .text	0000000000000014 write_serial
+0000000080000310 g       .data	0000000000000000 _DATA_END_
+00000000800001fa g     F .text	0000000000000042 print_uart_addr
+000000008000025c g       .text	0000000000000000 _TEXT_END_
+0000000080000100 g     F .text	0000000000000002 handle_trap
+0000000080000000 g       *ABS*	0000000000000000 RAM_BASE
+0000000080000134 g     F .text	0000000000000044 init_uart
+00000000800001ba g     F .text	0000000000000040 print_uart_int
+000000008000023c g     F .text	0000000000000020 print_uart_byte
+0000000080000102 g     F .text	0000000000000006 write_reg_u8
+0000000080000196 g     F .text	0000000000000024 bin_to_hex
+0000000080000000 g       .text.init	0000000000000000 _prog_start
+0000000080000112 g     F .text	000000000000000e is_transmit_empty
+000000008000025c g     F .text.startup	000000000000005c main
+0000000080000400 g       .data	0000000000000000 _BSS_START_
+0000000080000400 g       .data	0000000000000000 _BSS_END_
+0000000080000300 g       .data	0000000000000000 _DATA_START_
+0000000080000178 g     F .text	000000000000001e print_uart
+0000000080000422 g       .rodata	0000000000000000 _RODATA_END_
+0000000080000400 g       .rodata	0000000000000000 _RODATA_START_
+0000000080000300 g     O .data	0000000000000010 bin_to_hex_table
+0000000080000108 g     F .text	000000000000000a read_reg_u8
+0000000080000100 g       .text	0000000000000000 _TEXT_START_
+
+
+
+Disassembly of section .text.init:
+
+0000000080000000 <_prog_start>:
+
+  .section .text.init
+  .option norvc
+  .globl _prog_start
+_prog_start:
+  smp_pause(s1, s2)
+    80000000:	00800913          	li	s2,8
+    80000004:	30491073          	csrw	mie,s2
+    80000008:	00000493          	li	s1,0
+    8000000c:	f1402973          	csrr	s2,mhartid
+    80000010:	03249663          	bne	s1,s2,8000003c <_prog_start+0x3c>
+  li sp, 0x84000000
+    80000014:	0210011b          	addiw	sp,zero,33
+    80000018:	01a11113          	slli	sp,sp,0x1a
+  call main
+    8000001c:	240000ef          	jal	ra,8000025c <main>
+  smp_resume(s1, s2)
+    80000020:	020004b7          	lui	s1,0x2000
+    80000024:	00100913          	li	s2,1
+    80000028:	0124a023          	sw	s2,0(s1) # 2000000 <_prog_start-0x7e000000>
+    8000002c:	00448493          	addi	s1,s1,4
+    80000030:	02000937          	lui	s2,0x2000
+    80000034:	4009091b          	addiw	s2,s2,1024
+    80000038:	ff24c6e3          	blt	s1,s2,80000024 <_prog_start+0x24>
+    8000003c:	10500073          	wfi
+    80000040:	34402973          	csrr	s2,mip
+    80000044:	00897913          	andi	s2,s2,8
+    80000048:	fe090ae3          	beqz	s2,8000003c <_prog_start+0x3c>
+    8000004c:	020004b7          	lui	s1,0x2000
+    80000050:	f1402973          	csrr	s2,mhartid
+    80000054:	00291913          	slli	s2,s2,0x2
+    80000058:	00990933          	add	s2,s2,s1
+    8000005c:	00092023          	sw	zero,0(s2) # 2000000 <_prog_start-0x7e000000>
+    80000060:	0004a903          	lw	s2,0(s1) # 2000000 <_prog_start-0x7e000000>
+    80000064:	fe091ee3          	bnez	s2,80000060 <_prog_start+0x60>
+    80000068:	00448493          	addi	s1,s1,4
+    8000006c:	02000937          	lui	s2,0x2000
+    80000070:	4009091b          	addiw	s2,s2,1024
+    80000074:	ff24c6e3          	blt	s1,s2,80000060 <_prog_start+0x60>
+  csrr a0, mhartid
+    80000078:	f1402573          	csrr	a0,mhartid
+  li s1, DRAM_BASE
+    8000007c:	0010049b          	addiw	s1,zero,1
+    80000080:	01f49493          	slli	s1,s1,0x1f
+  jr s1
+    80000084:	00048067          	jr	s1
+
+Disassembly of section .text:
+
+0000000080000100 <handle_trap>:
+}
+
+void handle_trap(void)
+{
+    // print_uart("trap\r\n");
+    80000100:	8082                	ret
+
+0000000080000102 <write_reg_u8>:
+#include "uart.h"
+
+void write_reg_u8(uintptr_t addr, uint8_t value)
+{
+    volatile uint8_t *loc_addr = (volatile uint8_t *)addr;
+    *loc_addr = value;
+    80000102:	00b50023          	sb	a1,0(a0)
+}
+    80000106:	8082                	ret
+
+0000000080000108 <read_reg_u8>:
+
+uint8_t read_reg_u8(uintptr_t addr)
+{
+    return *(volatile uint8_t *)addr;
+    80000108:	00054503          	lbu	a0,0(a0)
+}
+    8000010c:	0ff57513          	andi	a0,a0,255
+    80000110:	8082                	ret
+
+0000000080000112 <is_transmit_empty>:
+    return *(volatile uint8_t *)addr;
+    80000112:	100007b7          	lui	a5,0x10000
+    80000116:	0147c503          	lbu	a0,20(a5) # 10000014 <RAM_BASE-0x6fffffec>
+
+int is_transmit_empty()
+{
+    return read_reg_u8(UART_LINE_STATUS) & 0x20;
+}
+    8000011a:	02057513          	andi	a0,a0,32
+    8000011e:	8082                	ret
+
+0000000080000120 <write_serial>:
+    return *(volatile uint8_t *)addr;
+    80000120:	10000737          	lui	a4,0x10000
+    80000124:	01474783          	lbu	a5,20(a4) # 10000014 <RAM_BASE-0x6fffffec>
+
+void write_serial(char a)
+{
+    while (is_transmit_empty() == 0) {};
+    80000128:	0207f793          	andi	a5,a5,32
+    8000012c:	dfe5                	beqz	a5,80000124 <write_serial+0x4>
+    *loc_addr = value;
+    8000012e:	00a70023          	sb	a0,0(a4)
+
+    write_reg_u8(UART_THR, a);
+}
+    80000132:	8082                	ret
+
+0000000080000134 <init_uart>:
+
+void init_uart(uint32_t freq, uint32_t baud)
+{
+    uint32_t divisor = freq / (baud << 4);
+    80000134:	0045959b          	slliw	a1,a1,0x4
+    80000138:	02b5553b          	divuw	a0,a0,a1
+    *loc_addr = value;
+    8000013c:	100007b7          	lui	a5,0x10000
+    80000140:	00078223          	sb	zero,4(a5) # 10000004 <RAM_BASE-0x6ffffffc>
+    80000144:	f8000713          	li	a4,-128
+    80000148:	00e78623          	sb	a4,12(a5)
+
+    write_reg_u8(UART_INTERRUPT_ENABLE, 0x00); // Disable all interrupts
+    write_reg_u8(UART_LINE_CONTROL, 0x80);     // Enable DLAB (set baud rate divisor)
+    write_reg_u8(UART_DLAB_LSB, divisor);         // divisor (lo byte)
+    8000014c:	0ff57713          	andi	a4,a0,255
+    write_reg_u8(UART_DLAB_MSB, (divisor >> 8) & 0xFF);  // divisor (hi byte)
+    80000150:	0085551b          	srliw	a0,a0,0x8
+    *loc_addr = value;
+    80000154:	00e78023          	sb	a4,0(a5)
+    write_reg_u8(UART_DLAB_MSB, (divisor >> 8) & 0xFF);  // divisor (hi byte)
+    80000158:	0ff57513          	andi	a0,a0,255
+    *loc_addr = value;
+    8000015c:	00a78223          	sb	a0,4(a5)
+    80000160:	470d                	li	a4,3
+    80000162:	00e78623          	sb	a4,12(a5)
+    80000166:	fc700713          	li	a4,-57
+    8000016a:	00e78423          	sb	a4,8(a5)
+    8000016e:	02000713          	li	a4,32
+    80000172:	00e78823          	sb	a4,16(a5)
+    write_reg_u8(UART_LINE_CONTROL, 0x03);     // 8 bits, no parity, one stop bit
+    write_reg_u8(UART_FIFO_CONTROL, 0xC7);     // Enable FIFO, clear them, with 14-byte threshold
+    write_reg_u8(UART_MODEM_CONTROL, 0x20);    // Autoflow mode
+}
+    80000176:	8082                	ret
+
+0000000080000178 <print_uart>:
+
+void print_uart(const char *str)
+{
+    80000178:	1141                	addi	sp,sp,-16
+    8000017a:	e022                	sd	s0,0(sp)
+    8000017c:	e406                	sd	ra,8(sp)
+    8000017e:	842a                	mv	s0,a0
+    const char *cur = &str[0];
+    while (*cur != '\0')
+    80000180:	00044503          	lbu	a0,0(s0)
+    80000184:	e509                	bnez	a0,8000018e <print_uart+0x16>
+    {
+        write_serial((uint8_t)*cur);
+        ++cur;
+    }
+}
+    80000186:	60a2                	ld	ra,8(sp)
+    80000188:	6402                	ld	s0,0(sp)
+    8000018a:	0141                	addi	sp,sp,16
+    8000018c:	8082                	ret
+        write_serial((uint8_t)*cur);
+    8000018e:	f93ff0ef          	jal	ra,80000120 <write_serial>
+        ++cur;
+    80000192:	0405                	addi	s0,s0,1
+    80000194:	b7f5                	j	80000180 <print_uart+0x8>
+
+0000000080000196 <bin_to_hex>:
+uint8_t bin_to_hex_table[16] = {
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+
+void bin_to_hex(uint8_t inp, uint8_t res[2])
+{
+    res[1] = bin_to_hex_table[inp & 0xf];
+    80000196:	00000797          	auipc	a5,0x0
+    8000019a:	16a78793          	addi	a5,a5,362 # 80000300 <bin_to_hex_table>
+    8000019e:	00f57713          	andi	a4,a0,15
+    800001a2:	973e                	add	a4,a4,a5
+    800001a4:	00074703          	lbu	a4,0(a4)
+    res[0] = bin_to_hex_table[(inp >> 4) & 0xf];
+    800001a8:	8111                	srli	a0,a0,0x4
+    800001aa:	97aa                	add	a5,a5,a0
+    res[1] = bin_to_hex_table[inp & 0xf];
+    800001ac:	00e580a3          	sb	a4,1(a1)
+    res[0] = bin_to_hex_table[(inp >> 4) & 0xf];
+    800001b0:	0007c783          	lbu	a5,0(a5)
+    800001b4:	00f58023          	sb	a5,0(a1)
+    return;
+}
+    800001b8:	8082                	ret
+
+00000000800001ba <print_uart_int>:
+
+void print_uart_int(uint32_t addr)
+{
+    800001ba:	7179                	addi	sp,sp,-48
+    800001bc:	f022                	sd	s0,32(sp)
+    800001be:	ec26                	sd	s1,24(sp)
+    800001c0:	e84a                	sd	s2,16(sp)
+    800001c2:	f406                	sd	ra,40(sp)
+    800001c4:	84aa                	mv	s1,a0
+    800001c6:	4461                	li	s0,24
+    int i;
+    for (i = 3; i > -1; i--)
+    800001c8:	5961                	li	s2,-8
+    {
+        uint8_t cur = (addr >> (i * 8)) & 0xff;
+    800001ca:	0084d53b          	srlw	a0,s1,s0
+        uint8_t hex[2];
+        bin_to_hex(cur, hex);
+    800001ce:	002c                	addi	a1,sp,8
+    800001d0:	0ff57513          	andi	a0,a0,255
+    800001d4:	fc3ff0ef          	jal	ra,80000196 <bin_to_hex>
+        write_serial(hex[0]);
+    800001d8:	00814503          	lbu	a0,8(sp)
+    for (i = 3; i > -1; i--)
+    800001dc:	3461                	addiw	s0,s0,-8
+        write_serial(hex[0]);
+    800001de:	f43ff0ef          	jal	ra,80000120 <write_serial>
+        write_serial(hex[1]);
+    800001e2:	00914503          	lbu	a0,9(sp)
+    800001e6:	f3bff0ef          	jal	ra,80000120 <write_serial>
+    for (i = 3; i > -1; i--)
+    800001ea:	ff2410e3          	bne	s0,s2,800001ca <print_uart_int+0x10>
+    }
+}
+    800001ee:	70a2                	ld	ra,40(sp)
+    800001f0:	7402                	ld	s0,32(sp)
+    800001f2:	64e2                	ld	s1,24(sp)
+    800001f4:	6942                	ld	s2,16(sp)
+    800001f6:	6145                	addi	sp,sp,48
+    800001f8:	8082                	ret
+
+00000000800001fa <print_uart_addr>:
+
+void print_uart_addr(uint64_t addr)
+{
+    800001fa:	7179                	addi	sp,sp,-48
+    800001fc:	f022                	sd	s0,32(sp)
+    800001fe:	ec26                	sd	s1,24(sp)
+    80000200:	e84a                	sd	s2,16(sp)
+    80000202:	f406                	sd	ra,40(sp)
+    80000204:	84aa                	mv	s1,a0
+    80000206:	03800413          	li	s0,56
+    int i;
+    for (i = 7; i > -1; i--)
+    8000020a:	5961                	li	s2,-8
+    {
+        uint8_t cur = (addr >> (i * 8)) & 0xff;
+    8000020c:	0084d533          	srl	a0,s1,s0
+        uint8_t hex[2];
+        bin_to_hex(cur, hex);
+    80000210:	002c                	addi	a1,sp,8
+    80000212:	0ff57513          	andi	a0,a0,255
+    80000216:	f81ff0ef          	jal	ra,80000196 <bin_to_hex>
+        write_serial(hex[0]);
+    8000021a:	00814503          	lbu	a0,8(sp)
+    for (i = 7; i > -1; i--)
+    8000021e:	3461                	addiw	s0,s0,-8
+        write_serial(hex[0]);
+    80000220:	f01ff0ef          	jal	ra,80000120 <write_serial>
+        write_serial(hex[1]);
+    80000224:	00914503          	lbu	a0,9(sp)
+    80000228:	ef9ff0ef          	jal	ra,80000120 <write_serial>
+    for (i = 7; i > -1; i--)
+    8000022c:	ff2410e3          	bne	s0,s2,8000020c <print_uart_addr+0x12>
+    }
+}
+    80000230:	70a2                	ld	ra,40(sp)
+    80000232:	7402                	ld	s0,32(sp)
+    80000234:	64e2                	ld	s1,24(sp)
+    80000236:	6942                	ld	s2,16(sp)
+    80000238:	6145                	addi	sp,sp,48
+    8000023a:	8082                	ret
+
+000000008000023c <print_uart_byte>:
+
+void print_uart_byte(uint8_t byte)
+{
+    8000023c:	1101                	addi	sp,sp,-32
+    uint8_t hex[2];
+    bin_to_hex(byte, hex);
+    8000023e:	002c                	addi	a1,sp,8
+{
+    80000240:	ec06                	sd	ra,24(sp)
+    bin_to_hex(byte, hex);
+    80000242:	f55ff0ef          	jal	ra,80000196 <bin_to_hex>
+    write_serial(hex[0]);
+    80000246:	00814503          	lbu	a0,8(sp)
+    8000024a:	ed7ff0ef          	jal	ra,80000120 <write_serial>
+    write_serial(hex[1]);
+    8000024e:	00914503          	lbu	a0,9(sp)
+    80000252:	ecfff0ef          	jal	ra,80000120 <write_serial>
+    80000256:	60e2                	ld	ra,24(sp)
+    80000258:	6105                	addi	sp,sp,32
+    8000025a:	8082                	ret
+
+Disassembly of section .text.startup:
+
+000000008000025c <main>:
+    init_uart(50000000, 115200);
+    8000025c:	65f1                	lui	a1,0x1c
+    8000025e:	02faf537          	lui	a0,0x2faf
+{
+    80000262:	1141                	addi	sp,sp,-16
+    init_uart(50000000, 115200);
+    80000264:	20058593          	addi	a1,a1,512 # 1c200 <RAM_BASE-0x7ffe3e00>
+    80000268:	08050513          	addi	a0,a0,128 # 2faf080 <RAM_BASE-0x7d050f80>
+{
+    8000026c:	e406                	sd	ra,8(sp)
+    init_uart(50000000, 115200);
+    8000026e:	ec7ff0ef          	jal	ra,80000134 <init_uart>
+    print_uart("Hello Georg!\r\n");
+    80000272:	00000517          	auipc	a0,0x0
+    80000276:	18e50513          	addi	a0,a0,398 # 80000400 <_BSS_END_>
+    8000027a:	effff0ef          	jal	ra,80000178 <print_uart>
+    *hv_tot = (1056<<16) + 628;
+    8000027e:	04200737          	lui	a4,0x4200
+    80000282:	190007b7          	lui	a5,0x19000
+    80000286:	27470713          	addi	a4,a4,628 # 4200274 <RAM_BASE-0x7bdffd8c>
+    8000028a:	c798                	sw	a4,8(a5)
+    *hv_act = (800<<16) + 600;
+    8000028c:	03200737          	lui	a4,0x3200
+    80000290:	25870713          	addi	a4,a4,600 # 3200258 <RAM_BASE-0x7cdffda8>
+    80000294:	cb98                	sw	a4,16(a5)
+    *hv_front = (40<<16) + 1;
+    80000296:	00280737          	lui	a4,0x280
+    8000029a:	0705                	addi	a4,a4,1
+    8000029c:	cf98                	sw	a4,24(a5)
+    *hv_sync = (128<<16) + 4;
+    8000029e:	00800737          	lui	a4,0x800
+    800002a2:	0711                	addi	a4,a4,4
+    800002a4:	d398                	sw	a4,32(a5)
+    print_uart("tschuess Georg!\r\n");
+    800002a6:	00000517          	auipc	a0,0x0
+    *pointer_addr = 1;
+    800002aa:	4705                	li	a4,1
+    800002ac:	e398                	sd	a4,0(a5)
+    print_uart("tschuess Georg!\r\n");
+    800002ae:	16a50513          	addi	a0,a0,362 # 80000410 <_BSS_END_+0x10>
+    800002b2:	ec7ff0ef          	jal	ra,80000178 <print_uart>
+    while (1)
+    800002b6:	a001                	j	800002b6 <main+0x5a>
+
+Disassembly of section .data:
+
+0000000080000300 <bin_to_hex_table>:
+    80000300:	3130                	fld	fa2,96(a0)
+    80000302:	3332                	fld	ft6,296(sp)
+    80000304:	3534                	fld	fa3,104(a0)
+    80000306:	3736                	fld	fa4,360(sp)
+    80000308:	3938                	fld	fa4,112(a0)
+    8000030a:	4241                	li	tp,16
+    8000030c:	46454443          	fmadd.q	fs0,fa0,ft4,fs0,rmm
+
+Disassembly of section .rodata:
+
+0000000080000400 <_RODATA_START_>:
+    80000400:	6548                	ld	a0,136(a0)
+    80000402:	6c6c                	ld	a1,216(s0)
+    80000404:	6547206f          	j	80072a58 <_RODATA_END_+0x72636>
+    80000408:	2167726f          	jal	tp,8007761e <_RODATA_END_+0x771fc>
+    8000040c:	0a0d                	addi	s4,s4,3
+    8000040e:	0000                	unimp
+    80000410:	7374                	ld	a3,224(a4)
+    80000412:	65756863          	bltu	a0,s7,80000a62 <_RODATA_END_+0x640>
+    80000416:	47207373          	csrrci	t1,0x472,0
+    8000041a:	6f65                	lui	t5,0x19
+    8000041c:	6772                	ld	a4,280(sp)
+    8000041e:	0d21                	addi	s10,s10,8
+    80000420:	000a                	c.slli	zero,0x2
+
+Disassembly of section .riscv.attributes:
+
+0000000000000000 <.riscv.attributes>:
+   0:	2e41                	addiw	t3,t3,16
+   2:	0000                	unimp
+   4:	7200                	ld	s0,32(a2)
+   6:	7369                	lui	t1,0xffffa
+   8:	01007663          	bgeu	zero,a6,14 <RAM_BASE-0x7fffffec>
+   c:	0024                	addi	s1,sp,8
+   e:	0000                	unimp
+  10:	1004                	addi	s1,sp,32
+  12:	7205                	lui	tp,0xfffe1
+  14:	3676                	fld	fa2,376(sp)
+  16:	6934                	ld	a3,80(a0)
+  18:	7032                	0x7032
+  1a:	5f30                	lw	a2,120(a4)
+  1c:	326d                	addiw	tp,tp,-5
+  1e:	3070                	fld	fa2,224(s0)
+  20:	615f 7032 5f30      	0x5f307032615f
+  26:	30703263          	0x30703263
+  2a:	0800                	addi	s0,sp,16
+  2c:	0a01                	addi	s4,s4,0
+  2e:	0b              	Address 0x000000000000002e is out of bounds.
+
+
+Disassembly of section .comment:
+
+0000000000000000 <.comment>:
+   0:	3a434347          	fmsub.d	ft6,ft6,ft4,ft7,rmm
+   4:	2820                	fld	fs0,80(s0)
+   6:	29554e47          	fmsub.s	ft8,fa0,fs5,ft5,rmm
+   a:	3120                	fld	fs0,96(a0)
+   c:	2e30                	fld	fa2,88(a2)
+   e:	2e32                	fld	ft8,264(sp)
+  10:	0030                	addi	a2,sp,8
+
+Disassembly of section .debug_line:
+
+0000000000000000 <.debug_line>:
+   0:	005e                	c.slli	zero,0x17
+   2:	0000                	unimp
+   4:	00200003          	lb	zero,2(zero) # 2 <RAM_BASE-0x7ffffffe>
+   8:	0000                	unimp
+   a:	0101                	addi	sp,sp,0
+   c:	000d0efb          	0xd0efb
+  10:	0101                	addi	sp,sp,0
+  12:	0101                	addi	sp,sp,0
+  14:	0000                	unimp
+  16:	0100                	addi	s0,sp,128
+  18:	0000                	unimp
+  1a:	0001                	nop
+  1c:	72617473          	csrrci	s0,0x726,2
+  20:	7574                	ld	a3,232(a0)
+  22:	2e70                	fld	fa2,216(a2)
+  24:	00000053          	fadd.s	ft0,ft0,ft0,rne
+  28:	0000                	unimp
+  2a:	0900                	addi	s0,sp,144
+  2c:	0002                	c.slli64	zero
+  2e:	0000                	unimp
+  30:	0080                	addi	s0,sp,64
+  32:	0000                	unimp
+  34:	0300                	addi	s0,sp,384
+  36:	010a                	slli	sp,sp,0x2
+  38:	14090103          	lb	sp,320(s2) # 2000140 <RAM_BASE-0x7dfffec0>
+  3c:	0100                	addi	s0,sp,128
+  3e:	08090103          	lb	sp,128(s2)
+  42:	0100                	addi	s0,sp,128
+  44:	04090103          	lb	sp,64(s2)
+  48:	0100                	addi	s0,sp,128
+  4a:	58090103          	lb	sp,1408(s2)
+  4e:	0100                	addi	s0,sp,128
+  50:	04090103          	lb	sp,64(s2)
+  54:	0100                	addi	s0,sp,128
+  56:	08090103          	lb	sp,128(s2)
+  5a:	0100                	addi	s0,sp,128
+  5c:	0409                	addi	s0,s0,2
+  5e:	0000                	unimp
+  60:	0101                	addi	sp,sp,0
+  62:	01e4                	addi	s1,sp,204
+  64:	0000                	unimp
+  66:	00cc0003          	lb	zero,12(s8)
+  6a:	0000                	unimp
+  6c:	0101                	addi	sp,sp,0
+  6e:	000d0efb          	0xd0efb
+  72:	0101                	addi	sp,sp,0
+  74:	0101                	addi	sp,sp,0
+  76:	0000                	unimp
+  78:	0100                	addi	s0,sp,128
+  7a:	0000                	unimp
+  7c:	7301                	lui	t1,0xfffe0
+  7e:	6372                	ld	t1,280(sp)
+  80:	2f00                	fld	fs0,24(a4)
+  82:	61726373          	csrrsi	t1,0x617,4
+  86:	6374                	ld	a3,192(a4)
+  88:	2f68                	fld	fa0,216(a4)
+  8a:	32617267          	0x32617267
+  8e:	6830                	ld	a2,80(s0)
+  90:	2f31                	addiw	t5,t5,12
+  92:	6972                	ld	s2,280(sp)
+  94:	2d766373          	csrrsi	t1,0x2d7,12
+  98:	616d                	addi	sp,sp,240
+  9a:	72657473          	csrrci	s0,0x726,10
+  9e:	7369722f          	0x7369722f
+  a2:	34367663          	bgeu	a2,gp,3ee <RAM_BASE-0x7ffffc12>
+  a6:	752d                	lui	a0,0xfffeb
+  a8:	6b6e                	ld	s6,216(sp)
+  aa:	6f6e                	ld	t5,216(sp)
+  ac:	652d6e77          	0x652d6e77
+  b0:	666c                	ld	a1,200(a2)
+  b2:	636e692f          	0x636e692f
+  b6:	756c                	ld	a1,232(a0)
+  b8:	6564                	ld	s1,200(a0)
+  ba:	63616d2f          	0x63616d2f
+  be:	6968                	ld	a0,208(a0)
+  c0:	656e                	ld	a0,216(sp)
+  c2:	2f00                	fld	fs0,24(a4)
+  c4:	61726373          	csrrsi	t1,0x617,4
+  c8:	6374                	ld	a3,192(a4)
+  ca:	2f68                	fld	fa0,216(a4)
+  cc:	32617267          	0x32617267
+  d0:	6830                	ld	a2,80(s0)
+  d2:	2f31                	addiw	t5,t5,12
+  d4:	6972                	ld	s2,280(sp)
+  d6:	2d766373          	csrrsi	t1,0x2d7,12
+  da:	616d                	addi	sp,sp,240
+  dc:	72657473          	csrrci	s0,0x726,10
+  e0:	7369722f          	0x7369722f
+  e4:	34367663          	bgeu	a2,gp,430 <RAM_BASE-0x7ffffbd0>
+  e8:	752d                	lui	a0,0xfffeb
+  ea:	6b6e                	ld	s6,216(sp)
+  ec:	6f6e                	ld	t5,216(sp)
+  ee:	652d6e77          	0x652d6e77
+  f2:	666c                	ld	a1,200(a2)
+  f4:	636e692f          	0x636e692f
+  f8:	756c                	ld	a1,232(a0)
+  fa:	6564                	ld	s1,200(a0)
+  fc:	7379732f          	0x7379732f
+ 100:	0000                	unimp
+ 102:	616d                	addi	sp,sp,240
+ 104:	6e69                	lui	t3,0x1a
+ 106:	632e                	ld	t1,200(sp)
+ 108:	0100                	addi	s0,sp,128
+ 10a:	0000                	unimp
+ 10c:	645f 6665 7561      	0x75616665645f
+ 112:	746c                	ld	a1,232(s0)
+ 114:	745f 7079 7365      	0x73657079745f
+ 11a:	682e                	ld	a6,200(sp)
+ 11c:	0200                	addi	s0,sp,256
+ 11e:	0000                	unimp
+ 120:	735f 6474 6e69      	0x6e696474735f
+ 126:	2e74                	fld	fa3,216(a2)
+ 128:	0068                	addi	a0,sp,12
+ 12a:	75000003          	lb	zero,1872(zero) # 750 <RAM_BASE-0x7ffff8b0>
+ 12e:	7261                	lui	tp,0xffff8
+ 130:	2e74                	fld	fa3,216(a2)
+ 132:	0068                	addi	a0,sp,12
+ 134:	0001                	nop
+ 136:	0000                	unimp
+ 138:	0105                	addi	sp,sp,1
+ 13a:	0900                	addi	s0,sp,144
+ 13c:	5c02                	lw	s8,32(sp)
+ 13e:	0002                	c.slli64	zero
+ 140:	0080                	addi	s0,sp,64
+ 142:	0000                	unimp
+ 144:	0300                	addi	s0,sp,384
+ 146:	010e                	slli	sp,sp,0x3
+ 148:	0505                	addi	a0,a0,1
+ 14a:	00090103          	lb	sp,0(s2)
+ 14e:	0100                	addi	s0,sp,128
+ 150:	0105                	addi	sp,sp,1
+ 152:	0306                	slli	t1,t1,0x1
+ 154:	097f                	0x97f
+ 156:	0006                	c.slli	zero,0x1
+ 158:	0501                	addi	a0,a0,0
+ 15a:	0305                	addi	t1,t1,1
+ 15c:	0901                	addi	s2,s2,0
+ 15e:	0002                	c.slli64	zero
+ 160:	0501                	addi	a0,a0,0
+ 162:	0301                	addi	t1,t1,0
+ 164:	097f                	0x97f
+ 166:	0008                	0x8
+ 168:	0501                	addi	a0,a0,0
+ 16a:	0305                	addi	t1,t1,1
+ 16c:	0901                	addi	s2,s2,0
+ 16e:	0002                	c.slli64	zero
+ 170:	0601                	addi	a2,a2,0
+ 172:	04090103          	lb	sp,64(s2)
+ 176:	0100                	addi	s0,sp,128
+ 178:	0c090303          	lb	t1,192(s2)
+ 17c:	0100                	addi	s0,sp,128
+ 17e:	00090103          	lb	sp,0(s2)
+ 182:	0100                	addi	s0,sp,128
+ 184:	00090103          	lb	sp,0(s2)
+ 188:	0100                	addi	s0,sp,128
+ 18a:	00090103          	lb	sp,0(s2)
+ 18e:	0100                	addi	s0,sp,128
+ 190:	00090103          	lb	sp,0(s2)
+ 194:	0100                	addi	s0,sp,128
+ 196:	00090103          	lb	sp,0(s2)
+ 19a:	0100                	addi	s0,sp,128
+ 19c:	00090203          	lb	tp,0(s2)
+ 1a0:	0100                	addi	s0,sp,128
+ 1a2:	0d05                	addi	s10,s10,1
+ 1a4:	0306                	slli	t1,t1,0x1
+ 1a6:	0900                	addi	s0,sp,144
+ 1a8:	0000                	unimp
+ 1aa:	0501                	addi	a0,a0,0
+ 1ac:	0605                	addi	a2,a2,1
+ 1ae:	0e090103          	lb	sp,224(s2)
+ 1b2:	0100                	addi	s0,sp,128
+ 1b4:	0d05                	addi	s10,s10,1
+ 1b6:	0306                	slli	t1,t1,0x1
+ 1b8:	0900                	addi	s0,sp,144
+ 1ba:	0000                	unimp
+ 1bc:	0501                	addi	a0,a0,0
+ 1be:	0605                	addi	a2,a2,1
+ 1c0:	0a090103          	lb	sp,160(s2)
+ 1c4:	0100                	addi	s0,sp,128
+ 1c6:	0f05                	addi	t5,t5,1
+ 1c8:	0306                	slli	t1,t1,0x1
+ 1ca:	0900                	addi	s0,sp,144
+ 1cc:	0000                	unimp
+ 1ce:	0501                	addi	a0,a0,0
+ 1d0:	0605                	addi	a2,a2,1
+ 1d2:	08090103          	lb	sp,128(s2)
+ 1d6:	0100                	addi	s0,sp,128
+ 1d8:	0e05                	addi	t3,t3,1
+ 1da:	0306                	slli	t1,t1,0x1
+ 1dc:	0900                	addi	s0,sp,144
+ 1de:	0000                	unimp
+ 1e0:	0501                	addi	a0,a0,0
+ 1e2:	0605                	addi	a2,a2,1
+ 1e4:	08090203          	lb	tp,128(s2)
+ 1e8:	0100                	addi	s0,sp,128
+ 1ea:	00090103          	lb	sp,0(s2)
+ 1ee:	0100                	addi	s0,sp,128
+ 1f0:	0306                	slli	t1,t1,0x1
+ 1f2:	0904                	addi	s1,sp,144
+ 1f4:	0000                	unimp
+ 1f6:	0501                	addi	a0,a0,0
+ 1f8:	097c0313          	addi	t1,s8,151
+ 1fc:	0004                	0x4
+ 1fe:	0501                	addi	a0,a0,0
+ 200:	0605                	addi	a2,a2,1
+ 202:	04090403          	lb	s0,64(s2)
+ 206:	0100                	addi	s0,sp,128
+ 208:	0200                	addi	s0,sp,256
+ 20a:	0104                	addi	s1,sp,128
+ 20c:	08090103          	lb	sp,128(s2)
+ 210:	0100                	addi	s0,sp,128
+ 212:	0200                	addi	s0,sp,256
+ 214:	0104                	addi	s1,sp,128
+ 216:	00090303          	lb	t1,0(s2)
+ 21a:	0100                	addi	s0,sp,128
+ 21c:	0b05                	addi	s6,s6,1
+ 21e:	0200                	addi	s0,sp,256
+ 220:	0104                	addi	s1,sp,128
+ 222:	00097d03          	0x97d03
+ 226:	0100                	addi	s0,sp,128
+ 228:	0209                	addi	tp,tp,2
+ 22a:	0000                	unimp
+ 22c:	0101                	addi	sp,sp,0
+ 22e:	0105                	addi	sp,sp,1
+ 230:	0900                	addi	s0,sp,144
+ 232:	0002                	c.slli64	zero
+ 234:	0001                	nop
+ 236:	0080                	addi	s0,sp,64
+ 238:	0000                	unimp
+ 23a:	0300                	addi	s0,sp,384
+ 23c:	012c                	addi	a1,sp,136
+ 23e:	00090203          	lb	tp,0(s2)
+ 242:	0100                	addi	s0,sp,128
+ 244:	0209                	addi	tp,tp,2
+ 246:	0000                	unimp
+ 248:	0101                	addi	sp,sp,0
+ 24a:	0549                	addi	a0,a0,18
+ 24c:	0000                	unimp
+ 24e:	00c20003          	lb	zero,12(tp) # ffffffffffff800c <_RODATA_END_+0xffffffff7fff7bea>
+ 252:	0000                	unimp
+ 254:	0101                	addi	sp,sp,0
+ 256:	000d0efb          	0xd0efb
+ 25a:	0101                	addi	sp,sp,0
+ 25c:	0101                	addi	sp,sp,0
+ 25e:	0000                	unimp
+ 260:	0100                	addi	s0,sp,128
+ 262:	0000                	unimp
+ 264:	7301                	lui	t1,0xfffe0
+ 266:	6372                	ld	t1,280(sp)
+ 268:	2f00                	fld	fs0,24(a4)
+ 26a:	61726373          	csrrsi	t1,0x617,4
+ 26e:	6374                	ld	a3,192(a4)
+ 270:	2f68                	fld	fa0,216(a4)
+ 272:	32617267          	0x32617267
+ 276:	6830                	ld	a2,80(s0)
+ 278:	2f31                	addiw	t5,t5,12
+ 27a:	6972                	ld	s2,280(sp)
+ 27c:	2d766373          	csrrsi	t1,0x2d7,12
+ 280:	616d                	addi	sp,sp,240
+ 282:	72657473          	csrrci	s0,0x726,10
+ 286:	7369722f          	0x7369722f
+ 28a:	34367663          	bgeu	a2,gp,5d6 <RAM_BASE-0x7ffffa2a>
+ 28e:	752d                	lui	a0,0xfffeb
+ 290:	6b6e                	ld	s6,216(sp)
+ 292:	6f6e                	ld	t5,216(sp)
+ 294:	652d6e77          	0x652d6e77
+ 298:	666c                	ld	a1,200(a2)
+ 29a:	636e692f          	0x636e692f
+ 29e:	756c                	ld	a1,232(a0)
+ 2a0:	6564                	ld	s1,200(a0)
+ 2a2:	63616d2f          	0x63616d2f
+ 2a6:	6968                	ld	a0,208(a0)
+ 2a8:	656e                	ld	a0,216(sp)
+ 2aa:	2f00                	fld	fs0,24(a4)
+ 2ac:	61726373          	csrrsi	t1,0x617,4
+ 2b0:	6374                	ld	a3,192(a4)
+ 2b2:	2f68                	fld	fa0,216(a4)
+ 2b4:	32617267          	0x32617267
+ 2b8:	6830                	ld	a2,80(s0)
+ 2ba:	2f31                	addiw	t5,t5,12
+ 2bc:	6972                	ld	s2,280(sp)
+ 2be:	2d766373          	csrrsi	t1,0x2d7,12
+ 2c2:	616d                	addi	sp,sp,240
+ 2c4:	72657473          	csrrci	s0,0x726,10
+ 2c8:	7369722f          	0x7369722f
+ 2cc:	34367663          	bgeu	a2,gp,618 <RAM_BASE-0x7ffff9e8>
+ 2d0:	752d                	lui	a0,0xfffeb
+ 2d2:	6b6e                	ld	s6,216(sp)
+ 2d4:	6f6e                	ld	t5,216(sp)
+ 2d6:	652d6e77          	0x652d6e77
+ 2da:	666c                	ld	a1,200(a2)
+ 2dc:	636e692f          	0x636e692f
+ 2e0:	756c                	ld	a1,232(a0)
+ 2e2:	6564                	ld	s1,200(a0)
+ 2e4:	7379732f          	0x7379732f
+ 2e8:	0000                	unimp
+ 2ea:	6175                	addi	sp,sp,368
+ 2ec:	7472                	ld	s0,312(sp)
+ 2ee:	632e                	ld	t1,200(sp)
+ 2f0:	0100                	addi	s0,sp,128
+ 2f2:	0000                	unimp
+ 2f4:	645f 6665 7561      	0x75616665645f
+ 2fa:	746c                	ld	a1,232(s0)
+ 2fc:	745f 7079 7365      	0x73657079745f
+ 302:	682e                	ld	a6,200(sp)
+ 304:	0200                	addi	s0,sp,256
+ 306:	0000                	unimp
+ 308:	735f 6474 6e69      	0x6e696474735f
+ 30e:	2e74                	fld	fa3,216(a2)
+ 310:	0068                	addi	a0,sp,12
+ 312:	00000003          	lb	zero,0(zero) # 0 <RAM_BASE-0x80000000>
+ 316:	0105                	addi	sp,sp,1
+ 318:	0900                	addi	s0,sp,144
+ 31a:	0202                	c.slli64	tp
+ 31c:	0001                	nop
+ 31e:	0080                	addi	s0,sp,64
+ 320:	0000                	unimp
+ 322:	1500                	addi	s0,sp,672
+ 324:	0505                	addi	a0,a0,1
+ 326:	00090103          	lb	sp,0(s2)
+ 32a:	0100                	addi	s0,sp,128
+ 32c:	00090103          	lb	sp,0(s2)
+ 330:	0100                	addi	s0,sp,128
+ 332:	0f05                	addi	t5,t5,1
+ 334:	0306                	slli	t1,t1,0x1
+ 336:	0900                	addi	s0,sp,144
+ 338:	0000                	unimp
+ 33a:	0501                	addi	a0,a0,0
+ 33c:	0301                	addi	t1,t1,0
+ 33e:	0901                	addi	s2,s2,0
+ 340:	0004                	0x4
+ 342:	0601                	addi	a2,a2,0
+ 344:	02090303          	lb	t1,32(s2)
+ 348:	0100                	addi	s0,sp,128
+ 34a:	0505                	addi	a0,a0,1
+ 34c:	00090103          	lb	sp,0(s2)
+ 350:	0100                	addi	s0,sp,128
+ 352:	0c05                	addi	s8,s8,1
+ 354:	0306                	slli	t1,t1,0x1
+ 356:	0900                	addi	s0,sp,144
+ 358:	0000                	unimp
+ 35a:	0501                	addi	a0,a0,0
+ 35c:	0301                	addi	t1,t1,0
+ 35e:	0901                	addi	s2,s2,0
+ 360:	0004                	0x4
+ 362:	0601                	addi	a2,a2,0
+ 364:	06090303          	lb	t1,96(s2)
+ 368:	0100                	addi	s0,sp,128
+ 36a:	0505                	addi	a0,a0,1
+ 36c:	00090103          	lb	sp,0(s2)
+ 370:	0100                	addi	s0,sp,128
+ 372:	00097b03          	0x97b03
+ 376:	0100                	addi	s0,sp,128
+ 378:	0c05                	addi	s8,s8,1
+ 37a:	0306                	slli	t1,t1,0x1
+ 37c:	0900                	addi	s0,sp,144
+ 37e:	0000                	unimp
+ 380:	0501                	addi	a0,a0,0
+ 382:	0301                	addi	t1,t1,0
+ 384:	0906                	slli	s2,s2,0x1
+ 386:	0008                	0x8
+ 388:	0601                	addi	a2,a2,0
+ 38a:	06090303          	lb	t1,96(s2)
+ 38e:	0100                	addi	s0,sp,128
+ 390:	0505                	addi	a0,a0,1
+ 392:	00090103          	lb	sp,0(s2)
+ 396:	0100                	addi	s0,sp,128
+ 398:	0c05                	addi	s8,s8,1
+ 39a:	0306                	slli	t1,t1,0x1
+ 39c:	0976                	slli	s2,s2,0x1d
+ 39e:	0000                	unimp
+ 3a0:	0501                	addi	a0,a0,0
+ 3a2:	04020027          	0x4020027
+ 3a6:	0601                	addi	a2,a2,0
+ 3a8:	04090a03          	lb	s4,64(s2)
+ 3ac:	0100                	addi	s0,sp,128
+ 3ae:	0b05                	addi	s6,s6,1
+ 3b0:	0200                	addi	s0,sp,256
+ 3b2:	0104                	addi	s1,sp,128
+ 3b4:	00090003          	lb	zero,0(s2)
+ 3b8:	0100                	addi	s0,sp,128
+ 3ba:	0505                	addi	a0,a0,1
+ 3bc:	0200                	addi	s0,sp,256
+ 3be:	0104                	addi	s1,sp,128
+ 3c0:	00097b03          	0x97b03
+ 3c4:	0100                	addi	s0,sp,128
+ 3c6:	0200                	addi	s0,sp,256
+ 3c8:	0104                	addi	s1,sp,128
+ 3ca:	00097b03          	0x97b03
+ 3ce:	0100                	addi	s0,sp,128
+ 3d0:	0c05                	addi	s8,s8,1
+ 3d2:	0200                	addi	s0,sp,256
+ 3d4:	0104                	addi	s1,sp,128
+ 3d6:	0306                	slli	t1,t1,0x1
+ 3d8:	0900                	addi	s0,sp,144
+ 3da:	0000                	unimp
+ 3dc:	0501                	addi	a0,a0,0
+ 3de:	0402000b          	0x402000b
+ 3e2:	0301                	addi	t1,t1,0
+ 3e4:	090a                	slli	s2,s2,0x2
+ 3e6:	0004                	0x4
+ 3e8:	0501                	addi	a0,a0,0
+ 3ea:	0628                	addi	a0,sp,776
+ 3ec:	06090003          	lb	zero,96(s2)
+ 3f0:	0100                	addi	s0,sp,128
+ 3f2:	0505                	addi	a0,a0,1
+ 3f4:	00090203          	lb	tp,0(s2)
+ 3f8:	0100                	addi	s0,sp,128
+ 3fa:	00096e03          	lwu	t3,0(s2)
+ 3fe:	0100                	addi	s0,sp,128
+ 400:	00090103          	lb	sp,0(s2)
+ 404:	0100                	addi	s0,sp,128
+ 406:	0f05                	addi	t5,t5,1
+ 408:	0306                	slli	t1,t1,0x1
+ 40a:	0900                	addi	s0,sp,144
+ 40c:	0000                	unimp
+ 40e:	0501                	addi	a0,a0,0
+ 410:	0301                	addi	t1,t1,0
+ 412:	0912                	slli	s2,s2,0x4
+ 414:	0004                	0x4
+ 416:	0601                	addi	a2,a2,0
+ 418:	02090303          	lb	t1,32(s2)
+ 41c:	0100                	addi	s0,sp,128
+ 41e:	0505                	addi	a0,a0,1
+ 420:	00090103          	lb	sp,0(s2)
+ 424:	0100                	addi	s0,sp,128
+ 426:	2505                	addiw	a0,a0,1
+ 428:	0306                	slli	t1,t1,0x1
+ 42a:	0900                	addi	s0,sp,144
+ 42c:	0000                	unimp
+ 42e:	0501                	addi	a0,a0,0
+ 430:	030e                	slli	t1,t1,0x3
+ 432:	0900                	addi	s0,sp,144
+ 434:	0004                	0x4
+ 436:	0501                	addi	a0,a0,0
+ 438:	0605                	addi	a2,a2,1
+ 43a:	04090203          	lb	tp,64(s2)
+ 43e:	0100                	addi	s0,sp,128
+ 440:	00096703          	lwu	a4,0(s2)
+ 444:	0100                	addi	s0,sp,128
+ 446:	00090103          	lb	sp,0(s2)
+ 44a:	0100                	addi	s0,sp,128
+ 44c:	0f05                	addi	t5,t5,1
+ 44e:	0306                	slli	t1,t1,0x1
+ 450:	0900                	addi	s0,sp,144
+ 452:	0000                	unimp
+ 454:	0501                	addi	a0,a0,0
+ 456:	0605                	addi	a2,a2,1
+ 458:	08091903          	lh	s2,128(s2)
+ 45c:	0100                	addi	s0,sp,128
+ 45e:	00096603          	lwu	a2,0(s2)
+ 462:	0100                	addi	s0,sp,128
+ 464:	00090103          	lb	sp,0(s2)
+ 468:	0100                	addi	s0,sp,128
+ 46a:	0f05                	addi	t5,t5,1
+ 46c:	0306                	slli	t1,t1,0x1
+ 46e:	0900                	addi	s0,sp,144
+ 470:	0000                	unimp
+ 472:	0501                	addi	a0,a0,0
+ 474:	0605                	addi	a2,a2,1
+ 476:	08091a03          	lh	s4,128(s2)
+ 47a:	0100                	addi	s0,sp,128
+ 47c:	04096503          	lwu	a0,64(s2)
+ 480:	0100                	addi	s0,sp,128
+ 482:	00090103          	lb	sp,0(s2)
+ 486:	0100                	addi	s0,sp,128
+ 488:	2a05                	addiw	s4,s4,1
+ 48a:	0306                	slli	t1,t1,0x1
+ 48c:	0000091b          	sext.w	s2,zero
+ 490:	0501                	addi	a0,a0,0
+ 492:	0965030f          	0x965030f
+ 496:	0004                	0x4
+ 498:	0501                	addi	a0,a0,0
+ 49a:	0605                	addi	a2,a2,1
+ 49c:	04091b03          	lh	s6,64(s2)
+ 4a0:	0100                	addi	s0,sp,128
+ 4a2:	04096403          	lwu	s0,64(s2)
+ 4a6:	0100                	addi	s0,sp,128
+ 4a8:	00090103          	lb	sp,0(s2)
+ 4ac:	0100                	addi	s0,sp,128
+ 4ae:	0f05                	addi	t5,t5,1
+ 4b0:	0306                	slli	t1,t1,0x1
+ 4b2:	0900                	addi	s0,sp,144
+ 4b4:	0000                	unimp
+ 4b6:	0501                	addi	a0,a0,0
+ 4b8:	0605                	addi	a2,a2,1
+ 4ba:	04091c03          	lh	s8,64(s2)
+ 4be:	0100                	addi	s0,sp,128
+ 4c0:	00096303          	lwu	t1,0(s2)
+ 4c4:	0100                	addi	s0,sp,128
+ 4c6:	00090103          	lb	sp,0(s2)
+ 4ca:	0100                	addi	s0,sp,128
+ 4cc:	0f05                	addi	t5,t5,1
+ 4ce:	0306                	slli	t1,t1,0x1
+ 4d0:	0900                	addi	s0,sp,144
+ 4d2:	0000                	unimp
+ 4d4:	0501                	addi	a0,a0,0
+ 4d6:	0605                	addi	a2,a2,1
+ 4d8:	06091d03          	lh	s10,96(s2)
+ 4dc:	0100                	addi	s0,sp,128
+ 4de:	00096203          	lwu	tp,0(s2)
+ 4e2:	0100                	addi	s0,sp,128
+ 4e4:	00090103          	lb	sp,0(s2)
+ 4e8:	0100                	addi	s0,sp,128
+ 4ea:	0f05                	addi	t5,t5,1
+ 4ec:	0306                	slli	t1,t1,0x1
+ 4ee:	0900                	addi	s0,sp,144
+ 4f0:	0000                	unimp
+ 4f2:	0501                	addi	a0,a0,0
+ 4f4:	0605                	addi	a2,a2,1
+ 4f6:	08091e03          	lh	t3,128(s2)
+ 4fa:	0100                	addi	s0,sp,128
+ 4fc:	00096103          	lwu	sp,0(s2)
+ 500:	0100                	addi	s0,sp,128
+ 502:	00090103          	lb	sp,0(s2)
+ 506:	0100                	addi	s0,sp,128
+ 508:	0f05                	addi	t5,t5,1
+ 50a:	0306                	slli	t1,t1,0x1
+ 50c:	0900                	addi	s0,sp,144
+ 50e:	0000                	unimp
+ 510:	0501                	addi	a0,a0,0
+ 512:	0301                	addi	t1,t1,0
+ 514:	091f 0008 0601      	0x6010008091f
+ 51a:	02090303          	lb	t1,32(s2)
+ 51e:	0100                	addi	s0,sp,128
+ 520:	0505                	addi	a0,a0,1
+ 522:	08090103          	lb	sp,128(s2)
+ 526:	0100                	addi	s0,sp,128
+ 528:	00090103          	lb	sp,0(s2)
+ 52c:	0100                	addi	s0,sp,128
+ 52e:	0b05                	addi	s6,s6,1
+ 530:	00090003          	lb	zero,0(s2)
+ 534:	0100                	addi	s0,sp,128
+ 536:	0c05                	addi	s8,s8,1
+ 538:	0306                	slli	t1,t1,0x1
+ 53a:	0900                	addi	s0,sp,144
+ 53c:	0000                	unimp
+ 53e:	0501                	addi	a0,a0,0
+ 540:	0900030b          	0x900030b
+ 544:	0004                	0x4
+ 546:	0501                	addi	a0,a0,0
+ 548:	0301                	addi	t1,t1,0
+ 54a:	0905                	addi	s2,s2,1
+ 54c:	0002                	c.slli64	zero
+ 54e:	0501                	addi	a0,a0,0
+ 550:	0609                	addi	a2,a2,2
+ 552:	08097d03          	0x8097d03
+ 556:	0100                	addi	s0,sp,128
+ 558:	04090103          	lb	sp,64(s2)
+ 55c:	0100                	addi	s0,sp,128
+ 55e:	0105                	addi	sp,sp,1
+ 560:	04090803          	lb	a6,64(s2)
+ 564:	0100                	addi	s0,sp,128
+ 566:	0505                	addi	a0,a0,1
+ 568:	00090103          	lb	sp,0(s2)
+ 56c:	0100                	addi	s0,sp,128
+ 56e:	1e05                	addi	t3,t3,-31
+ 570:	0306                	slli	t1,t1,0x1
+ 572:	0900                	addi	s0,sp,144
+ 574:	0000                	unimp
+ 576:	0301                	addi	t1,t1,0
+ 578:	0901                	addi	s2,s2,0
+ 57a:	0012                	c.slli	zero,0x4
+ 57c:	0501                	addi	a0,a0,0
+ 57e:	030c                	addi	a1,sp,384
+ 580:	097f                	0x97f
+ 582:	0004                	0x4
+ 584:	0501                	addi	a0,a0,0
+ 586:	0605                	addi	a2,a2,1
+ 588:	04090103          	lb	sp,64(s2)
+ 58c:	0100                	addi	s0,sp,128
+ 58e:	1e05                	addi	t3,t3,-31
+ 590:	0306                	slli	t1,t1,0x1
+ 592:	0900                	addi	s0,sp,144
+ 594:	0000                	unimp
+ 596:	0501                	addi	a0,a0,0
+ 598:	030c                	addi	a1,sp,384
+ 59a:	0900                	addi	s0,sp,144
+ 59c:	0004                	0x4
+ 59e:	0501                	addi	a0,a0,0
+ 5a0:	0605                	addi	a2,a2,1
+ 5a2:	04090103          	lb	sp,64(s2)
+ 5a6:	0100                	addi	s0,sp,128
+ 5a8:	0105                	addi	sp,sp,1
+ 5aa:	0306                	slli	t1,t1,0x1
+ 5ac:	0901                	addi	s2,s2,0
+ 5ae:	0000                	unimp
+ 5b0:	0601                	addi	a2,a2,0
+ 5b2:	02090303          	lb	t1,32(s2)
+ 5b6:	0100                	addi	s0,sp,128
+ 5b8:	0505                	addi	a0,a0,1
+ 5ba:	00090103          	lb	sp,0(s2)
+ 5be:	0100                	addi	s0,sp,128
+ 5c0:	00090103          	lb	sp,0(s2)
+ 5c4:	0100                	addi	s0,sp,128
+ 5c6:	1105                	addi	sp,sp,-31
+ 5c8:	00090003          	lb	zero,0(s2)
+ 5cc:	0100                	addi	s0,sp,128
+ 5ce:	0105                	addi	sp,sp,1
+ 5d0:	0306                	slli	t1,t1,0x1
+ 5d2:	097e                	slli	s2,s2,0x1f
+ 5d4:	0000                	unimp
+ 5d6:	0301                	addi	t1,t1,0
+ 5d8:	0900                	addi	s0,sp,144
+ 5da:	000a                	c.slli	zero,0x2
+ 5dc:	0501                	addi	a0,a0,0
+ 5de:	0305                	addi	t1,t1,1
+ 5e0:	0902                	c.slli64	s2
+ 5e2:	0004                	0x4
+ 5e4:	0501                	addi	a0,a0,0
+ 5e6:	0009                	c.nop	2
+ 5e8:	0402                	c.slli64	s0
+ 5ea:	02030603          	lb	a2,32(t1) # fffffffffffe0020 <_RODATA_END_+0xffffffff7ffdfbfe>
+ 5ee:	0209                	addi	tp,tp,2
+ 5f0:	0100                	addi	s0,sp,128
+ 5f2:	0200                	addi	s0,sp,256
+ 5f4:	0304                	addi	s1,sp,384
+ 5f6:	00090103          	lb	sp,0(s2)
+ 5fa:	0100                	addi	s0,sp,128
+ 5fc:	0200                	addi	s0,sp,256
+ 5fe:	0304                	addi	s1,sp,384
+ 600:	00090103          	lb	sp,0(s2)
+ 604:	0100                	addi	s0,sp,128
+ 606:	1d05                	addi	s10,s10,-31
+ 608:	0200                	addi	s0,sp,256
+ 60a:	0304                	addi	s1,sp,384
+ 60c:	0306                	slli	t1,t1,0x1
+ 60e:	097e                	slli	s2,s2,0x1f
+ 610:	0000                	unimp
+ 612:	0501                	addi	a0,a0,0
+ 614:	0009                	c.nop	2
+ 616:	0402                	c.slli64	s0
+ 618:	09020303          	lb	t1,144(tp) # 90 <RAM_BASE-0x7fffff70>
+ 61c:	0004                	0x4
+ 61e:	0001                	nop
+ 620:	0402                	c.slli64	s0
+ 622:	01030603          	lb	a2,16(t1)
+ 626:	0a09                	addi	s4,s4,2
+ 628:	0100                	addi	s0,sp,128
+ 62a:	0505                	addi	a0,a0,1
+ 62c:	0200                	addi	s0,sp,256
+ 62e:	0304                	addi	s1,sp,384
+ 630:	0306                	slli	t1,t1,0x1
+ 632:	0004097b          	0x4097b
+ 636:	0501                	addi	a0,a0,0
+ 638:	0009                	c.nop	2
+ 63a:	0402                	c.slli64	s0
+ 63c:	09050303          	lb	t1,144(a0) # fffffffffffeb090 <_RODATA_END_+0xffffffff7ffeac6e>
+ 640:	0002                	c.slli64	zero
+ 642:	0001                	nop
+ 644:	0402                	c.slli64	s0
+ 646:	01030603          	lb	a2,16(t1)
+ 64a:	0409                	addi	s0,s0,2
+ 64c:	0100                	addi	s0,sp,128
+ 64e:	1905                	addi	s2,s2,-31
+ 650:	0200                	addi	s0,sp,256
+ 652:	0304                	addi	s1,sp,384
+ 654:	08097a03          	0x8097a03
+ 658:	0100                	addi	s0,sp,128
+ 65a:	1105                	addi	sp,sp,-31
+ 65c:	0200                	addi	s0,sp,256
+ 65e:	0304                	addi	s1,sp,384
+ 660:	00090003          	lb	zero,0(s2)
+ 664:	0100                	addi	s0,sp,128
+ 666:	0505                	addi	a0,a0,1
+ 668:	0200                	addi	s0,sp,256
+ 66a:	0304                	addi	s1,sp,384
+ 66c:	0306                	slli	t1,t1,0x1
+ 66e:	0900                	addi	s0,sp,144
+ 670:	0000                	unimp
+ 672:	0501                	addi	a0,a0,0
+ 674:	0301                	addi	t1,t1,0
+ 676:	0908                	addi	a0,sp,144
+ 678:	0004                	0x4
+ 67a:	0601                	addi	a2,a2,0
+ 67c:	0c090303          	lb	t1,192(s2)
+ 680:	0100                	addi	s0,sp,128
+ 682:	0505                	addi	a0,a0,1
+ 684:	00090103          	lb	sp,0(s2)
+ 688:	0100                	addi	s0,sp,128
+ 68a:	00090103          	lb	sp,0(s2)
+ 68e:	0100                	addi	s0,sp,128
+ 690:	1105                	addi	sp,sp,-31
+ 692:	00090003          	lb	zero,0(s2)
+ 696:	0100                	addi	s0,sp,128
+ 698:	0105                	addi	sp,sp,1
+ 69a:	0306                	slli	t1,t1,0x1
+ 69c:	097e                	slli	s2,s2,0x1f
+ 69e:	0000                	unimp
+ 6a0:	0301                	addi	t1,t1,0
+ 6a2:	0900                	addi	s0,sp,144
+ 6a4:	000a                	c.slli	zero,0x2
+ 6a6:	0501                	addi	a0,a0,0
+ 6a8:	0305                	addi	t1,t1,1
+ 6aa:	0902                	c.slli64	s2
+ 6ac:	0006                	c.slli	zero,0x1
+ 6ae:	0501                	addi	a0,a0,0
+ 6b0:	0009                	c.nop	2
+ 6b2:	0402                	c.slli64	s0
+ 6b4:	02030603          	lb	a2,32(t1)
+ 6b8:	0209                	addi	tp,tp,2
+ 6ba:	0100                	addi	s0,sp,128
+ 6bc:	0200                	addi	s0,sp,256
+ 6be:	0304                	addi	s1,sp,384
+ 6c0:	00090103          	lb	sp,0(s2)
+ 6c4:	0100                	addi	s0,sp,128
+ 6c6:	0200                	addi	s0,sp,256
+ 6c8:	0304                	addi	s1,sp,384
+ 6ca:	00090103          	lb	sp,0(s2)
+ 6ce:	0100                	addi	s0,sp,128
+ 6d0:	1d05                	addi	s10,s10,-31
+ 6d2:	0200                	addi	s0,sp,256
+ 6d4:	0304                	addi	s1,sp,384
+ 6d6:	0306                	slli	t1,t1,0x1
+ 6d8:	097e                	slli	s2,s2,0x1f
+ 6da:	0000                	unimp
+ 6dc:	0501                	addi	a0,a0,0
+ 6de:	0009                	c.nop	2
+ 6e0:	0402                	c.slli64	s0
+ 6e2:	09020303          	lb	t1,144(tp) # 90 <RAM_BASE-0x7fffff70>
+ 6e6:	0004                	0x4
+ 6e8:	0001                	nop
+ 6ea:	0402                	c.slli64	s0
+ 6ec:	01030603          	lb	a2,16(t1)
+ 6f0:	0a09                	addi	s4,s4,2
+ 6f2:	0100                	addi	s0,sp,128
+ 6f4:	0505                	addi	a0,a0,1
+ 6f6:	0200                	addi	s0,sp,256
+ 6f8:	0304                	addi	s1,sp,384
+ 6fa:	0306                	slli	t1,t1,0x1
+ 6fc:	0004097b          	0x4097b
+ 700:	0501                	addi	a0,a0,0
+ 702:	0009                	c.nop	2
+ 704:	0402                	c.slli64	s0
+ 706:	09050303          	lb	t1,144(a0)
+ 70a:	0002                	c.slli64	zero
+ 70c:	0001                	nop
+ 70e:	0402                	c.slli64	s0
+ 710:	01030603          	lb	a2,16(t1)
+ 714:	0409                	addi	s0,s0,2
+ 716:	0100                	addi	s0,sp,128
+ 718:	1905                	addi	s2,s2,-31
+ 71a:	0200                	addi	s0,sp,256
+ 71c:	0304                	addi	s1,sp,384
+ 71e:	08097a03          	0x8097a03
+ 722:	0100                	addi	s0,sp,128
+ 724:	1105                	addi	sp,sp,-31
+ 726:	0200                	addi	s0,sp,256
+ 728:	0304                	addi	s1,sp,384
+ 72a:	00090003          	lb	zero,0(s2)
+ 72e:	0100                	addi	s0,sp,128
+ 730:	0505                	addi	a0,a0,1
+ 732:	0200                	addi	s0,sp,256
+ 734:	0304                	addi	s1,sp,384
+ 736:	0306                	slli	t1,t1,0x1
+ 738:	0900                	addi	s0,sp,144
+ 73a:	0000                	unimp
+ 73c:	0501                	addi	a0,a0,0
+ 73e:	0301                	addi	t1,t1,0
+ 740:	0908                	addi	a0,sp,144
+ 742:	0004                	0x4
+ 744:	0601                	addi	a2,a2,0
+ 746:	0c090303          	lb	t1,192(s2)
+ 74a:	0100                	addi	s0,sp,128
+ 74c:	0505                	addi	a0,a0,1
+ 74e:	00090103          	lb	sp,0(s2)
+ 752:	0100                	addi	s0,sp,128
+ 754:	00090103          	lb	sp,0(s2)
+ 758:	0100                	addi	s0,sp,128
+ 75a:	0105                	addi	sp,sp,1
+ 75c:	0306                	slli	t1,t1,0x1
+ 75e:	097e                	slli	s2,s2,0x1f
+ 760:	0000                	unimp
+ 762:	0501                	addi	a0,a0,0
+ 764:	0305                	addi	t1,t1,1
+ 766:	0902                	c.slli64	s2
+ 768:	0002                	c.slli64	zero
+ 76a:	0501                	addi	a0,a0,0
+ 76c:	0301                	addi	t1,t1,0
+ 76e:	097e                	slli	s2,s2,0x1f
+ 770:	0002                	c.slli64	zero
+ 772:	0501                	addi	a0,a0,0
+ 774:	0305                	addi	t1,t1,1
+ 776:	0902                	c.slli64	s2
+ 778:	0002                	c.slli64	zero
+ 77a:	0601                	addi	a2,a2,0
+ 77c:	04090103          	lb	sp,64(s2)
+ 780:	0100                	addi	s0,sp,128
+ 782:	08090103          	lb	sp,128(s2)
+ 786:	0100                	addi	s0,sp,128
+ 788:	0105                	addi	sp,sp,1
+ 78a:	0306                	slli	t1,t1,0x1
+ 78c:	0901                	addi	s2,s2,0
+ 78e:	0008                	0x8
+ 790:	0901                	addi	s2,s2,0
+ 792:	0006                	c.slli	zero,0x1
+ 794:	0100                	addi	s0,sp,128
+ 796:	01              	Address 0x0000000000000796 is out of bounds.
+
+
+Disassembly of section .debug_info:
+
+0000000000000000 <.debug_info>:
+   0:	002a                	c.slli	zero,0xa
+   2:	0000                	unimp
+   4:	0002                	c.slli64	zero
+   6:	0000                	unimp
+   8:	0000                	unimp
+   a:	0108                	addi	a0,sp,128
+   c:	0000                	unimp
+   e:	0000                	unimp
+  10:	0000                	unimp
+  12:	8000                	0x8000
+  14:	0000                	unimp
+  16:	0000                	unimp
+  18:	0088                	addi	a0,sp,64
+  1a:	8000                	0x8000
+	...
+  24:	000a                	c.slli	zero,0x2
+  26:	0000                	unimp
+  28:	0034                	addi	a3,sp,8
+  2a:	0000                	unimp
+  2c:	8001                	c.srli64	s0
+  2e:	019c                	addi	a5,sp,192
+  30:	0000                	unimp
+  32:	0004                	0x4
+  34:	0014                	0x14
+  36:	0000                	unimp
+  38:	0108                	addi	a0,sp,128
+  3a:	00bc                	addi	a5,sp,72
+  3c:	0000                	unimp
+  3e:	440c                	lw	a1,8(s0)
+  40:	0001                	nop
+  42:	0a00                	addi	s0,sp,272
+	...
+  50:	0000                	unimp
+  52:	6200                	ld	s0,0(a2)
+  54:	0000                	unimp
+  56:	0200                	addi	s0,sp,256
+  58:	0601                	addi	a2,a2,0
+  5a:	0068                	addi	a0,sp,12
+  5c:	0000                	unimp
+  5e:	0102                	c.slli64	sp
+  60:	6608                	ld	a0,8(a2)
+  62:	0000                	unimp
+  64:	0200                	addi	s0,sp,256
+  66:	0502                	c.slli64	a0
+  68:	0000014f          	fnmadd.s	ft2,ft0,ft0,ft0,rne
+  6c:	0202                	c.slli64	tp
+  6e:	00009207          	0x9207
+  72:	0300                	addi	s0,sp,384
+  74:	0504                	addi	s1,sp,640
+  76:	6e69                	lui	t3,0x1a
+  78:	0074                	addi	a3,sp,12
+  7a:	a504                	fsd	fs1,8(a0)
+  7c:	0000                	unimp
+  7e:	0200                	addi	s0,sp,256
+  80:	0058194f          	fnmadd.s	fs2,fa6,ft5,ft0,rtz
+  84:	0000                	unimp
+  86:	0402                	c.slli64	s0
+  88:	00008507          	0x8507
+  8c:	0200                	addi	s0,sp,256
+  8e:	0508                	addi	a0,sp,640
+  90:	016d                	addi	sp,sp,27
+  92:	0000                	unimp
+  94:	6204                	ld	s1,0(a2)
+  96:	0001                	nop
+  98:	0200                	addi	s0,sp,256
+  9a:	1969                	addi	s2,s2,-6
+  9c:	0072                	c.slli	zero,0x1c
+  9e:	0000                	unimp
+  a0:	0802                	c.slli64	a6
+  a2:	00008007          	0x8007
+  a6:	0400                	addi	s0,sp,512
+  a8:	000000a7          	0xa7
+  ac:	4c143003          	ld	zero,1217(s0)
+  b0:	0000                	unimp
+  b2:	0500                	addi	s0,sp,640
+  b4:	0079                	c.nop	30
+  b6:	0000                	unimp
+  b8:	6404                	ld	s1,8(s0)
+  ba:	0001                	nop
+  bc:	0300                	addi	s0,sp,384
+  be:	143c                	addi	a5,sp,552
+  c0:	0066                	c.slli	zero,0x19
+  c2:	0000                	unimp
+  c4:	8a05                	andi	a2,a2,1
+  c6:	0000                	unimp
+  c8:	0600                	addi	s0,sp,768
+  ca:	0074                	addi	a3,sp,12
+  cc:	0000                	unimp
+  ce:	2c01                	sext.w	s8,s8
+  d0:	0006                	c.slli	zero,0x1
+  d2:	0001                	nop
+  d4:	0080                	addi	s0,sp,64
+  d6:	0000                	unimp
+  d8:	0200                	addi	s0,sp,256
+  da:	0000                	unimp
+  dc:	0000                	unimp
+  de:	0000                	unimp
+  e0:	0100                	addi	s0,sp,128
+  e2:	079c                	addi	a5,sp,960
+  e4:	00b0                	addi	a2,sp,72
+  e6:	0000                	unimp
+  e8:	0e01                	addi	t3,t3,0
+  ea:	4505                	li	a0,1
+  ec:	0000                	unimp
+  ee:	5c00                	lw	s0,56(s0)
+  f0:	0002                	c.slli64	zero
+  f2:	0080                	addi	s0,sp,64
+  f4:	0000                	unimp
+  f6:	5c00                	lw	s0,56(s0)
+  f8:	0000                	unimp
+  fa:	0000                	unimp
+  fc:	0000                	unimp
+  fe:	0100                	addi	s0,sp,128
+ 100:	759c                	ld	a5,40(a1)
+ 102:	0001                	nop
+ 104:	0800                	addi	s0,sp,16
+ 106:	00000137          	lui	sp,0x0
+ 10a:	1401                	addi	s0,s0,-32
+ 10c:	7519                	lui	a0,0xfffe6
+ 10e:	0001                	nop
+ 110:	0000                	unimp
+ 112:	0000                	unimp
+ 114:	0819                	addi	a6,a6,6
+ 116:	00b5                	addi	ra,ra,13
+ 118:	0000                	unimp
+ 11a:	1501                	addi	a0,a0,-32
+ 11c:	8118                	0x8118
+ 11e:	0001                	nop
+ 120:	0800                	addi	s0,sp,16
+ 122:	0000                	unimp
+ 124:	0819                	addi	a6,a6,6
+ 126:	0130                	addi	a2,sp,136
+ 128:	0000                	unimp
+ 12a:	1601                	addi	a2,a2,-32
+ 12c:	8118                	0x8118
+ 12e:	0001                	nop
+ 130:	1000                	addi	s0,sp,32
+ 132:	0000                	unimp
+ 134:	0819                	addi	a6,a6,6
+ 136:	0159                	addi	sp,sp,22
+ 138:	0000                	unimp
+ 13a:	1701                	addi	a4,a4,-32
+ 13c:	8118                	0x8118
+ 13e:	0001                	nop
+ 140:	1800                	addi	s0,sp,48
+ 142:	0000                	unimp
+ 144:	0819                	addi	a6,a6,6
+ 146:	0040                	addi	s0,sp,4
+ 148:	0000                	unimp
+ 14a:	1801                	addi	a6,a6,-32
+ 14c:	8118                	0x8118
+ 14e:	0001                	nop
+ 150:	2000                	fld	fs0,0(s0)
+ 152:	0000                	unimp
+ 154:	0819                	addi	a6,a6,6
+ 156:	0052                	c.slli	zero,0x14
+ 158:	0000                	unimp
+ 15a:	1901                	addi	s2,s2,-32
+ 15c:	8118                	0x8118
+ 15e:	0001                	nop
+ 160:	2800                	fld	fs0,16(s0)
+ 162:	0000                	unimp
+ 164:	0919                	addi	s2,s2,6
+ 166:	0272                	slli	tp,tp,0x1c
+ 168:	8000                	0x8000
+ 16a:	0000                	unimp
+ 16c:	0000                	unimp
+ 16e:	00000187          	0x187
+ 172:	015a                	slli	sp,sp,0x16
+ 174:	0000                	unimp
+ 176:	010a                	slli	sp,sp,0x2
+ 178:	055a                	slli	a0,a0,0x16
+ 17a:	800c                	0x800c
+ 17c:	faf0                	sd	a2,240(a3)
+ 17e:	0a02                	c.slli64	s4
+ 180:	5b01                	li	s6,-32
+ 182:	0804                	addi	s1,sp,16
+ 184:	39e1                	addiw	s3,s3,-8
+ 186:	0024                	addi	s1,sp,8
+ 188:	00027e0b          	0x27e0b
+ 18c:	0080                	addi	s0,sp,64
+ 18e:	0000                	unimp
+ 190:	9300                	0x9300
+ 192:	0001                	nop
+ 194:	0b00                	addi	s0,sp,400
+ 196:	02b6                	slli	t0,t0,0xd
+ 198:	8000                	0x8000
+ 19a:	0000                	unimp
+ 19c:	0000                	unimp
+ 19e:	00000193          	li	gp,0
+ 1a2:	0c00                	addi	s0,sp,528
+ 1a4:	7b08                	ld	a0,48(a4)
+ 1a6:	0001                	nop
+ 1a8:	0c00                	addi	s0,sp,528
+ 1aa:	9608                	0x9608
+ 1ac:	0000                	unimp
+ 1ae:	0c00                	addi	s0,sp,528
+ 1b0:	8508                	0x8508
+ 1b2:	0000                	unimp
+ 1b4:	0d00                	addi	s0,sp,656
+ 1b6:	0048                	addi	a0,sp,4
+ 1b8:	0000                	unimp
+ 1ba:	0048                	addi	a0,sp,4
+ 1bc:	0000                	unimp
+ 1be:	1304                	addi	s1,sp,416
+ 1c0:	0d06                	slli	s10,s10,0x1
+ 1c2:	0000005b          	0x5b
+ 1c6:	0000005b          	0x5b
+ 1ca:	1504                	addi	s1,sp,672
+ 1cc:	0006                	c.slli	zero,0x1
+ 1ce:	06a4                	addi	s1,sp,840
+ 1d0:	0000                	unimp
+ 1d2:	0004                	0x4
+ 1d4:	000000db          	0xdb
+ 1d8:	0108                	addi	a0,sp,128
+ 1da:	00bc                	addi	a5,sp,72
+ 1dc:	0000                	unimp
+ 1de:	c70c                	sw	a1,8(a4)
+ 1e0:	0001                	nop
+ 1e2:	0a00                	addi	s0,sp,272
+ 1e4:	0000                	unimp
+ 1e6:	0200                	addi	s0,sp,256
+ 1e8:	0001                	nop
+ 1ea:	0080                	addi	s0,sp,64
+ 1ec:	0000                	unimp
+ 1ee:	5a00                	lw	s0,48(a2)
+ 1f0:	0001                	nop
+ 1f2:	0000                	unimp
+ 1f4:	0000                	unimp
+ 1f6:	4a00                	lw	s0,16(a2)
+ 1f8:	0002                	c.slli64	zero
+ 1fa:	0200                	addi	s0,sp,256
+ 1fc:	0704                	addi	s1,sp,896
+ 1fe:	0085                	addi	ra,ra,1
+ 200:	0000                	unimp
+ 202:	0102                	c.slli64	sp
+ 204:	6806                	ld	a6,64(sp)
+ 206:	0000                	unimp
+ 208:	0300                	addi	s0,sp,384
+ 20a:	0185                	addi	gp,gp,1
+ 20c:	0000                	unimp
+ 20e:	2b02                	fld	fs6,0(sp)
+ 210:	4718                	lw	a4,8(a4)
+ 212:	0000                	unimp
+ 214:	0200                	addi	s0,sp,256
+ 216:	0801                	addi	a6,a6,0
+ 218:	0066                	c.slli	zero,0x19
+ 21a:	0000                	unimp
+ 21c:	0202                	c.slli64	tp
+ 21e:	4f05                	li	t5,1
+ 220:	0001                	nop
+ 222:	0200                	addi	s0,sp,256
+ 224:	0702                	c.slli64	a4
+ 226:	0092                	slli	ra,ra,0x4
+ 228:	0000                	unimp
+ 22a:	0404                	addi	s1,sp,512
+ 22c:	6905                	lui	s2,0x1
+ 22e:	746e                	ld	s0,248(sp)
+ 230:	0300                	addi	s0,sp,384
+ 232:	00a5                	addi	ra,ra,9
+ 234:	0000                	unimp
+ 236:	4f02                	lw	t5,0(sp)
+ 238:	2d19                	addiw	s10,s10,6
+ 23a:	0000                	unimp
+ 23c:	0200                	addi	s0,sp,256
+ 23e:	0508                	addi	a0,sp,640
+ 240:	016d                	addi	sp,sp,27
+ 242:	0000                	unimp
+ 244:	00016203          	lwu	tp,0(sp) # 0 <RAM_BASE-0x80000000>
+ 248:	0200                	addi	s0,sp,256
+ 24a:	1969                	addi	s2,s2,-6
+ 24c:	0082                	c.slli64	ra
+ 24e:	0000                	unimp
+ 250:	0802                	c.slli64	a6
+ 252:	00008007          	0x8007
+ 256:	0300                	addi	s0,sp,384
+ 258:	000001bb          	addw	gp,zero,zero
+ 25c:	e802                	sd	zero,16(sp)
+ 25e:	821a                	mv	tp,t1
+ 260:	0000                	unimp
+ 262:	0300                	addi	s0,sp,384
+ 264:	00000187          	0x187
+ 268:	3b131803          	lh	a6,945(t1)
+ 26c:	0000                	unimp
+ 26e:	0500                	addi	s0,sp,640
+ 270:	0095                	addi	ra,ra,5
+ 272:	0000                	unimp
+ 274:	0000a703          	lw	a4,0(ra)
+ 278:	0300                	addi	s0,sp,384
+ 27a:	1430                	addi	a2,sp,552
+ 27c:	00000063          	beqz	zero,27c <RAM_BASE-0x7ffffd84>
+ 280:	00016403          	lwu	s0,0(sp)
+ 284:	0300                	addi	s0,sp,384
+ 286:	143c                	addi	a5,sp,552
+ 288:	0076                	c.slli	zero,0x1d
+ 28a:	0000                	unimp
+ 28c:	0001bd03          	ld	s10,0(gp)
+ 290:	0300                	addi	s0,sp,384
+ 292:	1552                	slli	a0,a0,0x34
+ 294:	0089                	addi	ra,ra,2
+ 296:	0000                	unimp
+ 298:	9506                	add	a0,a0,ra
+ 29a:	0000                	unimp
+ 29c:	da00                	sw	s0,48(a2)
+ 29e:	0000                	unimp
+ 2a0:	0700                	addi	s0,sp,896
+ 2a2:	0082                	c.slli64	ra
+ 2a4:	0000                	unimp
+ 2a6:	d208000f          	0xd208000f
+ 2aa:	0001                	nop
+ 2ac:	0100                	addi	s0,sp,128
+ 2ae:	0931                	addi	s2,s2,12
+ 2b0:	00ca                	slli	ra,ra,0x12
+ 2b2:	0000                	unimp
+ 2b4:	0309                	addi	t1,t1,2
+ 2b6:	0300                	addi	s0,sp,384
+ 2b8:	8000                	0x8000
+ 2ba:	0000                	unimp
+ 2bc:	0000                	unimp
+ 2be:	0709                	addi	a4,a4,2
+ 2c0:	0002                	c.slli64	zero
+ 2c2:	0100                	addi	s0,sp,128
+ 2c4:	0655                	addi	a2,a2,21
+ 2c6:	023c                	addi	a5,sp,264
+ 2c8:	8000                	0x8000
+ 2ca:	0000                	unimp
+ 2cc:	0000                	unimp
+ 2ce:	0020                	addi	s0,sp,8
+ 2d0:	0000                	unimp
+ 2d2:	0000                	unimp
+ 2d4:	0000                	unimp
+ 2d6:	9c01                	subw	s0,s0,s0
+ 2d8:	0160                	addi	s0,sp,140
+ 2da:	0000                	unimp
+ 2dc:	120a                	slli	tp,tp,0x22
+ 2de:	0002                	c.slli64	zero
+ 2e0:	0100                	addi	s0,sp,128
+ 2e2:	1e55                	addi	t3,t3,-11
+ 2e4:	0095                	addi	ra,ra,5
+ 2e6:	0000                	unimp
+ 2e8:	0000                	unimp
+ 2ea:	0000                	unimp
+ 2ec:	7865680b          	0x7865680b
+ 2f0:	0100                	addi	s0,sp,128
+ 2f2:	01600d57          	0x1600d57
+ 2f6:	0000                	unimp
+ 2f8:	9102                	jalr	sp
+ 2fa:	0c68                	addi	a0,sp,540
+ 2fc:	0246                	slli	tp,tp,0x11
+ 2fe:	8000                	0x8000
+ 300:	0000                	unimp
+ 302:	0000                	unimp
+ 304:	02b0                	addi	a2,sp,328
+ 306:	0000                	unimp
+ 308:	0145                	addi	sp,sp,17
+ 30a:	0000                	unimp
+ 30c:	010d                	addi	sp,sp,3
+ 30e:	6891025b          	0x6891025b
+ 312:	0e00                	addi	s0,sp,784
+ 314:	024e                	slli	tp,tp,0x13
+ 316:	8000                	0x8000
+ 318:	0000                	unimp
+ 31a:	0000                	unimp
+ 31c:	0526                	slli	a0,a0,0x9
+ 31e:	0000                	unimp
+ 320:	560e                	lw	a2,224(sp)
+ 322:	0002                	c.slli64	zero
+ 324:	0080                	addi	s0,sp,64
+ 326:	0000                	unimp
+ 328:	2600                	fld	fs0,8(a2)
+ 32a:	0005                	c.nop	1
+ 32c:	0000                	unimp
+ 32e:	9506                	add	a0,a0,ra
+ 330:	0000                	unimp
+ 332:	7000                	ld	s0,32(s0)
+ 334:	0001                	nop
+ 336:	0700                	addi	s0,sp,896
+ 338:	0082                	c.slli64	ra
+ 33a:	0000                	unimp
+ 33c:	0001                	nop
+ 33e:	1709                	addi	a4,a4,-30
+ 340:	0002                	c.slli64	zero
+ 342:	0100                	addi	s0,sp,128
+ 344:	0648                	addi	a0,sp,772
+ 346:	01fa                	slli	gp,gp,0x1e
+ 348:	8000                	0x8000
+ 34a:	0000                	unimp
+ 34c:	0000                	unimp
+ 34e:	0042                	c.slli	zero,0x10
+ 350:	0000                	unimp
+ 352:	0000                	unimp
+ 354:	0000                	unimp
+ 356:	9c01                	subw	s0,s0,s0
+ 358:	0210                	addi	a2,sp,256
+ 35a:	0000                	unimp
+ 35c:	e70a                	sd	sp,392(sp)
+ 35e:	0001                	nop
+ 360:	0100                	addi	s0,sp,128
+ 362:	1f48                	addi	a0,sp,948
+ 364:	00b2                	slli	ra,ra,0xc
+ 366:	0000                	unimp
+ 368:	0039                	c.nop	14
+ 36a:	0000                	unimp
+ 36c:	0100690f          	0x100690f
+ 370:	094a                	slli	s2,s2,0x12
+ 372:	005c                	addi	a5,sp,4
+ 374:	0000                	unimp
+ 376:	0085                	addi	ra,ra,1
+ 378:	0000                	unimp
+ 37a:	c010                	sw	a2,0(s0)
+ 37c:	0000                	unimp
+ 37e:	0f00                	addi	s0,sp,912
+ 380:	00727563          	bgeu	tp,t2,38a <RAM_BASE-0x7ffffc76>
+ 384:	4d01                	li	s10,0
+ 386:	9511                	srai	a0,a0,0x24
+ 388:	0000                	unimp
+ 38a:	a900                	fsd	fs0,16(a0)
+ 38c:	0000                	unimp
+ 38e:	0b00                	addi	s0,sp,400
+ 390:	6568                	ld	a0,200(a0)
+ 392:	0078                	addi	a4,sp,12
+ 394:	4e01                	li	t3,0
+ 396:	6011                	c.lui	zero,0x4
+ 398:	0001                	nop
+ 39a:	0200                	addi	s0,sp,256
+ 39c:	5891                	li	a7,-28
+ 39e:	1a0c                	addi	a1,sp,304
+ 3a0:	0002                	c.slli64	zero
+ 3a2:	0080                	addi	s0,sp,64
+ 3a4:	0000                	unimp
+ 3a6:	b000                	fsd	fs0,32(s0)
+ 3a8:	0002                	c.slli64	zero
+ 3aa:	f400                	sd	s0,40(s0)
+ 3ac:	0001                	nop
+ 3ae:	0d00                	addi	s0,sp,656
+ 3b0:	5a01                	li	s4,-32
+ 3b2:	7908                	ld	a0,48(a0)
+ 3b4:	7800                	ld	s0,48(s0)
+ 3b6:	0800                	addi	s0,sp,16
+ 3b8:	1aff                	0x1aff
+ 3ba:	0d25                	addi	s10,s10,9
+ 3bc:	5b01                	li	s6,-32
+ 3be:	9102                	jalr	sp
+ 3c0:	0058                	addi	a4,sp,4
+ 3c2:	240e                	fld	fs0,192(sp)
+ 3c4:	0002                	c.slli64	zero
+ 3c6:	0080                	addi	s0,sp,64
+ 3c8:	0000                	unimp
+ 3ca:	2600                	fld	fs0,8(a2)
+ 3cc:	0005                	c.nop	1
+ 3ce:	0e00                	addi	s0,sp,784
+ 3d0:	022c                	addi	a1,sp,264
+ 3d2:	8000                	0x8000
+ 3d4:	0000                	unimp
+ 3d6:	0000                	unimp
+ 3d8:	0526                	slli	a0,a0,0x9
+ 3da:	0000                	unimp
+ 3dc:	0000                	unimp
+ 3de:	7609                	lui	a2,0xfffe2
+ 3e0:	0001                	nop
+ 3e2:	0100                	addi	s0,sp,128
+ 3e4:	01ba063b          	addw	a2,s4,s11
+ 3e8:	8000                	0x8000
+ 3ea:	0000                	unimp
+ 3ec:	0000                	unimp
+ 3ee:	0040                	addi	s0,sp,4
+ 3f0:	0000                	unimp
+ 3f2:	0000                	unimp
+ 3f4:	0000                	unimp
+ 3f6:	9c01                	subw	s0,s0,s0
+ 3f8:	02b0                	addi	a2,sp,328
+ 3fa:	0000                	unimp
+ 3fc:	e70a                	sd	sp,392(sp)
+ 3fe:	0001                	nop
+ 400:	0100                	addi	s0,sp,128
+ 402:	00a61e3b          	sllw	t3,a2,a0
+ 406:	0000                	unimp
+ 408:	000000d7          	0xd7
+ 40c:	0100690f          	0x100690f
+ 410:	093d                	addi	s2,s2,15
+ 412:	005c                	addi	a5,sp,4
+ 414:	0000                	unimp
+ 416:	0110                	addi	a2,sp,128
+ 418:	0000                	unimp
+ 41a:	9010                	0x9010
+ 41c:	0000                	unimp
+ 41e:	0f00                	addi	s0,sp,912
+ 420:	00727563          	bgeu	tp,t2,42a <RAM_BASE-0x7ffffbd6>
+ 424:	4001                	c.li	zero,0
+ 426:	9511                	srai	a0,a0,0x24
+ 428:	0000                	unimp
+ 42a:	3400                	fld	fs0,40(s0)
+ 42c:	0001                	nop
+ 42e:	0b00                	addi	s0,sp,400
+ 430:	6568                	ld	a0,200(a0)
+ 432:	0078                	addi	a4,sp,12
+ 434:	4101                	li	sp,0
+ 436:	6011                	c.lui	zero,0x4
+ 438:	0001                	nop
+ 43a:	0200                	addi	s0,sp,256
+ 43c:	5891                	li	a7,-28
+ 43e:	d80c                	sw	a1,48(s0)
+ 440:	0001                	nop
+ 442:	0080                	addi	s0,sp,64
+ 444:	0000                	unimp
+ 446:	b000                	fsd	fs0,32(s0)
+ 448:	0002                	c.slli64	zero
+ 44a:	9400                	0x9400
+ 44c:	0002                	c.slli64	zero
+ 44e:	0d00                	addi	s0,sp,656
+ 450:	5a01                	li	s4,-32
+ 452:	7908                	ld	a0,48(a0)
+ 454:	7800                	ld	s0,48(s0)
+ 456:	0800                	addi	s0,sp,16
+ 458:	1aff                	0x1aff
+ 45a:	0d25                	addi	s10,s10,9
+ 45c:	5b01                	li	s6,-32
+ 45e:	9102                	jalr	sp
+ 460:	0058                	addi	a4,sp,4
+ 462:	e20e                	sd	gp,256(sp)
+ 464:	0001                	nop
+ 466:	0080                	addi	s0,sp,64
+ 468:	0000                	unimp
+ 46a:	2600                	fld	fs0,8(a2)
+ 46c:	0005                	c.nop	1
+ 46e:	0e00                	addi	s0,sp,784
+ 470:	01ea                	slli	gp,gp,0x1a
+ 472:	8000                	0x8000
+ 474:	0000                	unimp
+ 476:	0000                	unimp
+ 478:	0526                	slli	a0,a0,0x9
+ 47a:	0000                	unimp
+ 47c:	0000                	unimp
+ 47e:	ec09                	bnez	s0,498 <RAM_BASE-0x7ffffb68>
+ 480:	0001                	nop
+ 482:	0100                	addi	s0,sp,128
+ 484:	0634                	addi	a3,sp,776
+ 486:	0196                	slli	gp,gp,0x5
+ 488:	8000                	0x8000
+ 48a:	0000                	unimp
+ 48c:	0000                	unimp
+ 48e:	0024                	addi	s1,sp,8
+ 490:	0000                	unimp
+ 492:	0000                	unimp
+ 494:	0000                	unimp
+ 496:	9c01                	subw	s0,s0,s0
+ 498:	02ed                	addi	t0,t0,27
+ 49a:	0000                	unimp
+ 49c:	6911                	lui	s2,0x4
+ 49e:	706e                	0x706e
+ 4a0:	0100                	addi	s0,sp,128
+ 4a2:	1934                	addi	a3,sp,184
+ 4a4:	0095                	addi	ra,ra,5
+ 4a6:	0000                	unimp
+ 4a8:	015c                	addi	a5,sp,132
+ 4aa:	0000                	unimp
+ 4ac:	7212                	ld	tp,288(sp)
+ 4ae:	7365                	lui	t1,0xffff9
+ 4b0:	0100                	addi	s0,sp,128
+ 4b2:	2634                	fld	fa3,72(a2)
+ 4b4:	02ed                	addi	t0,t0,27
+ 4b6:	0000                	unimp
+ 4b8:	5b01                	li	s6,-32
+ 4ba:	1300                	addi	s0,sp,416
+ 4bc:	9508                	0x9508
+ 4be:	0000                	unimp
+ 4c0:	0900                	addi	s0,sp,144
+ 4c2:	0000005b          	0x5b
+ 4c6:	2701                	sext.w	a4,a4
+ 4c8:	7806                	ld	a6,96(sp)
+ 4ca:	0001                	nop
+ 4cc:	0080                	addi	s0,sp,64
+ 4ce:	0000                	unimp
+ 4d0:	1e00                	addi	s0,sp,816
+ 4d2:	0000                	unimp
+ 4d4:	0000                	unimp
+ 4d6:	0000                	unimp
+ 4d8:	0100                	addi	s0,sp,128
+ 4da:	3f9c                	fld	fa5,56(a5)
+ 4dc:	11000003          	lb	zero,272(zero) # 110 <RAM_BASE-0x7ffffef0>
+ 4e0:	00727473          	csrrci	s0,0x7,4
+ 4e4:	2701                	sext.w	a4,a4
+ 4e6:	3f1d                	addiw	t5,t5,-25
+ 4e8:	95000003          	lb	zero,-1712(zero) # fffffffffffff950 <_RODATA_END_+0xffffffff7ffff52e>
+ 4ec:	0001                	nop
+ 4ee:	0f00                	addi	s0,sp,912
+ 4f0:	00727563          	bgeu	tp,t2,4fa <RAM_BASE-0x7ffffb06>
+ 4f4:	2901                	sext.w	s2,s2
+ 4f6:	3f11                	addiw	t5,t5,-28
+ 4f8:	ce000003          	lb	zero,-800(zero) # fffffffffffffce0 <_RODATA_END_+0xffffffff7ffff8be>
+ 4fc:	0001                	nop
+ 4fe:	0e00                	addi	s0,sp,784
+ 500:	0192                	slli	gp,gp,0x4
+ 502:	8000                	0x8000
+ 504:	0000                	unimp
+ 506:	0000                	unimp
+ 508:	0526                	slli	a0,a0,0x9
+ 50a:	0000                	unimp
+ 50c:	1300                	addi	s0,sp,416
+ 50e:	4c08                	lw	a0,24(s0)
+ 510:	02000003          	lb	zero,32(zero) # 20 <RAM_BASE-0x7fffffe0>
+ 514:	0801                	addi	a6,a6,0
+ 516:	0000006f          	j	516 <RAM_BASE-0x7ffffaea>
+ 51a:	4514                	lw	a3,8(a0)
+ 51c:	09000003          	lb	zero,144(zero) # 90 <RAM_BASE-0x7fffff70>
+ 520:	0048                	addi	a0,sp,4
+ 522:	0000                	unimp
+ 524:	1a01                	addi	s4,s4,-32
+ 526:	3406                	fld	fs0,96(sp)
+ 528:	0001                	nop
+ 52a:	0080                	addi	s0,sp,64
+ 52c:	0000                	unimp
+ 52e:	4400                	lw	s0,8(s0)
+ 530:	0000                	unimp
+ 532:	0000                	unimp
+ 534:	0000                	unimp
+ 536:	0100                	addi	s0,sp,128
+ 538:	269c                	fld	fa5,8(a3)
+ 53a:	0005                	c.nop	1
+ 53c:	0a00                	addi	s0,sp,272
+ 53e:	0202                	c.slli64	tp
+ 540:	0000                	unimp
+ 542:	1a01                	addi	s4,s4,-32
+ 544:	a619                	j	84a <RAM_BASE-0x7ffff7b6>
+ 546:	0000                	unimp
+ 548:	0400                	addi	s0,sp,512
+ 54a:	0002                	c.slli64	zero
+ 54c:	0a00                	addi	s0,sp,272
+ 54e:	000001f7          	0x1f7
+ 552:	1a01                	addi	s4,s4,-32
+ 554:	a628                	fsd	fa0,72(a2)
+ 556:	0000                	unimp
+ 558:	3d00                	fld	fs0,56(a0)
+ 55a:	0002                	c.slli64	zero
+ 55c:	1500                	addi	s0,sp,672
+ 55e:	00000233          	add	tp,zero,zero
+ 562:	1c01                	addi	s8,s8,-32
+ 564:	a60e                	fsd	ft3,264(sp)
+ 566:	0000                	unimp
+ 568:	7600                	ld	s0,40(a2)
+ 56a:	0002                	c.slli64	zero
+ 56c:	1600                	addi	s0,sp,800
+ 56e:	000005e3          	beqz	zero,d78 <RAM_BASE-0x7ffff288>
+ 572:	013c                	addi	a5,sp,136
+ 574:	8000                	0x8000
+ 576:	0000                	unimp
+ 578:	0000                	unimp
+ 57a:	0008                	0x8
+ 57c:	0000                	unimp
+ 57e:	0000                	unimp
+ 580:	0000                	unimp
+ 582:	1e01                	addi	t3,t3,-32
+ 584:	d705                	beqz	a4,4ac <RAM_BASE-0x7ffffb54>
+ 586:	17000003          	lb	zero,368(zero) # 170 <RAM_BASE-0x7ffffe90>
+ 58a:	05fc                	addi	a5,sp,716
+ 58c:	0000                	unimp
+ 58e:	02b8                	addi	a4,sp,328
+ 590:	0000                	unimp
+ 592:	0005f017          	auipc	zero,0x5f
+ 596:	dc00                	sw	s0,56(s0)
+ 598:	0002                	c.slli64	zero
+ 59a:	1800                	addi	s0,sp,48
+ 59c:	0608                	addi	a0,sp,768
+ 59e:	0000                	unimp
+ 5a0:	02dc                	addi	a5,sp,324
+ 5a2:	0000                	unimp
+ 5a4:	1600                	addi	s0,sp,800
+ 5a6:	000005e3          	beqz	zero,db0 <RAM_BASE-0x7ffff250>
+ 5aa:	0144                	addi	s1,sp,132
+ 5ac:	8000                	0x8000
+ 5ae:	0000                	unimp
+ 5b0:	0000                	unimp
+ 5b2:	0008                	0x8
+ 5b4:	0000                	unimp
+ 5b6:	0000                	unimp
+ 5b8:	0000                	unimp
+ 5ba:	1f01                	addi	t5,t5,-32
+ 5bc:	0f05                	addi	t5,t5,1
+ 5be:	0004                	0x4
+ 5c0:	1700                	addi	s0,sp,928
+ 5c2:	05fc                	addi	a5,sp,716
+ 5c4:	0000                	unimp
+ 5c6:	0304                	addi	s1,sp,384
+ 5c8:	0000                	unimp
+ 5ca:	0005f017          	auipc	zero,0x5f
+ 5ce:	2900                	fld	fs0,16(a0)
+ 5d0:	18000003          	lb	zero,384(zero) # 180 <RAM_BASE-0x7ffffe80>
+ 5d4:	0608                	addi	a0,sp,768
+ 5d6:	0000                	unimp
+ 5d8:	0329                	addi	t1,t1,10
+ 5da:	0000                	unimp
+ 5dc:	1900                	addi	s0,sp,176
+ 5de:	000005e3          	beqz	zero,de8 <RAM_BASE-0x7ffff218>
+ 5e2:	0150                	addi	a2,sp,132
+ 5e4:	8000                	0x8000
+ 5e6:	0000                	unimp
+ 5e8:	0000                	unimp
+ 5ea:	0060                	addi	s0,sp,12
+ 5ec:	0000                	unimp
+ 5ee:	2001                	0x2001
+ 5f0:	4905                	li	s2,1
+ 5f2:	0004                	0x4
+ 5f4:	1700                	addi	s0,sp,928
+ 5f6:	05fc                	addi	a5,sp,716
+ 5f8:	0000                	unimp
+ 5fa:	0351                	addi	t1,t1,20
+ 5fc:	0000                	unimp
+ 5fe:	0005f017          	auipc	zero,0x5f
+ 602:	7400                	ld	s0,40(s0)
+ 604:	10000003          	lb	zero,256(zero) # 100 <RAM_BASE-0x7fffff00>
+ 608:	0060                	addi	s0,sp,12
+ 60a:	0000                	unimp
+ 60c:	0818                	addi	a4,sp,16
+ 60e:	0006                	c.slli	zero,0x1
+ 610:	7400                	ld	s0,40(s0)
+ 612:	00000003          	lb	zero,0(zero) # 0 <RAM_BASE-0x80000000>
+ 616:	1600                	addi	s0,sp,800
+ 618:	000005e3          	beqz	zero,e22 <RAM_BASE-0x7ffff1de>
+ 61c:	015c                	addi	a5,sp,132
+ 61e:	8000                	0x8000
+ 620:	0000                	unimp
+ 622:	0000                	unimp
+ 624:	0004                	0x4
+ 626:	0000                	unimp
+ 628:	0000                	unimp
+ 62a:	0000                	unimp
+ 62c:	2101                	sext.w	sp,sp
+ 62e:	8105                	srli	a0,a0,0x1
+ 630:	0004                	0x4
+ 632:	1700                	addi	s0,sp,928
+ 634:	05fc                	addi	a5,sp,716
+ 636:	0000                	unimp
+ 638:	039a                	slli	t2,t2,0x6
+ 63a:	0000                	unimp
+ 63c:	0005f017          	auipc	zero,0x5f
+ 640:	bd00                	fsd	fs0,56(a0)
+ 642:	18000003          	lb	zero,384(zero) # 180 <RAM_BASE-0x7ffffe80>
+ 646:	0608                	addi	a0,sp,768
+ 648:	0000                	unimp
+ 64a:	03bd                	addi	t2,t2,15
+ 64c:	0000                	unimp
+ 64e:	1600                	addi	s0,sp,800
+ 650:	000005e3          	beqz	zero,e5a <RAM_BASE-0x7ffff1a6>
+ 654:	0160                	addi	s0,sp,140
+ 656:	8000                	0x8000
+ 658:	0000                	unimp
+ 65a:	0000                	unimp
+ 65c:	0006                	c.slli	zero,0x1
+ 65e:	0000                	unimp
+ 660:	0000                	unimp
+ 662:	0000                	unimp
+ 664:	2201                	sext.w	tp,tp
+ 666:	b905                	j	296 <RAM_BASE-0x7ffffd6a>
+ 668:	0004                	0x4
+ 66a:	1700                	addi	s0,sp,928
+ 66c:	05fc                	addi	a5,sp,716
+ 66e:	0000                	unimp
+ 670:	03e5                	addi	t2,t2,25
+ 672:	0000                	unimp
+ 674:	0005f017          	auipc	zero,0x5f
+ 678:	0900                	addi	s0,sp,144
+ 67a:	0004                	0x4
+ 67c:	1800                	addi	s0,sp,48
+ 67e:	0608                	addi	a0,sp,768
+ 680:	0000                	unimp
+ 682:	0409                	addi	s0,s0,2
+ 684:	0000                	unimp
+ 686:	1600                	addi	s0,sp,800
+ 688:	000005e3          	beqz	zero,e92 <RAM_BASE-0x7ffff16e>
+ 68c:	0166                	slli	sp,sp,0x19
+ 68e:	8000                	0x8000
+ 690:	0000                	unimp
+ 692:	0000                	unimp
+ 694:	0008                	0x8
+ 696:	0000                	unimp
+ 698:	0000                	unimp
+ 69a:	0000                	unimp
+ 69c:	2301                	sext.w	t1,t1
+ 69e:	f105                	bnez	a0,5be <RAM_BASE-0x7ffffa42>
+ 6a0:	0004                	0x4
+ 6a2:	1700                	addi	s0,sp,928
+ 6a4:	05fc                	addi	a5,sp,716
+ 6a6:	0000                	unimp
+ 6a8:	0431                	addi	s0,s0,12
+ 6aa:	0000                	unimp
+ 6ac:	0005f017          	auipc	zero,0x5f
+ 6b0:	5600                	lw	s0,40(a2)
+ 6b2:	0004                	0x4
+ 6b4:	1800                	addi	s0,sp,48
+ 6b6:	0608                	addi	a0,sp,768
+ 6b8:	0000                	unimp
+ 6ba:	0456                	slli	s0,s0,0x15
+ 6bc:	0000                	unimp
+ 6be:	1a00                	addi	s0,sp,304
+ 6c0:	000005e3          	beqz	zero,eca <RAM_BASE-0x7ffff136>
+ 6c4:	016e                	slli	sp,sp,0x1b
+ 6c6:	8000                	0x8000
+ 6c8:	0000                	unimp
+ 6ca:	0000                	unimp
+ 6cc:	0008                	0x8
+ 6ce:	0000                	unimp
+ 6d0:	0000                	unimp
+ 6d2:	0000                	unimp
+ 6d4:	2401                	sext.w	s0,s0
+ 6d6:	1705                	addi	a4,a4,-31
+ 6d8:	05fc                	addi	a5,sp,716
+ 6da:	0000                	unimp
+ 6dc:	047e                	slli	s0,s0,0x1f
+ 6de:	0000                	unimp
+ 6e0:	0005f017          	auipc	zero,0x5f
+ 6e4:	a300                	fsd	fs0,0(a4)
+ 6e6:	0004                	0x4
+ 6e8:	1800                	addi	s0,sp,48
+ 6ea:	0608                	addi	a0,sp,768
+ 6ec:	0000                	unimp
+ 6ee:	000004a3          	sb	zero,9(zero) # 9 <RAM_BASE-0x7ffffff7>
+ 6f2:	0000                	unimp
+ 6f4:	ae09                	j	a06 <RAM_BASE-0x7ffff5fa>
+ 6f6:	0001                	nop
+ 6f8:	0100                	addi	s0,sp,128
+ 6fa:	01200613          	li	a2,18
+ 6fe:	8000                	0x8000
+ 700:	0000                	unimp
+ 702:	0000                	unimp
+ 704:	0014                	0x14
+ 706:	0000                	unimp
+ 708:	0000                	unimp
+ 70a:	0000                	unimp
+ 70c:	9c01                	subw	s0,s0,s0
+ 70e:	05b8                	addi	a4,sp,712
+ 710:	0000                	unimp
+ 712:	6112                	ld	sp,256(sp)
+ 714:	0100                	addi	s0,sp,128
+ 716:	03451813          	slli	a6,a0,0x34
+ 71a:	0000                	unimp
+ 71c:	5a01                	li	s4,-32
+ 71e:	b819                	j	ffffffffffffff34 <_RODATA_END_+0xffffffff7ffffb12>
+ 720:	0005                	c.nop	1
+ 722:	2000                	fld	fs0,0(s0)
+ 724:	0001                	nop
+ 726:	0080                	addi	s0,sp,64
+ 728:	0000                	unimp
+ 72a:	3000                	fld	fs0,32(s0)
+ 72c:	0000                	unimp
+ 72e:	0100                	addi	s0,sp,128
+ 730:	0c15                	addi	s8,s8,5
+ 732:	00000583          	lb	a1,0(zero) # 0 <RAM_BASE-0x80000000>
+ 736:	0005c51b          	0x5c51b
+ 73a:	2000                	fld	fs0,0(s0)
+ 73c:	0001                	nop
+ 73e:	0080                	addi	s0,sp,64
+ 740:	0000                	unimp
+ 742:	3000                	fld	fs0,32(s0)
+ 744:	0000                	unimp
+ 746:	0100                	addi	s0,sp,128
+ 748:	0c10                	addi	a2,sp,528
+ 74a:	d61c                	sw	a5,40(a2)
+ 74c:	0005                	c.nop	1
+ 74e:	0000                	unimp
+ 750:	1a00                	addi	s0,sp,304
+ 752:	000005e3          	beqz	zero,f5c <RAM_BASE-0x7ffff0a4>
+ 756:	012e                	slli	sp,sp,0xb
+ 758:	8000                	0x8000
+ 75a:	0000                	unimp
+ 75c:	0000                	unimp
+ 75e:	0004                	0x4
+ 760:	0000                	unimp
+ 762:	0000                	unimp
+ 764:	0000                	unimp
+ 766:	1701                	addi	a4,a4,-32
+ 768:	1705                	addi	a4,a4,-31
+ 76a:	05fc                	addi	a5,sp,716
+ 76c:	0000                	unimp
+ 76e:	000004cb          	fnmsub.s	fs1,ft0,ft0,ft0,rne
+ 772:	0005f017          	auipc	zero,0x5f
+ 776:	ee00                	sd	s0,24(a2)
+ 778:	0004                	0x4
+ 77a:	1800                	addi	s0,sp,48
+ 77c:	0608                	addi	a0,sp,768
+ 77e:	0000                	unimp
+ 780:	04ee                	slli	s1,s1,0x1b
+ 782:	0000                	unimp
+ 784:	0000                	unimp
+ 786:	8f1d                	sub	a4,a4,a5
+ 788:	0001                	nop
+ 78a:	0100                	addi	s0,sp,128
+ 78c:	050e                	slli	a0,a0,0x3
+ 78e:	005c                	addi	a5,sp,4
+ 790:	0000                	unimp
+ 792:	1e01                	addi	t3,t3,-32
+ 794:	00000227          	0x227
+ 798:	0901                	addi	s2,s2,0
+ 79a:	9509                	srai	a0,a0,0x22
+ 79c:	0000                	unimp
+ 79e:	0100                	addi	s0,sp,128
+ 7a0:	000005e3          	beqz	zero,faa <RAM_BASE-0x7ffff056>
+ 7a4:	e71f 0001 0100      	0x1000001e71f
+ 7aa:	1f09                	addi	t5,t5,-30
+ 7ac:	00be                	slli	ra,ra,0xf
+ 7ae:	0000                	unimp
+ 7b0:	2000                	fld	fs0,0(s0)
+ 7b2:	01a1                	addi	gp,gp,8
+ 7b4:	0000                	unimp
+ 7b6:	0301                	addi	t1,t1,0
+ 7b8:	0106                	slli	sp,sp,0x1
+ 7ba:	0615                	addi	a2,a2,5
+ 7bc:	0000                	unimp
+ 7be:	e71f 0001 0100      	0x1000001e71f
+ 7c4:	00be1d03          	lh	s10,11(t3) # 1a00b <RAM_BASE-0x7ffe5ff5>
+ 7c8:	0000                	unimp
+ 7ca:	fc1f 0001 0100      	0x1000001fc1f
+ 7d0:	00952b03          	lw	s6,9(a0) # fffffffffffe6009 <_RODATA_END_+0xffffffff7ffe5be7>
+ 7d4:	0000                	unimp
+ 7d6:	e321                	bnez	a4,816 <RAM_BASE-0x7ffff7ea>
+ 7d8:	0001                	nop
+ 7da:	0100                	addi	s0,sp,128
+ 7dc:	1705                	addi	a4,a4,-31
+ 7de:	0615                	addi	a2,a2,5
+ 7e0:	0000                	unimp
+ 7e2:	1300                	addi	s0,sp,416
+ 7e4:	a108                	fsd	fa0,0(a0)
+ 7e6:	0000                	unimp
+ 7e8:	2200                	fld	fs0,0(a2)
+ 7ea:	000005e3          	beqz	zero,ff4 <RAM_BASE-0x7ffff00c>
+ 7ee:	0102                	c.slli64	sp
+ 7f0:	8000                	0x8000
+ 7f2:	0000                	unimp
+ 7f4:	0000                	unimp
+ 7f6:	0006                	c.slli	zero,0x1
+ 7f8:	0000                	unimp
+ 7fa:	0000                	unimp
+ 7fc:	0000                	unimp
+ 7fe:	9c01                	subw	s0,s0,s0
+ 800:	064c                	addi	a1,sp,772
+ 802:	0000                	unimp
+ 804:	0005f023          	0x5f023
+ 808:	0100                	addi	s0,sp,128
+ 80a:	235a                	fld	ft6,400(sp)
+ 80c:	05fc                	addi	a5,sp,716
+ 80e:	0000                	unimp
+ 810:	5b01                	li	s6,-32
+ 812:	0824                	addi	s1,sp,24
+ 814:	0006                	c.slli	zero,0x1
+ 816:	0100                	addi	s0,sp,128
+ 818:	005a                	c.slli	zero,0x16
+ 81a:	c522                	sw	s0,136(sp)
+ 81c:	0005                	c.nop	1
+ 81e:	0800                	addi	s0,sp,16
+ 820:	0001                	nop
+ 822:	0080                	addi	s0,sp,64
+ 824:	0000                	unimp
+ 826:	0a00                	addi	s0,sp,272
+ 828:	0000                	unimp
+ 82a:	0000                	unimp
+ 82c:	0000                	unimp
+ 82e:	0100                	addi	s0,sp,128
+ 830:	719c                	ld	a5,32(a1)
+ 832:	0006                	c.slli	zero,0x1
+ 834:	1700                	addi	s0,sp,928
+ 836:	05d6                	slli	a1,a1,0x15
+ 838:	0000                	unimp
+ 83a:	0514                	addi	a3,sp,640
+ 83c:	0000                	unimp
+ 83e:	2500                	fld	fs0,8(a0)
+ 840:	05b8                	addi	a4,sp,712
+ 842:	0000                	unimp
+ 844:	0112                	slli	sp,sp,0x4
+ 846:	8000                	0x8000
+ 848:	0000                	unimp
+ 84a:	0000                	unimp
+ 84c:	000e                	c.slli	zero,0x3
+ 84e:	0000                	unimp
+ 850:	0000                	unimp
+ 852:	0000                	unimp
+ 854:	9c01                	subw	s0,s0,s0
+ 856:	c51a                	sw	t1,136(sp)
+ 858:	0005                	c.nop	1
+ 85a:	1200                	addi	s0,sp,288
+ 85c:	0001                	nop
+ 85e:	0080                	addi	s0,sp,64
+ 860:	0000                	unimp
+ 862:	0800                	addi	s0,sp,16
+ 864:	0000                	unimp
+ 866:	0000                	unimp
+ 868:	0000                	unimp
+ 86a:	0100                	addi	s0,sp,128
+ 86c:	0c10                	addi	a2,sp,528
+ 86e:	d61c                	sw	a5,40(a2)
+ 870:	0005                	c.nop	1
+ 872:	0000                	unimp
+	...
+
+Disassembly of section .debug_abbrev:
+
+0000000000000000 <.debug_abbrev>:
+   0:	1101                	addi	sp,sp,-32
+   2:	1000                	addi	s0,sp,32
+   4:	1106                	slli	sp,sp,0x21
+   6:	1201                	addi	tp,tp,-32
+   8:	0301                	addi	t1,t1,0
+   a:	1b0e                	slli	s6,s6,0x23
+   c:	250e                	fld	fa0,192(sp)
+   e:	130e                	slli	t1,t1,0x23
+  10:	0005                	c.nop	1
+  12:	0000                	unimp
+  14:	1101                	addi	sp,sp,-32
+  16:	2501                	sext.w	a0,a0
+  18:	130e                	slli	t1,t1,0x23
+  1a:	1b0e030b          	0x1b0e030b
+  1e:	550e                	lw	a0,224(sp)
+  20:	10011117          	auipc	sp,0x10011
+  24:	02000017          	auipc	zero,0x2000
+  28:	0024                	addi	s1,sp,8
+  2a:	0b3e0b0b          	0xb3e0b0b
+  2e:	00000e03          	lb	t3,0(zero) # 0 <RAM_BASE-0x80000000>
+  32:	0b002403          	lw	s0,176(zero) # b0 <RAM_BASE-0x7fffff50>
+  36:	030b3e0b          	0x30b3e0b
+  3a:	0008                	0x8
+  3c:	0400                	addi	s0,sp,512
+  3e:	0016                	c.slli	zero,0x5
+  40:	0b3a0e03          	lb	t3,179(s4)
+  44:	0b390b3b          	0xb390b3b
+  48:	1349                	addi	t1,t1,-14
+  4a:	0000                	unimp
+  4c:	3505                	addiw	a0,a0,-31
+  4e:	4900                	lw	s0,16(a0)
+  50:	06000013          	li	zero,96
+  54:	002e                	c.slli	zero,0xb
+  56:	0e03193f 0b3b0b3a 	0xb3b0b3a0e03193f
+  5e:	0b39                	addi	s6,s6,14
+  60:	01111927          	0x1111927
+  64:	0712                	slli	a4,a4,0x4
+  66:	1840                	addi	s0,sp,52
+  68:	00194297          	auipc	t0,0x194
+  6c:	0700                	addi	s0,sp,896
+  6e:	012e                	slli	sp,sp,0xb
+  70:	0e03193f 0b3b0b3a 	0xb3b0b3a0e03193f
+  78:	0b39                	addi	s6,s6,14
+  7a:	1349                	addi	t1,t1,-14
+  7c:	0111                	addi	sp,sp,4
+  7e:	0712                	slli	a4,a4,0x4
+  80:	1840                	addi	s0,sp,52
+  82:	01194297          	auipc	t0,0x1194
+  86:	08000013          	li	zero,128
+  8a:	0034                	addi	a3,sp,8
+  8c:	0b3a0e03          	lb	t3,179(s4)
+  90:	0b390b3b          	0xb390b3b
+  94:	1349                	addi	t1,t1,-14
+  96:	061c                	addi	a5,sp,768
+  98:	0000                	unimp
+  9a:	8909                	andi	a0,a0,2
+  9c:	0182                	c.slli64	gp
+  9e:	1101                	addi	sp,sp,-32
+  a0:	3101                	addiw	sp,sp,-32
+  a2:	00130113          	addi	sp,t1,1 # ffffffffffff9001 <_RODATA_END_+0xffffffff7fff8bdf>
+  a6:	0a00                	addi	s0,sp,272
+  a8:	828a                	mv	t0,sp
+  aa:	0001                	nop
+  ac:	1802                	slli	a6,a6,0x20
+  ae:	4291                	li	t0,4
+  b0:	0018                	0x18
+  b2:	0b00                	addi	s0,sp,400
+  b4:	8289                	srli	a3,a3,0x2
+  b6:	0001                	nop
+  b8:	0111                	addi	sp,sp,4
+  ba:	1331                	addi	t1,t1,-20
+  bc:	0000                	unimp
+  be:	0f0c                	addi	a1,sp,912
+  c0:	0b00                	addi	s0,sp,400
+  c2:	0013490b          	0x13490b
+  c6:	0d00                	addi	s0,sp,656
+  c8:	002e                	c.slli	zero,0xb
+  ca:	193c193f 0e030e6e 	0xe030e6e193c193f
+  d2:	0b3a                	slli	s6,s6,0xe
+  d4:	0b390b3b          	0xb390b3b
+  d8:	0000                	unimp
+  da:	0100                	addi	s0,sp,128
+  dc:	0111                	addi	sp,sp,4
+  de:	0e25                	addi	t3,t3,9
+  e0:	0e030b13          	addi	s6,t1,224
+  e4:	01110e1b          	addiw	t3,sp,17
+  e8:	0712                	slli	a4,a4,0x4
+  ea:	1710                	addi	a2,sp,928
+  ec:	0000                	unimp
+  ee:	2402                	fld	fs0,0(sp)
+  f0:	0b00                	addi	s0,sp,400
+  f2:	030b3e0b          	0x30b3e0b
+  f6:	000e                	c.slli	zero,0x3
+  f8:	0300                	addi	s0,sp,384
+  fa:	0016                	c.slli	zero,0x5
+  fc:	0b3a0e03          	lb	t3,179(s4)
+ 100:	0b390b3b          	0xb390b3b
+ 104:	1349                	addi	t1,t1,-14
+ 106:	0000                	unimp
+ 108:	2404                	fld	fs1,8(s0)
+ 10a:	0b00                	addi	s0,sp,400
+ 10c:	030b3e0b          	0x30b3e0b
+ 110:	0008                	0x8
+ 112:	0500                	addi	s0,sp,640
+ 114:	0035                	c.nop	13
+ 116:	1349                	addi	t1,t1,-14
+ 118:	0000                	unimp
+ 11a:	0106                	slli	sp,sp,0x1
+ 11c:	4901                	li	s2,0
+ 11e:	00130113          	addi	sp,t1,1
+ 122:	0700                	addi	s0,sp,896
+ 124:	0021                	c.nop	8
+ 126:	1349                	addi	t1,t1,-14
+ 128:	00000b2f          	0xb2f
+ 12c:	3408                	fld	fa0,40(s0)
+ 12e:	0300                	addi	s0,sp,384
+ 130:	3a0e                	fld	fs4,224(sp)
+ 132:	390b3b0b          	0x390b3b0b
+ 136:	3f13490b          	0x3f13490b
+ 13a:	0219                	addi	tp,tp,6
+ 13c:	0018                	0x18
+ 13e:	0900                	addi	s0,sp,144
+ 140:	012e                	slli	sp,sp,0xb
+ 142:	0e03193f 0b3b0b3a 	0xb3b0b3a0e03193f
+ 14a:	0b39                	addi	s6,s6,14
+ 14c:	01111927          	0x1111927
+ 150:	0712                	slli	a4,a4,0x4
+ 152:	1840                	addi	s0,sp,52
+ 154:	01194297          	auipc	t0,0x1194
+ 158:	0a000013          	li	zero,160
+ 15c:	0005                	c.nop	1
+ 15e:	0b3a0e03          	lb	t3,179(s4)
+ 162:	0b390b3b          	0xb390b3b
+ 166:	1349                	addi	t1,t1,-14
+ 168:	1702                	slli	a4,a4,0x20
+ 16a:	0000                	unimp
+ 16c:	0300340b          	0x300340b
+ 170:	3a08                	fld	fa0,48(a2)
+ 172:	390b3b0b          	0x390b3b0b
+ 176:	0213490b          	0x213490b
+ 17a:	0018                	0x18
+ 17c:	0c00                	addi	s0,sp,528
+ 17e:	8289                	srli	a3,a3,0x2
+ 180:	0101                	addi	sp,sp,0
+ 182:	0111                	addi	sp,sp,4
+ 184:	1331                	addi	t1,t1,-20
+ 186:	1301                	addi	t1,t1,-32
+ 188:	0000                	unimp
+ 18a:	8a0d                	andi	a2,a2,3
+ 18c:	0182                	c.slli64	gp
+ 18e:	0200                	addi	s0,sp,256
+ 190:	9118                	0x9118
+ 192:	1842                	slli	a6,a6,0x30
+ 194:	0000                	unimp
+ 196:	890e                	mv	s2,gp
+ 198:	0182                	c.slli64	gp
+ 19a:	1100                	addi	s0,sp,160
+ 19c:	3101                	addiw	sp,sp,-32
+ 19e:	0f000013          	li	zero,240
+ 1a2:	0034                	addi	a3,sp,8
+ 1a4:	0b3a0803          	lb	a6,179(s4)
+ 1a8:	0b390b3b          	0xb390b3b
+ 1ac:	1349                	addi	t1,t1,-14
+ 1ae:	1702                	slli	a4,a4,0x20
+ 1b0:	0000                	unimp
+ 1b2:	0b10                	addi	a2,sp,400
+ 1b4:	5501                	li	a0,-32
+ 1b6:	11000017          	auipc	zero,0x11000
+ 1ba:	0005                	c.nop	1
+ 1bc:	0b3a0803          	lb	a6,179(s4)
+ 1c0:	0b390b3b          	0xb390b3b
+ 1c4:	1349                	addi	t1,t1,-14
+ 1c6:	1702                	slli	a4,a4,0x20
+ 1c8:	0000                	unimp
+ 1ca:	0512                	slli	a0,a0,0x4
+ 1cc:	0300                	addi	s0,sp,384
+ 1ce:	3a08                	fld	fa0,48(a2)
+ 1d0:	390b3b0b          	0x390b3b0b
+ 1d4:	0213490b          	0x213490b
+ 1d8:	0018                	0x18
+ 1da:	1300                	addi	s0,sp,416
+ 1dc:	0b0b000f          	0xb0b000f
+ 1e0:	1349                	addi	t1,t1,-14
+ 1e2:	0000                	unimp
+ 1e4:	2614                	fld	fa3,8(a2)
+ 1e6:	4900                	lw	s0,16(a0)
+ 1e8:	15000013          	li	zero,336
+ 1ec:	0034                	addi	a3,sp,8
+ 1ee:	0b3a0e03          	lb	t3,179(s4)
+ 1f2:	0b390b3b          	0xb390b3b
+ 1f6:	1349                	addi	t1,t1,-14
+ 1f8:	1702                	slli	a4,a4,0x20
+ 1fa:	0000                	unimp
+ 1fc:	1d16                	slli	s10,s10,0x25
+ 1fe:	3101                	addiw	sp,sp,-32
+ 200:	12011113          	0x12011113
+ 204:	590b5807          	0x590b5807
+ 208:	010b570b          	0x10b570b
+ 20c:	17000013          	li	zero,368
+ 210:	0005                	c.nop	1
+ 212:	1331                	addi	t1,t1,-20
+ 214:	1702                	slli	a4,a4,0x20
+ 216:	0000                	unimp
+ 218:	3418                	fld	fa4,40(s0)
+ 21a:	3100                	fld	fs0,32(a0)
+ 21c:	00170213          	addi	tp,a4,1 # 800001 <RAM_BASE-0x7f7fffff>
+ 220:	1900                	addi	s0,sp,176
+ 222:	011d                	addi	sp,sp,7
+ 224:	1331                	addi	t1,t1,-20
+ 226:	0152                	slli	sp,sp,0x14
+ 228:	1755                	addi	a4,a4,-11
+ 22a:	0b58                	addi	a4,sp,404
+ 22c:	0b59                	addi	s6,s6,22
+ 22e:	13010b57          	0x13010b57
+ 232:	0000                	unimp
+ 234:	1d1a                	slli	s10,s10,0x26
+ 236:	3101                	addiw	sp,sp,-32
+ 238:	12011113          	0x12011113
+ 23c:	590b5807          	0x590b5807
+ 240:	000b570b          	0xb570b
+ 244:	1b00                	addi	s0,sp,432
+ 246:	011d                	addi	sp,sp,7
+ 248:	1331                	addi	t1,t1,-20
+ 24a:	0152                	slli	sp,sp,0x14
+ 24c:	1755                	addi	a4,a4,-11
+ 24e:	0b58                	addi	a4,sp,404
+ 250:	0b59                	addi	s6,s6,22
+ 252:	00000b57          	0xb57
+ 256:	051c                	addi	a5,sp,640
+ 258:	3100                	fld	fs0,32(a0)
+ 25a:	1d000013          	li	zero,464
+ 25e:	002e                	c.slli	zero,0xb
+ 260:	0e03193f 0b3b0b3a 	0xb3b0b3a0e03193f
+ 268:	0b39                	addi	s6,s6,14
+ 26a:	1349                	addi	t1,t1,-14
+ 26c:	0b20                	addi	s0,sp,408
+ 26e:	0000                	unimp
+ 270:	2e1e                	fld	ft8,448(sp)
+ 272:	3f01                	addiw	t5,t5,-32
+ 274:	0319                	addi	t1,t1,6
+ 276:	3a0e                	fld	fs4,224(sp)
+ 278:	390b3b0b          	0x390b3b0b
+ 27c:	4919270b          	0x4919270b
+ 280:	010b2013          	slti	zero,s6,16
+ 284:	1f000013          	li	zero,496
+ 288:	0005                	c.nop	1
+ 28a:	0b3a0e03          	lb	t3,179(s4)
+ 28e:	0b390b3b          	0xb390b3b
+ 292:	1349                	addi	t1,t1,-14
+ 294:	0000                	unimp
+ 296:	2e20                	fld	fs0,88(a2)
+ 298:	3f01                	addiw	t5,t5,-32
+ 29a:	0319                	addi	t1,t1,6
+ 29c:	3a0e                	fld	fs4,224(sp)
+ 29e:	390b3b0b          	0x390b3b0b
+ 2a2:	2019270b          	0x2019270b
+ 2a6:	0013010b          	0x13010b
+ 2aa:	2100                	fld	fs0,0(a0)
+ 2ac:	0034                	addi	a3,sp,8
+ 2ae:	0b3a0e03          	lb	t3,179(s4)
+ 2b2:	0b390b3b          	0xb390b3b
+ 2b6:	1349                	addi	t1,t1,-14
+ 2b8:	0000                	unimp
+ 2ba:	2e22                	fld	ft8,8(sp)
+ 2bc:	3101                	addiw	sp,sp,-32
+ 2be:	12011113          	0x12011113
+ 2c2:	97184007          	flq	ft0,-1679(a6)
+ 2c6:	1942                	slli	s2,s2,0x30
+ 2c8:	1301                	addi	t1,t1,-32
+ 2ca:	0000                	unimp
+ 2cc:	31000523          	sb	a6,778(zero) # 30a <RAM_BASE-0x7ffffcf6>
+ 2d0:	00180213          	addi	tp,a6,1
+ 2d4:	2400                	fld	fs0,8(s0)
+ 2d6:	0034                	addi	a3,sp,8
+ 2d8:	1331                	addi	t1,t1,-20
+ 2da:	1802                	slli	a6,a6,0x20
+ 2dc:	0000                	unimp
+ 2de:	2e25                	addiw	t3,t3,9
+ 2e0:	3101                	addiw	sp,sp,-32
+ 2e2:	12011113          	0x12011113
+ 2e6:	97184007          	flq	ft0,-1679(a6)
+ 2ea:	1942                	slli	s2,s2,0x30
+ 2ec:	0000                	unimp
+	...
+
+Disassembly of section .debug_aranges:
+
+0000000000000000 <.debug_aranges>:
+   0:	002c                	addi	a1,sp,8
+   2:	0000                	unimp
+   4:	0002                	c.slli64	zero
+   6:	0000                	unimp
+   8:	0000                	unimp
+   a:	0008                	0x8
+   c:	0000                	unimp
+   e:	0000                	unimp
+  10:	0000                	unimp
+  12:	8000                	0x8000
+  14:	0000                	unimp
+  16:	0000                	unimp
+  18:	0088                	addi	a0,sp,64
+	...
+  2e:	0000                	unimp
+  30:	003c                	addi	a5,sp,8
+  32:	0000                	unimp
+  34:	0002                	c.slli64	zero
+  36:	002e                	c.slli	zero,0xb
+  38:	0000                	unimp
+  3a:	0008                	0x8
+  3c:	0000                	unimp
+  3e:	0000                	unimp
+  40:	0100                	addi	s0,sp,128
+  42:	8000                	0x8000
+  44:	0000                	unimp
+  46:	0000                	unimp
+  48:	0002                	c.slli64	zero
+  4a:	0000                	unimp
+  4c:	0000                	unimp
+  4e:	0000                	unimp
+  50:	025c                	addi	a5,sp,260
+  52:	8000                	0x8000
+  54:	0000                	unimp
+  56:	0000                	unimp
+  58:	005c                	addi	a5,sp,4
+	...
+  6e:	0000                	unimp
+  70:	002c                	addi	a1,sp,8
+  72:	0000                	unimp
+  74:	0002                	c.slli64	zero
+  76:	01ce                	slli	gp,gp,0x13
+  78:	0000                	unimp
+  7a:	0008                	0x8
+  7c:	0000                	unimp
+  7e:	0000                	unimp
+  80:	0102                	c.slli64	sp
+  82:	8000                	0x8000
+  84:	0000                	unimp
+  86:	0000                	unimp
+  88:	015a                	slli	sp,sp,0x16
+	...
+
+Disassembly of section .debug_str:
+
+0000000000000000 <.debug_str>:
+   0:	72617473          	csrrci	s0,0x726,2
+   4:	7574                	ld	a3,232(a0)
+   6:	2e70                	fld	fa2,216(a2)
+   8:	732f0053          	0x732f0053
+   c:	74617263          	bgeu	sp,t1,750 <RAM_BASE-0x7ffff8b0>
+  10:	672f6863          	bltu	t5,s2,680 <RAM_BASE-0x7ffff980>
+  14:	6172                	ld	sp,280(sp)
+  16:	3032                	fld	ft0,296(sp)
+  18:	3168                	fld	fa0,224(a0)
+  1a:	6176632f          	0x6176632f
+  1e:	2f36                	fld	ft10,328(sp)
+  20:	7066                	0x7066
+  22:	732f6167          	0x732f6167
+  26:	6372                	ld	t1,280(sp)
+  28:	7061702f          	0x7061702f
+  2c:	7265                	lui	tp,0xffff9
+  2e:	745f 7365 0074      	0x747365745f
+  34:	20554e47          	fmsub.s	ft8,fa0,ft5,ft4,rmm
+  38:	5341                	li	t1,-16
+  3a:	3220                	fld	fs0,96(a2)
+  3c:	332e                	fld	ft6,232(sp)
+  3e:	0035                	c.nop	13
+  40:	7668                	ld	a0,232(a2)
+  42:	735f 6e79 0063      	0x636e79735f
+  48:	6e69                	lui	t3,0x1a
+  4a:	7469                	lui	s0,0xffffa
+  4c:	755f 7261 0074      	0x747261755f
+  52:	6f70                	ld	a2,216(a4)
+  54:	72726577          	0x72726577
+  58:	6765                	lui	a4,0x19
+  5a:	7000                	ld	s0,32(s0)
+  5c:	6972                	ld	s2,280(sp)
+  5e:	746e                	ld	s0,248(sp)
+  60:	755f 7261 0074      	0x747261755f
+  66:	6e75                	lui	t3,0x1d
+  68:	6e676973          	csrrsi	s2,0x6e6,14
+  6c:	6465                	lui	s0,0x19
+  6e:	6320                	ld	s0,64(a4)
+  70:	6168                	ld	a0,192(a0)
+  72:	0072                	c.slli	zero,0x1c
+  74:	6168                	ld	a0,192(a0)
+  76:	646e                	ld	s0,216(sp)
+  78:	656c                	ld	a1,200(a0)
+  7a:	745f 6172 0070      	0x706172745f
+  80:	6f6c                	ld	a1,216(a4)
+  82:	676e                	ld	a4,216(sp)
+  84:	7520                	ld	s0,104(a0)
+  86:	736e                	ld	t1,248(sp)
+  88:	6769                	lui	a4,0x1a
+  8a:	656e                	ld	a0,216(sp)
+  8c:	2064                	fld	fs1,192(s0)
+  8e:	6e69                	lui	t3,0x1a
+  90:	0074                	addi	a3,sp,12
+  92:	726f6873          	csrrsi	a6,0x726,30
+  96:	2074                	fld	fa3,192(s0)
+  98:	6e75                	lui	t3,0x1d
+  9a:	6e676973          	csrrsi	s2,0x6e6,14
+  9e:	6465                	lui	s0,0x19
+  a0:	6920                	ld	s0,80(a0)
+  a2:	746e                	ld	s0,248(sp)
+  a4:	5f00                	lw	s0,56(a4)
+  a6:	755f 6e69 3374      	0x33746e69755f
+  ac:	5f32                	lw	t5,44(sp)
+  ae:	0074                	addi	a3,sp,12
+  b0:	616d                	addi	sp,sp,240
+  b2:	6e69                	lui	t3,0x1a
+  b4:	6800                	ld	s0,16(s0)
+  b6:	5f76                	lw	t5,124(sp)
+  b8:	6f74                	ld	a3,216(a4)
+  ba:	0074                	addi	a3,sp,12
+  bc:	20554e47          	fmsub.s	ft8,fa0,ft5,ft4,rmm
+  c0:	20373143          	fmadd.s	ft2,fa4,ft3,ft4,rup
+  c4:	3031                	0x3031
+  c6:	322e                	fld	ft4,232(sp)
+  c8:	302e                	fld	ft0,232(sp)
+  ca:	2d20                	fld	fs0,88(a0)
+  cc:	616d                	addi	sp,sp,240
+  ce:	6372                	ld	t1,280(sp)
+  d0:	3d68                	fld	fa0,248(a0)
+  d2:	7672                	ld	a2,312(sp)
+  d4:	3436                	fld	fs0,360(sp)
+  d6:	6d69                	lui	s10,0x1a
+  d8:	6361                	lui	t1,0x18
+  da:	2d20                	fld	fs0,88(a0)
+  dc:	616d                	addi	sp,sp,240
+  de:	6962                	ld	s2,24(sp)
+  e0:	6c3d                	lui	s8,0xf
+  e2:	3670                	fld	fa2,232(a2)
+  e4:	2034                	fld	fa3,64(s0)
+  e6:	6d2d                	lui	s10,0xb
+  e8:	646f6d63          	bltu	t5,t1,742 <RAM_BASE-0x7ffff8be>
+  ec:	6c65                	lui	s8,0x19
+  ee:	6d3d                	lui	s10,0xf
+  f0:	6465                	lui	s0,0x19
+  f2:	6e61                	lui	t3,0x18
+  f4:	2079                	0x2079
+  f6:	6d2d                	lui	s10,0xb
+  f8:	7865                	lui	a6,0xffff9
+  fa:	6c70                	ld	a2,216(s0)
+  fc:	6369                	lui	t1,0x1a
+  fe:	7469                	lui	s0,0xffffa
+ 100:	722d                	lui	tp,0xfffeb
+ 102:	6c65                	lui	s8,0x19
+ 104:	2073636f          	jal	t1,36b0a <RAM_BASE-0x7ffc94f6>
+ 108:	6d2d                	lui	s10,0xb
+ 10a:	7574                	ld	a3,232(a0)
+ 10c:	656e                	ld	a0,216(sp)
+ 10e:	723d                	lui	tp,0xfffef
+ 110:	656b636f          	jal	t1,b6766 <RAM_BASE-0x7ff4989a>
+ 114:	2074                	fld	fa3,192(s0)
+ 116:	6d2d                	lui	s10,0xb
+ 118:	7261                	lui	tp,0xffff8
+ 11a:	723d6863          	bltu	s10,gp,84a <RAM_BASE-0x7ffff7b6>
+ 11e:	3676                	fld	fa2,376(sp)
+ 120:	6934                	ld	a3,80(a0)
+ 122:	616d                	addi	sp,sp,240
+ 124:	672d2063          	0x672d2063
+ 128:	20626467          	0x20626467
+ 12c:	4f2d                	li	t5,11
+ 12e:	76680073          	0x76680073
+ 132:	615f 7463 7000      	0x70007463615f
+ 138:	746e696f          	jal	s2,e687e <RAM_BASE-0x7ff19782>
+ 13c:	7265                	lui	tp,0xffff9
+ 13e:	615f 6464 0072      	0x726464615f
+ 144:	2f637273          	csrrci	tp,0x2f6,6
+ 148:	616d                	addi	sp,sp,240
+ 14a:	6e69                	lui	t3,0x1a
+ 14c:	632e                	ld	t1,200(sp)
+ 14e:	7300                	ld	s0,32(a4)
+ 150:	6f68                	ld	a0,216(a4)
+ 152:	7472                	ld	s0,312(sp)
+ 154:	6920                	ld	s0,80(a0)
+ 156:	746e                	ld	s0,248(sp)
+ 158:	6800                	ld	s0,16(s0)
+ 15a:	5f76                	lw	t5,124(sp)
+ 15c:	7266                	ld	tp,120(sp)
+ 15e:	00746e6f          	jal	t3,46964 <RAM_BASE-0x7ffb969c>
+ 162:	5f5f 6975 746e      	0x746e69755f5f
+ 168:	3436                	fld	fs0,360(sp)
+ 16a:	745f 6c00 6e6f      	0x6e6f6c00745f
+ 170:	6e692067          	0x6e692067
+ 174:	0074                	addi	a3,sp,12
+ 176:	7270                	ld	a2,224(a2)
+ 178:	6e69                	lui	t3,0x1a
+ 17a:	5f74                	lw	a3,124(a4)
+ 17c:	6175                	addi	sp,sp,368
+ 17e:	7472                	ld	s0,312(sp)
+ 180:	695f 746e 5f00      	0x5f00746e695f
+ 186:	755f 6e69 3874      	0x38746e69755f
+ 18c:	745f 6900 5f73      	0x5f736900745f
+ 192:	7274                	ld	a3,224(a2)
+ 194:	6e61                	lui	t3,0x18
+ 196:	74696d73          	csrrsi	s10,0x746,18
+ 19a:	655f 706d 7974      	0x7974706d655f
+ 1a0:	7700                	ld	s0,40(a4)
+ 1a2:	6972                	ld	s2,280(sp)
+ 1a4:	6574                	ld	a3,200(a0)
+ 1a6:	725f 6765 755f      	0x755f6765725f
+ 1ac:	0038                	addi	a4,sp,8
+ 1ae:	74697277          	0x74697277
+ 1b2:	5f65                	li	t5,-7
+ 1b4:	69726573          	csrrsi	a0,0x697,4
+ 1b8:	6c61                	lui	s8,0x18
+ 1ba:	5f00                	lw	s0,56(a4)
+ 1bc:	755f 6e69 7074      	0x70746e69755f
+ 1c2:	7274                	ld	a3,224(a2)
+ 1c4:	745f 7300 6372      	0x63727300745f
+ 1ca:	7261752f          	0x7261752f
+ 1ce:	2e74                	fld	fa3,216(a2)
+ 1d0:	69620063          	beq	tp,s6,850 <RAM_BASE-0x7ffff7b0>
+ 1d4:	5f6e                	lw	t5,248(sp)
+ 1d6:	6f74                	ld	a3,216(a4)
+ 1d8:	685f 7865 745f      	0x745f7865685f
+ 1de:	6261                	lui	tp,0x18
+ 1e0:	656c                	ld	a1,200(a0)
+ 1e2:	6c00                	ld	s0,24(s0)
+ 1e4:	615f636f          	jal	t1,f6ff8 <RAM_BASE-0x7ff09008>
+ 1e8:	6464                	ld	s1,200(s0)
+ 1ea:	0072                	c.slli	zero,0x1c
+ 1ec:	6962                	ld	s2,24(sp)
+ 1ee:	5f6e                	lw	t5,248(sp)
+ 1f0:	6f74                	ld	a3,216(a4)
+ 1f2:	685f 7865 6200      	0x62007865685f
+ 1f8:	7561                	lui	a0,0xffff8
+ 1fa:	0064                	addi	s1,sp,12
+ 1fc:	6176                	ld	sp,344(sp)
+ 1fe:	756c                	ld	a1,232(a0)
+ 200:	0065                	c.nop	25
+ 202:	7266                	ld	tp,120(sp)
+ 204:	7165                	addi	sp,sp,-400
+ 206:	7000                	ld	s0,32(s0)
+ 208:	6972                	ld	s2,280(sp)
+ 20a:	746e                	ld	s0,248(sp)
+ 20c:	755f 7261 5f74      	0x5f747261755f
+ 212:	7962                	ld	s2,56(sp)
+ 214:	6574                	ld	a3,200(a0)
+ 216:	7000                	ld	s0,32(s0)
+ 218:	6972                	ld	s2,280(sp)
+ 21a:	746e                	ld	s0,248(sp)
+ 21c:	755f 7261 5f74      	0x5f747261755f
+ 222:	6461                	lui	s0,0x18
+ 224:	7264                	ld	s1,224(a2)
+ 226:	7200                	ld	s0,32(a2)
+ 228:	6165                	addi	sp,sp,112
+ 22a:	5f64                	lw	s1,124(a4)
+ 22c:	6572                	ld	a0,280(sp)
+ 22e:	38755f67          	0x38755f67
+ 232:	6400                	ld	s0,8(s0)
+ 234:	7669                	lui	a2,0xffffa
+ 236:	7369                	lui	t1,0xffffa
+ 238:	          	jal	tp,7238 <RAM_BASE-0x7fff8dc8>
+
+Disassembly of section .debug_ranges:
+
+0000000000000000 <.debug_ranges>:
+   0:	0100                	addi	s0,sp,128
+   2:	8000                	0x8000
+   4:	0000                	unimp
+   6:	0000                	unimp
+   8:	0102                	c.slli64	sp
+   a:	8000                	0x8000
+   c:	0000                	unimp
+   e:	0000                	unimp
+  10:	025c                	addi	a5,sp,260
+  12:	8000                	0x8000
+  14:	0000                	unimp
+  16:	0000                	unimp
+  18:	02b8                	addi	a4,sp,328
+  1a:	8000                	0x8000
+	...
+  30:	001e                	c.slli	zero,0x7
+  32:	0000                	unimp
+  34:	0000                	unimp
+  36:	0000                	unimp
+  38:	0022                	c.slli	zero,0x8
+  3a:	0000                	unimp
+  3c:	0000                	unimp
+  3e:	0000                	unimp
+  40:	0022                	c.slli	zero,0x8
+  42:	0000                	unimp
+  44:	0000                	unimp
+  46:	0000                	unimp
+  48:	0026                	c.slli	zero,0x9
+	...
+  5e:	0000                	unimp
+  60:	004e                	c.slli	zero,0x13
+  62:	0000                	unimp
+  64:	0000                	unimp
+  66:	0000                	unimp
+  68:	004e                	c.slli	zero,0x13
+  6a:	0000                	unimp
+  6c:	0000                	unimp
+  6e:	0000                	unimp
+  70:	0052                	c.slli	zero,0x14
+  72:	0000                	unimp
+  74:	0000                	unimp
+  76:	0000                	unimp
+  78:	0056                	c.slli	zero,0x15
+	...
+  8e:	0000                	unimp
+  90:	00c8                	addi	a0,sp,68
+  92:	0000                	unimp
+  94:	0000                	unimp
+  96:	0000                	unimp
+  98:	00da                	slli	ra,ra,0x16
+  9a:	0000                	unimp
+  9c:	0000                	unimp
+  9e:	0000                	unimp
+  a0:	00dc                	addi	a5,sp,68
+  a2:	0000                	unimp
+  a4:	0000                	unimp
+  a6:	0000                	unimp
+  a8:	00e8                	addi	a0,sp,76
+	...
+  be:	0000                	unimp
+  c0:	010a                	slli	sp,sp,0x2
+  c2:	0000                	unimp
+  c4:	0000                	unimp
+  c6:	0000                	unimp
+  c8:	011c                	addi	a5,sp,128
+  ca:	0000                	unimp
+  cc:	0000                	unimp
+  ce:	0000                	unimp
+  d0:	011e                	slli	sp,sp,0x7
+  d2:	0000                	unimp
+  d4:	0000                	unimp
+  d6:	0000                	unimp
+  d8:	012a                	slli	sp,sp,0xa
+	...
+
+Disassembly of section .debug_frame:
+
+0000000000000000 <.debug_frame>:
+   0:	000c                	0xc
+   2:	0000                	unimp
+   4:	ffff                	0xffff
+   6:	ffff                	0xffff
+   8:	7c010003          	lb	zero,1984(sp) # 100117e0 <RAM_BASE-0x6ffee820>
+   c:	0d01                	addi	s10,s10,0
+   e:	0002                	c.slli64	zero
+  10:	001c                	0x1c
+  12:	0000                	unimp
+  14:	0000                	unimp
+  16:	0000                	unimp
+  18:	025c                	addi	a5,sp,260
+  1a:	8000                	0x8000
+  1c:	0000                	unimp
+  1e:	0000                	unimp
+  20:	005c                	addi	a5,sp,4
+  22:	0000                	unimp
+  24:	0000                	unimp
+  26:	0000                	unimp
+  28:	0e48                	addi	a0,sp,788
+  2a:	4a10                	lw	a2,16(a2)
+  2c:	0281                	addi	t0,t0,0
+  2e:	0000                	unimp
+  30:	0014                	0x14
+  32:	0000                	unimp
+  34:	0000                	unimp
+  36:	0000                	unimp
+  38:	0100                	addi	s0,sp,128
+  3a:	8000                	0x8000
+  3c:	0000                	unimp
+  3e:	0000                	unimp
+  40:	0002                	c.slli64	zero
+  42:	0000                	unimp
+  44:	0000                	unimp
+  46:	0000                	unimp
+  48:	000c                	0xc
+  4a:	0000                	unimp
+  4c:	ffff                	0xffff
+  4e:	ffff                	0xffff
+  50:	7c010003          	lb	zero,1984(sp)
+  54:	0d01                	addi	s10,s10,0
+  56:	0002                	c.slli64	zero
+  58:	0014                	0x14
+  5a:	0000                	unimp
+  5c:	0048                	addi	a0,sp,4
+  5e:	0000                	unimp
+  60:	0102                	c.slli64	sp
+  62:	8000                	0x8000
+  64:	0000                	unimp
+  66:	0000                	unimp
+  68:	0006                	c.slli	zero,0x1
+  6a:	0000                	unimp
+  6c:	0000                	unimp
+  6e:	0000                	unimp
+  70:	0014                	0x14
+  72:	0000                	unimp
+  74:	0048                	addi	a0,sp,4
+  76:	0000                	unimp
+  78:	0108                	addi	a0,sp,128
+  7a:	8000                	0x8000
+  7c:	0000                	unimp
+  7e:	0000                	unimp
+  80:	000a                	c.slli	zero,0x2
+  82:	0000                	unimp
+  84:	0000                	unimp
+  86:	0000                	unimp
+  88:	0014                	0x14
+  8a:	0000                	unimp
+  8c:	0048                	addi	a0,sp,4
+  8e:	0000                	unimp
+  90:	0112                	slli	sp,sp,0x4
+  92:	8000                	0x8000
+  94:	0000                	unimp
+  96:	0000                	unimp
+  98:	000e                	c.slli	zero,0x3
+  9a:	0000                	unimp
+  9c:	0000                	unimp
+  9e:	0000                	unimp
+  a0:	0014                	0x14
+  a2:	0000                	unimp
+  a4:	0048                	addi	a0,sp,4
+  a6:	0000                	unimp
+  a8:	0120                	addi	s0,sp,136
+  aa:	8000                	0x8000
+  ac:	0000                	unimp
+  ae:	0000                	unimp
+  b0:	0014                	0x14
+  b2:	0000                	unimp
+  b4:	0000                	unimp
+  b6:	0000                	unimp
+  b8:	0014                	0x14
+  ba:	0000                	unimp
+  bc:	0048                	addi	a0,sp,4
+  be:	0000                	unimp
+  c0:	0134                	addi	a3,sp,136
+  c2:	8000                	0x8000
+  c4:	0000                	unimp
+  c6:	0000                	unimp
+  c8:	0044                	addi	s1,sp,4
+  ca:	0000                	unimp
+  cc:	0000                	unimp
+  ce:	0000                	unimp
+  d0:	002c                	addi	a1,sp,8
+  d2:	0000                	unimp
+  d4:	0048                	addi	a0,sp,4
+  d6:	0000                	unimp
+  d8:	0178                	addi	a4,sp,140
+  da:	8000                	0x8000
+  dc:	0000                	unimp
+  de:	0000                	unimp
+  e0:	001e                	c.slli	zero,0x7
+  e2:	0000                	unimp
+  e4:	0000                	unimp
+  e6:	0000                	unimp
+  e8:	0e42                	slli	t3,t3,0x10
+  ea:	4410                	lw	a2,8(s0)
+  ec:	0488                	addi	a0,sp,576
+  ee:	0281                	addi	t0,t0,0
+  f0:	0a4a                	slli	s4,s4,0x12
+  f2:	42c1                	li	t0,16
+  f4:	42c8                	lw	a0,4(a3)
+  f6:	000e                	c.slli	zero,0x3
+  f8:	0b42                	slli	s6,s6,0x10
+  fa:	0000                	unimp
+  fc:	0000                	unimp
+  fe:	0000                	unimp
+ 100:	0014                	0x14
+ 102:	0000                	unimp
+ 104:	0048                	addi	a0,sp,4
+ 106:	0000                	unimp
+ 108:	0196                	slli	gp,gp,0x5
+ 10a:	8000                	0x8000
+ 10c:	0000                	unimp
+ 10e:	0000                	unimp
+ 110:	0024                	addi	s1,sp,8
+ 112:	0000                	unimp
+ 114:	0000                	unimp
+ 116:	0000                	unimp
+ 118:	002c                	addi	a1,sp,8
+ 11a:	0000                	unimp
+ 11c:	0048                	addi	a0,sp,4
+ 11e:	0000                	unimp
+ 120:	01ba                	slli	gp,gp,0xe
+ 122:	8000                	0x8000
+ 124:	0000                	unimp
+ 126:	0000                	unimp
+ 128:	0040                	addi	s0,sp,4
+ 12a:	0000                	unimp
+ 12c:	0000                	unimp
+ 12e:	0000                	unimp
+ 130:	0e42                	slli	t3,t3,0x10
+ 132:	4830                	lw	a2,80(s0)
+ 134:	0488                	addi	a0,sp,576
+ 136:	0689                	addi	a3,a3,2
+ 138:	0892                	slli	a7,a7,0x4
+ 13a:	0281                	addi	t0,t0,0
+ 13c:	c16c                	sw	a1,68(a0)
+ 13e:	c842                	sw	a6,16(sp)
+ 140:	c942                	sw	a6,144(sp)
+ 142:	d242                	sw	a6,36(sp)
+ 144:	0e42                	slli	t3,t3,0x10
+ 146:	0000                	unimp
+ 148:	002c                	addi	a1,sp,8
+ 14a:	0000                	unimp
+ 14c:	0048                	addi	a0,sp,4
+ 14e:	0000                	unimp
+ 150:	01fa                	slli	gp,gp,0x1e
+ 152:	8000                	0x8000
+ 154:	0000                	unimp
+ 156:	0000                	unimp
+ 158:	0042                	c.slli	zero,0x10
+ 15a:	0000                	unimp
+ 15c:	0000                	unimp
+ 15e:	0000                	unimp
+ 160:	0e42                	slli	t3,t3,0x10
+ 162:	4830                	lw	a2,80(s0)
+ 164:	0488                	addi	a0,sp,576
+ 166:	0689                	addi	a3,a3,2
+ 168:	0892                	slli	a7,a7,0x4
+ 16a:	0281                	addi	t0,t0,0
+ 16c:	c16e                	sw	s11,128(sp)
+ 16e:	c842                	sw	a6,16(sp)
+ 170:	c942                	sw	a6,144(sp)
+ 172:	d242                	sw	a6,36(sp)
+ 174:	0e42                	slli	t3,t3,0x10
+ 176:	0000                	unimp
+ 178:	0024                	addi	s1,sp,8
+ 17a:	0000                	unimp
+ 17c:	0048                	addi	a0,sp,4
+ 17e:	0000                	unimp
+ 180:	023c                	addi	a5,sp,264
+ 182:	8000                	0x8000
+ 184:	0000                	unimp
+ 186:	0000                	unimp
+ 188:	0020                	addi	s0,sp,8
+ 18a:	0000                	unimp
+ 18c:	0000                	unimp
+ 18e:	0000                	unimp
+ 190:	0e42                	slli	t3,t3,0x10
+ 192:	4420                	lw	s0,72(s0)
+ 194:	0281                	addi	t0,t0,0
+ 196:	c156                	sw	s5,128(sp)
+ 198:	0e42                	slli	t3,t3,0x10
+ 19a:	0000                	unimp
+ 19c:	0000                	unimp
+	...
+
+Disassembly of section .debug_loc:
+
+0000000000000000 <.debug_loc>:
+   0:	013a                	slli	sp,sp,0xe
+   2:	0000                	unimp
+   4:	0000                	unimp
+   6:	0000                	unimp
+   8:	00000143          	fmadd.s	ft2,ft0,ft0,ft0,rne
+   c:	0000                	unimp
+   e:	0000                	unimp
+  10:	0001                	nop
+  12:	435a                	lw	t1,148(sp)
+  14:	0001                	nop
+  16:	0000                	unimp
+  18:	0000                	unimp
+  1a:	5a00                	lw	s0,48(a2)
+  1c:	0001                	nop
+  1e:	0000                	unimp
+  20:	0000                	unimp
+  22:	0400                	addi	s0,sp,512
+  24:	f300                	sd	s0,32(a4)
+  26:	5a01                	li	s4,-32
+  28:	009f 0000 0000      	0x9f
+	...
+  36:	0000                	unimp
+  38:	f800                	sd	s0,48(s0)
+  3a:	0000                	unimp
+  3c:	0000                	unimp
+  3e:	0000                	unimp
+  40:	0a00                	addi	s0,sp,272
+  42:	0001                	nop
+  44:	0000                	unimp
+  46:	0000                	unimp
+  48:	0100                	addi	s0,sp,128
+  4a:	5a00                	lw	s0,48(a2)
+  4c:	010a                	slli	sp,sp,0x2
+  4e:	0000                	unimp
+  50:	0000                	unimp
+  52:	0000                	unimp
+  54:	0134                	addi	a3,sp,136
+  56:	0000                	unimp
+  58:	0000                	unimp
+  5a:	0000                	unimp
+  5c:	0001                	nop
+  5e:	3459                	addiw	s0,s0,-10
+  60:	0001                	nop
+  62:	0000                	unimp
+  64:	0000                	unimp
+  66:	3a00                	fld	fs0,48(a2)
+  68:	0001                	nop
+  6a:	0000                	unimp
+  6c:	0000                	unimp
+  6e:	0400                	addi	s0,sp,512
+  70:	f300                	sd	s0,32(a4)
+  72:	5a01                	li	s4,-32
+  74:	009f 0000 0000      	0x9f
+	...
+  82:	0000                	unimp
+  84:	f800                	sd	s0,48(s0)
+  86:	0000                	unimp
+  88:	0000                	unimp
+  8a:	0000                	unimp
+  8c:	0a00                	addi	s0,sp,272
+  8e:	0001                	nop
+  90:	0000                	unimp
+  92:	0000                	unimp
+  94:	0200                	addi	s0,sp,256
+  96:	3700                	fld	fs0,40(a4)
+  98:	009f 0000 0000      	0x9f
+	...
+  a6:	0000                	unimp
+  a8:	0a00                	addi	s0,sp,272
+  aa:	0001                	nop
+  ac:	0000                	unimp
+  ae:	0000                	unimp
+  b0:	1e00                	addi	s0,sp,816
+  b2:	0001                	nop
+  b4:	0000                	unimp
+  b6:	0000                	unimp
+  b8:	0c00                	addi	s0,sp,528
+  ba:	7900                	ld	s0,48(a0)
+  bc:	7800                	ld	s0,48(s0)
+  be:	0c00                	addi	s0,sp,528
+  c0:	ffff                	0xffff
+  c2:	ffff                	0xffff
+  c4:	251a                	fld	fa0,384(sp)
+  c6:	009f 0000 0000      	0x9f
+	...
+  d4:	0000                	unimp
+  d6:	b800                	fsd	fs0,48(s0)
+  d8:	0000                	unimp
+  da:	0000                	unimp
+  dc:	0000                	unimp
+  de:	c800                	sw	s0,16(s0)
+  e0:	0000                	unimp
+  e2:	0000                	unimp
+  e4:	0000                	unimp
+  e6:	0100                	addi	s0,sp,128
+  e8:	5a00                	lw	s0,48(a2)
+  ea:	00c8                	addi	a0,sp,68
+  ec:	0000                	unimp
+  ee:	0000                	unimp
+  f0:	0000                	unimp
+  f2:	00f8                	addi	a4,sp,76
+  f4:	0000                	unimp
+  f6:	0000                	unimp
+  f8:	0000                	unimp
+  fa:	0004                	0x4
+  fc:	9f5a01f3          	0x9f5a01f3
+	...
+ 110:	00b8                	addi	a4,sp,72
+ 112:	0000                	unimp
+ 114:	0000                	unimp
+ 116:	0000                	unimp
+ 118:	00c8                	addi	a0,sp,68
+ 11a:	0000                	unimp
+ 11c:	0000                	unimp
+ 11e:	0000                	unimp
+ 120:	0002                	c.slli64	zero
+ 122:	00009f33          	sll	t5,ra,zero
+	...
+ 132:	0000                	unimp
+ 134:	00c8                	addi	a0,sp,68
+ 136:	0000                	unimp
+ 138:	0000                	unimp
+ 13a:	0000                	unimp
+ 13c:	00dc                	addi	a5,sp,68
+ 13e:	0000                	unimp
+ 140:	0000                	unimp
+ 142:	0000                	unimp
+ 144:	0006                	c.slli	zero,0x1
+ 146:	0079                	c.nop	30
+ 148:	0078                	addi	a4,sp,12
+ 14a:	9f25                	addw	a4,a4,s1
+	...
+ 15c:	0094                	addi	a3,sp,64
+ 15e:	0000                	unimp
+ 160:	0000                	unimp
+ 162:	0000                	unimp
+ 164:	00a8                	addi	a0,sp,72
+ 166:	0000                	unimp
+ 168:	0000                	unimp
+ 16a:	0000                	unimp
+ 16c:	0001                	nop
+ 16e:	a85a                	fsd	fs6,16(sp)
+ 170:	0000                	unimp
+ 172:	0000                	unimp
+ 174:	0000                	unimp
+ 176:	b800                	fsd	fs0,48(s0)
+ 178:	0000                	unimp
+ 17a:	0000                	unimp
+ 17c:	0000                	unimp
+ 17e:	0400                	addi	s0,sp,512
+ 180:	f300                	sd	s0,32(a4)
+ 182:	5a01                	li	s4,-32
+ 184:	009f 0000 0000      	0x9f
+	...
+ 192:	0000                	unimp
+ 194:	7600                	ld	s0,40(a2)
+ 196:	0000                	unimp
+ 198:	0000                	unimp
+ 19a:	0000                	unimp
+ 19c:	7e00                	ld	s0,56(a2)
+ 19e:	0000                	unimp
+ 1a0:	0000                	unimp
+ 1a2:	0000                	unimp
+ 1a4:	0100                	addi	s0,sp,128
+ 1a6:	5a00                	lw	s0,48(a2)
+ 1a8:	007e                	c.slli	zero,0x1f
+ 1aa:	0000                	unimp
+ 1ac:	0000                	unimp
+ 1ae:	0000                	unimp
+ 1b0:	0094                	addi	a3,sp,64
+ 1b2:	0000                	unimp
+ 1b4:	0000                	unimp
+ 1b6:	0000                	unimp
+ 1b8:	0004                	0x4
+ 1ba:	9f5a01f3          	0x9f5a01f3
+	...
+ 1ce:	007e                	c.slli	zero,0x1f
+ 1d0:	0000                	unimp
+ 1d2:	0000                	unimp
+ 1d4:	0000                	unimp
+ 1d6:	0088                	addi	a0,sp,64
+ 1d8:	0000                	unimp
+ 1da:	0000                	unimp
+ 1dc:	0000                	unimp
+ 1de:	0001                	nop
+ 1e0:	8c58                	0x8c58
+ 1e2:	0000                	unimp
+ 1e4:	0000                	unimp
+ 1e6:	0000                	unimp
+ 1e8:	9400                	0x9400
+ 1ea:	0000                	unimp
+ 1ec:	0000                	unimp
+ 1ee:	0000                	unimp
+ 1f0:	0100                	addi	s0,sp,128
+ 1f2:	5800                	lw	s0,48(s0)
+	...
+ 204:	0032                	c.slli	zero,0xc
+ 206:	0000                	unimp
+ 208:	0000                	unimp
+ 20a:	0000                	unimp
+ 20c:	003a                	c.slli	zero,0xe
+ 20e:	0000                	unimp
+ 210:	0000                	unimp
+ 212:	0000                	unimp
+ 214:	0001                	nop
+ 216:	3a5a                	fld	fs4,432(sp)
+ 218:	0000                	unimp
+ 21a:	0000                	unimp
+ 21c:	0000                	unimp
+ 21e:	7600                	ld	s0,40(a2)
+ 220:	0000                	unimp
+ 222:	0000                	unimp
+ 224:	0000                	unimp
+ 226:	0400                	addi	s0,sp,512
+ 228:	f300                	sd	s0,32(a4)
+ 22a:	5a01                	li	s4,-32
+ 22c:	009f 0000 0000      	0x9f
+	...
+ 23a:	0000                	unimp
+ 23c:	3200                	fld	fs0,32(a2)
+ 23e:	0000                	unimp
+ 240:	0000                	unimp
+ 242:	0000                	unimp
+ 244:	3600                	fld	fs0,40(a2)
+ 246:	0000                	unimp
+ 248:	0000                	unimp
+ 24a:	0000                	unimp
+ 24c:	0100                	addi	s0,sp,128
+ 24e:	5b00                	lw	s0,48(a4)
+ 250:	0036                	c.slli	zero,0xd
+ 252:	0000                	unimp
+ 254:	0000                	unimp
+ 256:	0000                	unimp
+ 258:	0076                	c.slli	zero,0x1d
+ 25a:	0000                	unimp
+ 25c:	0000                	unimp
+ 25e:	0000                	unimp
+ 260:	0004                	0x4
+ 262:	9f5b01f3          	0x9f5b01f3
+	...
+ 276:	003a                	c.slli	zero,0xe
+ 278:	0000                	unimp
+ 27a:	0000                	unimp
+ 27c:	0000                	unimp
+ 27e:	0052                	c.slli	zero,0x14
+ 280:	0000                	unimp
+ 282:	0000                	unimp
+ 284:	0000                	unimp
+ 286:	0001                	nop
+ 288:	525a                	lw	tp,180(sp)
+ 28a:	0000                	unimp
+ 28c:	0000                	unimp
+ 28e:	0000                	unimp
+ 290:	7600                	ld	s0,40(a2)
+ 292:	0000                	unimp
+ 294:	0000                	unimp
+ 296:	0000                	unimp
+ 298:	0d00                	addi	s0,sp,656
+ 29a:	f300                	sd	s0,32(a4)
+ 29c:	5a01                	li	s4,-32
+ 29e:	007b2df7          	0x7b2df7
+ 2a2:	f71b2df7          	0xf71b2df7
+ 2a6:	9f00                	0x9f00
+	...
+ 2b8:	003a                	c.slli	zero,0xe
+ 2ba:	0000                	unimp
+ 2bc:	0000                	unimp
+ 2be:	0000                	unimp
+ 2c0:	0042                	c.slli	zero,0x10
+ 2c2:	0000                	unimp
+ 2c4:	0000                	unimp
+ 2c6:	0000                	unimp
+ 2c8:	0002                	c.slli64	zero
+ 2ca:	9f30                	0x9f30
+	...
+ 2dc:	003a                	c.slli	zero,0xe
+ 2de:	0000                	unimp
+ 2e0:	0000                	unimp
+ 2e2:	0000                	unimp
+ 2e4:	0042                	c.slli	zero,0x10
+ 2e6:	0000                	unimp
+ 2e8:	0000                	unimp
+ 2ea:	0000                	unimp
+ 2ec:	0006                	c.slli	zero,0x1
+ 2ee:	040c                	addi	a1,sp,512
+ 2f0:	0000                	unimp
+ 2f2:	9f10                	0x9f10
+	...
+ 304:	0042                	c.slli	zero,0x10
+ 306:	0000                	unimp
+ 308:	0000                	unimp
+ 30a:	0000                	unimp
+ 30c:	004a                	c.slli	zero,0x12
+ 30e:	0000                	unimp
+ 310:	0000                	unimp
+ 312:	0000                	unimp
+ 314:	80090003          	lb	zero,-2048(s2) # 3800 <RAM_BASE-0x7fffc800>
+ 318:	009f 0000 0000      	0x9f
+	...
+ 326:	0000                	unimp
+ 328:	4200                	lw	s0,0(a2)
+ 32a:	0000                	unimp
+ 32c:	0000                	unimp
+ 32e:	0000                	unimp
+ 330:	4a00                	lw	s0,16(a2)
+ 332:	0000                	unimp
+ 334:	0000                	unimp
+ 336:	0000                	unimp
+ 338:	0600                	addi	s0,sp,768
+ 33a:	0c00                	addi	s0,sp,528
+ 33c:	000c                	0xc
+ 33e:	1000                	addi	s0,sp,32
+ 340:	009f 0000 0000      	0x9f
+	...
+ 34e:	0000                	unimp
+ 350:	4e00                	lw	s0,24(a2)
+ 352:	0000                	unimp
+ 354:	0000                	unimp
+ 356:	0000                	unimp
+ 358:	5600                	lw	s0,40(a2)
+ 35a:	0000                	unimp
+ 35c:	0000                	unimp
+ 35e:	0000                	unimp
+ 360:	0100                	addi	s0,sp,128
+ 362:	5e00                	lw	s0,56(a2)
+	...
+ 374:	004e                	c.slli	zero,0x13
+ 376:	0000                	unimp
+ 378:	0000                	unimp
+ 37a:	0000                	unimp
+ 37c:	0056                	c.slli	zero,0x15
+ 37e:	0000                	unimp
+ 380:	0000                	unimp
+ 382:	0000                	unimp
+ 384:	0004                	0x4
+ 386:	4840                	lw	s0,20(s0)
+ 388:	9f24                	0x9f24
+	...
+ 39a:	005a                	c.slli	zero,0x16
+ 39c:	0000                	unimp
+ 39e:	0000                	unimp
+ 3a0:	0000                	unimp
+ 3a2:	005e                	c.slli	zero,0x17
+ 3a4:	0000                	unimp
+ 3a6:	0000                	unimp
+ 3a8:	0000                	unimp
+ 3aa:	0001                	nop
+ 3ac:	005a                	c.slli	zero,0x16
+	...
+ 3ba:	0000                	unimp
+ 3bc:	5a00                	lw	s0,48(a2)
+ 3be:	0000                	unimp
+ 3c0:	0000                	unimp
+ 3c2:	0000                	unimp
+ 3c4:	5e00                	lw	s0,56(a2)
+ 3c6:	0000                	unimp
+ 3c8:	0000                	unimp
+ 3ca:	0000                	unimp
+ 3cc:	0600                	addi	s0,sp,768
+ 3ce:	0c00                	addi	s0,sp,528
+ 3d0:	0004                	0x4
+ 3d2:	1000                	addi	s0,sp,32
+ 3d4:	009f 0000 0000      	0x9f
+	...
+ 3e2:	0000                	unimp
+ 3e4:	5e00                	lw	s0,56(a2)
+ 3e6:	0000                	unimp
+ 3e8:	0000                	unimp
+ 3ea:	0000                	unimp
+ 3ec:	6400                	ld	s0,8(s0)
+ 3ee:	0000                	unimp
+ 3f0:	0000                	unimp
+ 3f2:	0000                	unimp
+ 3f4:	0200                	addi	s0,sp,256
+ 3f6:	3300                	fld	fs0,32(a4)
+ 3f8:	009f 0000 0000      	0x9f
+	...
+ 406:	0000                	unimp
+ 408:	5e00                	lw	s0,56(a2)
+ 40a:	0000                	unimp
+ 40c:	0000                	unimp
+ 40e:	0000                	unimp
+ 410:	6400                	ld	s0,8(s0)
+ 412:	0000                	unimp
+ 414:	0000                	unimp
+ 416:	0000                	unimp
+ 418:	0600                	addi	s0,sp,768
+ 41a:	0c00                	addi	s0,sp,528
+ 41c:	000c                	0xc
+ 41e:	1000                	addi	s0,sp,32
+ 420:	009f 0000 0000      	0x9f
+	...
+ 42e:	0000                	unimp
+ 430:	6400                	ld	s0,8(s0)
+ 432:	0000                	unimp
+ 434:	0000                	unimp
+ 436:	0000                	unimp
+ 438:	6c00                	ld	s0,24(s0)
+ 43a:	0000                	unimp
+ 43c:	0000                	unimp
+ 43e:	0000                	unimp
+ 440:	0300                	addi	s0,sp,384
+ 442:	0900                	addi	s0,sp,144
+ 444:	00009fc7          	fmsub.s	ft11,ft1,ft0,ft0,rtz
+	...
+ 454:	0000                	unimp
+ 456:	0064                	addi	s1,sp,12
+ 458:	0000                	unimp
+ 45a:	0000                	unimp
+ 45c:	0000                	unimp
+ 45e:	006c                	addi	a1,sp,12
+ 460:	0000                	unimp
+ 462:	0000                	unimp
+ 464:	0000                	unimp
+ 466:	0006                	c.slli	zero,0x1
+ 468:	080c                	addi	a1,sp,16
+ 46a:	0000                	unimp
+ 46c:	9f10                	0x9f10
+	...
+ 47e:	006c                	addi	a1,sp,12
+ 480:	0000                	unimp
+ 482:	0000                	unimp
+ 484:	0000                	unimp
+ 486:	0074                	addi	a3,sp,12
+ 488:	0000                	unimp
+ 48a:	0000                	unimp
+ 48c:	0000                	unimp
+ 48e:	20080003          	lb	zero,512(a6) # ffffffffffff9200 <_RODATA_END_+0xffffffff7fff8dde>
+ 492:	009f 0000 0000      	0x9f
+	...
+ 4a0:	0000                	unimp
+ 4a2:	6c00                	ld	s0,24(s0)
+ 4a4:	0000                	unimp
+ 4a6:	0000                	unimp
+ 4a8:	0000                	unimp
+ 4aa:	7400                	ld	s0,40(s0)
+ 4ac:	0000                	unimp
+ 4ae:	0000                	unimp
+ 4b0:	0000                	unimp
+ 4b2:	0600                	addi	s0,sp,768
+ 4b4:	0c00                	addi	s0,sp,528
+ 4b6:	0010                	0x10
+ 4b8:	1000                	addi	s0,sp,32
+ 4ba:	009f 0000 0000      	0x9f
+	...
+ 4c8:	0000                	unimp
+ 4ca:	2c00                	fld	fs0,24(s0)
+ 4cc:	0000                	unimp
+ 4ce:	0000                	unimp
+ 4d0:	0000                	unimp
+ 4d2:	3000                	fld	fs0,32(s0)
+ 4d4:	0000                	unimp
+ 4d6:	0000                	unimp
+ 4d8:	0000                	unimp
+ 4da:	0100                	addi	s0,sp,128
+ 4dc:	5a00                	lw	s0,48(a2)
+	...
+ 4ee:	002c                	addi	a1,sp,8
+ 4f0:	0000                	unimp
+ 4f2:	0000                	unimp
+ 4f4:	0000                	unimp
+ 4f6:	0030                	addi	a2,sp,8
+ 4f8:	0000                	unimp
+ 4fa:	0000                	unimp
+ 4fc:	0000                	unimp
+ 4fe:	0004                	0x4
+ 500:	4840                	lw	s0,20(s0)
+ 502:	9f24                	0x9f24
+	...
+ 514:	0006                	c.slli	zero,0x1
+ 516:	0000                	unimp
+ 518:	0000                	unimp
+ 51a:	0000                	unimp
+ 51c:	000a                	c.slli	zero,0x2
+ 51e:	0000                	unimp
+ 520:	0000                	unimp
+ 522:	0000                	unimp
+ 524:	0001                	nop
+ 526:	0a5a                	slli	s4,s4,0x16
+ 528:	0000                	unimp
+ 52a:	0000                	unimp
+ 52c:	0000                	unimp
+ 52e:	1000                	addi	s0,sp,32
+ 530:	0000                	unimp
+ 532:	0000                	unimp
+ 534:	0000                	unimp
+ 536:	0400                	addi	s0,sp,512
+ 538:	f300                	sd	s0,32(a4)
+ 53a:	5a01                	li	s4,-32
+ 53c:	009f 0000 0000      	0x9f
+	...
