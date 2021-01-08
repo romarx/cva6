@@ -12,12 +12,16 @@
 #define H_VSYNC_ADDR           (PAPER_BASE +  4 * CMD_IF_OFFSET)
 #define POWERREG               (PAPER_BASE +  5 * CMD_IF_OFFSET)
 
+void write_reg_u32(uintptr_t addr, uint32_t value);
+
+volatile uint64_t **pointer_addr            = (volatile uint64_t**) POINTERQ_ADDR;
+
 int main()
 {
     init_uart(50000000, 115200);
     print_uart("Hello Georg!\r\n");
 
-
+/*
     volatile uint64_t **pointer_addr            = (volatile uint64_t**) POINTERQ_ADDR;
     volatile uint32_t *hvtot                 = (volatile uint32_t *) H_VTOT_ADDR;
     volatile uint32_t *hvactive                 = (volatile uint32_t *) H_VACTIVE_ADDR;
@@ -32,10 +36,25 @@ int main()
 
     *pointer_addr = pepe;
     *powerreg = 1;
+*/
+
+    write_reg_u32(H_VTOT_ADDR, (1056<<16) + 628);
+    write_reg_u32(H_VACTIVE_ADDR, (800<<16) + 600);
+    write_reg_u32(H_VFRONT_ADDR,(40<<16) + 1);
+    write_reg_u32(H_VSYNC_ADDR, ((128<<16) + 4) | (1<<31) | (1<<15));
+
+    *pointer_addr = pepe;
+    write_reg_u32(POWERREG, 1);
 
     print_uart("tschuess Georg!\r\n");
     while (1)
     {
-        //print_uart_byte(read_uart_byte());
+        print_uart_byte(read_uart_byte());
     }
+}
+
+void write_reg_u32(uintptr_t addr, uint32_t value)
+{
+    volatile uint32_t *loc_addr = (volatile uint32_t *)addr;
+    *loc_addr = value;
 }
