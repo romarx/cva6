@@ -642,6 +642,11 @@ module ariane_peripherals #(
             .out                   ( paper_lite_sl      )
         );
 
+        logic [23:0] rgb;
+        logic        hsync;
+        logic        vsync;
+        logic        de;
+
         AXI2HDMI
         #(
             .AXI4_ADDRESS_WIDTH(AxiAddrWidth),
@@ -653,7 +658,8 @@ module ariane_peripherals #(
             .DC_FIFO_DEPTH(DC_DEPTH),
             .AXI_ARID(ARID),
             .FONT_MEMINIT_FILE(0),
-            .XILINX(1'b0)
+            .XILINX(1'b0),
+            .RGB_ONLY(1'b1)
         )
         i_paper
         (
@@ -671,10 +677,6 @@ module ariane_peripherals #(
             .DCEmpty_SO(paper_dcempty_o)
         );
 
-        logic [23:0] rgb;
-        logic        hsync;
-        logic        vsync;
-        logic        de;
     
         RGB2DVI	#(
         )
