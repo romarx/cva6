@@ -20,10 +20,12 @@ void init_uart();
 
 void print_uart(const char* str);
 
+void print_uart_char(char character);
+
 void print_uart_int(uint32_t addr);
 
 void print_uart_addr(uint64_t addr);
 
 void print_uart_byte(uint8_t byte);
 
-uint8_t read_uart_byte(uint8_t* addr);
+uint8_t read_uart_byte(void);

@@ -27,12 +27,12 @@ void init_uart(uint32_t freq, uint32_t baud)
 {
     uint32_t divisor = freq / (baud << 4);
 
-    write_reg_u8(UART_INTERRUPT_ENABLE, 0x00); // Disable all interrupts
+    write_reg_u8(UART_INTERRUPT_ENABLE, 0x01); // Enable receiver data available interrupts
     write_reg_u8(UART_LINE_CONTROL, 0x80);     // Enable DLAB (set baud rate divisor)
     write_reg_u8(UART_DLAB_LSB, divisor);         // divisor (lo byte)
     write_reg_u8(UART_DLAB_MSB, (divisor >> 8) & 0xFF);  // divisor (hi byte)
     write_reg_u8(UART_LINE_CONTROL, 0x03);     // 8 bits, no parity, one stop bit
-    write_reg_u8(UART_FIFO_CONTROL, 0xC7);     // Enable FIFO, clear them, with 14-byte threshold
+    write_reg_u8(UART_FIFO_CONTROL, 0x07);     // Enable FIFO, clear them, interrupts at 1 item
     write_reg_u8(UART_MODEM_CONTROL, 0x20);    // Autoflow mode
 }
 
@@ -54,6 +54,11 @@ void bin_to_hex(uint8_t inp, uint8_t res[2])
     res[1] = bin_to_hex_table[inp & 0xf];
     res[0] = bin_to_hex_table[(inp >> 4) & 0xf];
     return;
+}
+
+void print_uart_char(char character)
+{
+    write_serial(character);
 }
 
 void print_uart_int(uint32_t addr)
@@ -90,7 +95,12 @@ void print_uart_byte(uint8_t byte)
     write_serial(hex[1]);
 }
 
-uint8_t read_uart_byte(uint8_t* addr)
+uint8_t read_uart_byte(void)
 {
-    return read_reg_u8((uintptr_t) addr);
+    while (!(read_reg_u8(UART_INTERRUPT_IDENT) & 0x2<<1)) {
+        // wait for byte reception indictated by INTD = 2
+    }
+    uint8_t byte = read_reg_u8(UART_RBR);
+    write_reg_u8(UART_INTERRUPT_IDENT, 0x0); // Clear interrupt flags. FIFO mode is set to off, which triggers interrupts after a single byte.
+    return byte;
 }
