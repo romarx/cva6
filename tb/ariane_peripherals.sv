@@ -18,7 +18,8 @@ module ariane_peripherals #(
     parameter bit InclSPI      = 0,
     parameter bit InclEthernet = 0,
     parameter bit InclGPIO     = 0,
-    parameter bit InclTimer    = 1
+    parameter bit InclTimer    = 1,
+    parameter bit InclPAPER    = 1
 ) (
     input  logic       clk_i           , // Clock
     input  logic       rst_ni          , // Asynchronous reset active low
@@ -27,6 +28,8 @@ module ariane_peripherals #(
     AXI_BUS.Slave      spi             ,
     AXI_BUS.Slave      ethernet        ,
     AXI_BUS.Slave      timer           ,
+    AXI_BUS.Master     paper_ms        ,
+    AXI_BUS.Slave      paper_sl        ,
     output logic [1:0] irq_o           ,
     // UART
     input  logic       rx_i            ,
@@ -48,7 +51,9 @@ module ariane_peripherals #(
     output logic       spi_clk_o       ,
     output logic       spi_mosi        ,
     input  logic       spi_miso        ,
-    output logic       spi_ss
+    output logic       spi_ss          ,
+    // Paper
+    input  logic       px_clk_i
 );
 
     // ---------------
@@ -611,5 +616,84 @@ module ariane_peripherals #(
             .PSLVERR ( timer_pslverr    ),
             .irq_o   ( irq_sources[6:3] )
         );
+    end
+    if (InclPAPER) begin : gen_paper
+        localparam int                            SC_DEPTH = 128;
+        localparam int                            FILL_THRESH = 64;
+        localparam int                            DC_DEPTH = 24;
+        localparam logic [AxiIdWidth-1:0]         ARID = 'd213; // random constant value because PAPER doesn't do out of order txs
+
+        AXI_LITE #(
+            .AXI_ADDR_WIDTH(AxiAddrWidth),
+            .AXI_DATA_WIDTH(AxiDataWidth)
+        ) paper_lite_sl ();
+
+        axi_to_axi_lite
+        #(
+            .NUM_PENDING_RD   ( 10   ),
+            .NUM_PENDING_WR   ( 10   )
+        )
+        i_axi_to_axi_lite_paper_sl
+        (
+            .clk_i                 ( clk_i              ),
+            .rst_ni                ( rst_ni             ),
+            .testmode_i            ( 1'b0               ),
+            .in                    ( paper_sl           ),
+            .out                   ( paper_lite_sl      )
+        );
+
+        logic [23:0] rgb;
+        logic        hsync;
+        logic        vsync;
+        logic        de;
+
+        AXI2HDMI
+        #(
+            .AXI4_ADDRESS_WIDTH(AxiAddrWidth),
+            .AXI4_DATA_WIDTH(AxiDataWidth),
+            .AXI4_LITE_DATA_WIDTH(AxiDataWidth),
+            .AXI4_ID_WIDTH(ariane_soc::IdWidth), // ID width of master, therefore the shorter one
+            .SC_FIFO_DEPTH(SC_DEPTH),
+            .FILL_THRESH(FILL_THRESH),
+            .DC_FIFO_DEPTH(DC_DEPTH),
+            .AXI_ARID(ARID),
+            .FONT_MEMINIT_FILE(0),
+            .XILINX(1'b0),
+            .RGB_ONLY(1'b1)
+        )
+        i_paper
+        (
+            .AXI_ACLK_CI(clk_i),
+            .AXI_ARESETn_RBI(rst_ni),
+            .AXIMaster(paper_ms),
+            .LiteSlave(paper_lite_sl),
+            .PixelClk_CI(px_clk_i),
+            .PxClkRst_RBI(rst_ni),
+            .DOut_DO(rgb),
+            .DE_SO(de),
+            .HSync_SO(hsync),
+            .VSync_SO(vsync),
+            .SCEmpty_SO(paper_scempty_o),
+            .DCEmpty_SO(paper_dcempty_o)
+        );
+
+    
+        RGB2DVI	#(
+        )
+        i_tmds_encoder
+            (
+            .clk_i(px_clk_i),
+            .rst_ni(rst_ni),
+            .data_i(rgb),
+            .DE_i(de),
+            .HSync_i(hsync),
+            .VSync_i(vsync),
+            .TMDS_CH0_o(tmds_0),
+            .TMDS_CH1_o(tmds_1),
+            .TMDS_CH2_o(tmds_2)
+        );
+        logic [9:0] tmds_0;
+        logic [9:0] tmds_1;
+        logic [9:0] tmds_2;
     end
 endmodule

@@ -45,6 +45,11 @@ module ariane_xilinx (
   input  logic [ 7:0]  sw          ,
   output logic         fan_pwm     ,
   input  logic         trst_n      ,
+  // Paper
+  output logic		     hdmi_tx_clk_n,
+	output logic		     hdmi_tx_clk_p,
+	output logic [2:0]	 hdmi_tx_n   ,
+	output logic [2:0]	 hdmi_tx_p   ,
 `elsif KC705
   input  logic         sys_clk_p   ,
   input  logic         sys_clk_n   ,
@@ -154,11 +159,10 @@ module ariane_xilinx (
 );
 // 24 MByte in 8 byte words
 localparam NumWords = (24 * 1024 * 1024) / 8;
-localparam NBSlave = 2; // debug, ariane
 localparam AxiAddrWidth = 64;
 localparam AxiDataWidth = 64;
 localparam AxiIdWidthMaster = 4;
-localparam AxiIdWidthSlaves = AxiIdWidthMaster + $clog2(NBSlave); // 5
+localparam AxiIdWidthSlaves = AxiIdWidthMaster + $clog2(ariane_soc::NrSlaves); // 5
 localparam AxiUserWidth = 1;
 
 AXI_BUS #(
@@ -166,7 +170,7 @@ AXI_BUS #(
     .AXI_DATA_WIDTH ( AxiDataWidth     ),
     .AXI_ID_WIDTH   ( AxiIdWidthMaster ),
     .AXI_USER_WIDTH ( AxiUserWidth     )
-) slave[NBSlave-1:0]();
+) slave[ariane_soc::NrSlaves-1:0]();
 
 AXI_BUS #(
     .AXI_ADDR_WIDTH ( AxiAddrWidth     ),
@@ -188,6 +192,9 @@ logic eth_clk;
 logic spi_clk_i;
 logic phy_tx_clk;
 logic sd_clk_sys;
+
+logic ser_px_clk;
+logic px_clk;
 
 logic ddr_sync_reset;
 logic ddr_clock_out;
@@ -230,7 +237,7 @@ logic dmactive;
 logic [1:0] irq;
 assign test_en    = 1'b0;
 
-logic [NBSlave-1:0] pc_asserted;
+logic [ariane_soc::NrSlaves-1:0] pc_asserted;
 
 rstgen i_rstgen_main (
     .clk_i        ( clk                      ),
@@ -248,7 +255,7 @@ assign rst = ddr_sync_reset;
 // ---------------
 axi_node_wrap_with_slices #(
     // three ports from Ariane (instruction, data and bypass)
-    .NB_SLAVE           ( NBSlave                    ),
+    .NB_SLAVE           ( ariane_soc::NrSlaves       ),
     .NB_MASTER          ( ariane_soc::NB_PERIPHERALS ),
     .NB_REGION          ( ariane_soc::NrRegion       ),
     .AXI_ADDR_WIDTH     ( AxiAddrWidth               ),
@@ -265,6 +272,7 @@ axi_node_wrap_with_slices #(
     .master       ( master     ),
     .start_addr_i ({
         ariane_soc::DebugBase,
+        ariane_soc::PaperBase,
         ariane_soc::ROMBase,
         ariane_soc::CLINTBase,
         ariane_soc::PLICBase,
@@ -277,6 +285,7 @@ axi_node_wrap_with_slices #(
     }),
     .end_addr_i   ({
         ariane_soc::DebugBase    + ariane_soc::DebugLength - 1,
+        ariane_soc::PaperBase    + ariane_soc::PaperLength - 1,
         ariane_soc::ROMBase      + ariane_soc::ROMLength - 1,
         ariane_soc::CLINTBase    + ariane_soc::CLINTLength - 1,
         ariane_soc::PLICBase     + ariane_soc::PLICLength - 1,
@@ -537,6 +546,8 @@ ariane_peripherals #(
     .eth_clk_i    ( eth_clk                      ),
     .ethernet     ( master[ariane_soc::Ethernet] ),
     .timer        ( master[ariane_soc::Timer]    ),
+    .paper_ms     ( slave[2]                     ),
+    .paper_sl     ( master[ariane_soc::Paper]    ),
     .irq_o        ( irq                          ),
     .rx_i         ( rx                           ),
     .tx_o         ( tx                           ),
@@ -557,11 +568,17 @@ ariane_peripherals #(
     .spi_ss         ( spi_ss                      ),
     `ifdef KC705
       .leds_o         ( {led[3:0], unused_led[7:4]}),
-      .dip_switches_i ( {sw, unused_switches}     )
+      .dip_switches_i ( {sw, unused_switches}     ),
     `else
       .leds_o         ( led                       ),
-      .dip_switches_i ( sw                        )
+      .dip_switches_i ( sw                        ),
     `endif
+    .ser_px_clk_i   ( ser_px_clk                ),
+    .px_clk_i       ( px_clk                  ),
+    .hdmi_tx_clk_n  ( hdmi_tx_clk_n           ),
+    .hdmi_tx_clk_p  ( hdmi_tx_clk_p           ),
+    .hdmi_tx_n      ( hdmi_tx_n               ),
+    .hdmi_tx_p      ( hdmi_tx_p               )
 );
 
 
@@ -777,10 +794,12 @@ xlnx_axi_clock_converter i_xlnx_axi_clock_converter_ddr (
 );
 
 xlnx_clk_gen i_xlnx_clk_gen (
-  .clk_out1 ( clk           ), // 50 MHz
+  .clk_out1 ( clk           ), // 50  MHz
   .clk_out2 ( phy_tx_clk    ), // 125 MHz (for RGMII PHY)
   .clk_out3 ( eth_clk       ), // 125 MHz quadrature (90 deg phase shift)
-  .clk_out4 ( sd_clk_sys    ), // 50 MHz clock
+  .clk_out4 ( sd_clk_sys    ), // 50  MHz clock
+  .clk_out5 ( ser_px_clk    ), // 200 MHz Paper serialized pixel clock
+  .clk_out6 ( px_clk        ), // 40  Mhz Paper divided pixel clock
   .reset    ( cpu_reset     ),
   .locked   ( pll_locked    ),
   .clk_in1  ( ddr_clock_out )

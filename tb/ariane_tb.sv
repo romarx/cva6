@@ -32,11 +32,13 @@ module ariane_tb;
     localparam int unsigned CLOCK_PERIOD = 20ns;
     // toggle with RTC period
     localparam int unsigned RTC_CLOCK_PERIOD = 30.517us;
+    localparam int unsigned PX_CLOCK_PERIOD = 25ns;
 
     localparam NUM_WORDS = 2**25;
     logic clk_i;
     logic rst_ni;
     logic rtc_i;
+    logic px_clk_i;
 
     longint unsigned cycles;
     longint unsigned max_cycles;
@@ -54,6 +56,7 @@ module ariane_tb;
         .clk_i,
         .rst_ni,
         .rtc_i,
+        .px_clk_i,
         .exit_o
     );
 
@@ -99,6 +102,14 @@ module ariane_tb;
             rtc_i = 1'b0;
             #(RTC_CLOCK_PERIOD/2) rtc_i = 1'b1;
             #(RTC_CLOCK_PERIOD/2) rtc_i = 1'b0;
+        end
+    end
+
+    initial begin
+        forever begin
+            px_clk_i = 1'b0;
+            #(PX_CLOCK_PERIOD/2) px_clk_i = 1'b1;
+            #(PX_CLOCK_PERIOD/2) px_clk_i = 1'b0;
         end
     end
 

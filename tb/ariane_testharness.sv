@@ -29,6 +29,7 @@ module ariane_testharness #(
   input  logic                           clk_i,
   input  logic                           rtc_i,
   input  logic                           rst_ni,
+  input  logic                           px_clk_i,
   output logic [31:0]                    exit_o
 );
 
@@ -565,6 +566,7 @@ module ariane_testharness #(
     .master       ( master     ),
     .start_addr_i (addr_map_t'({
       ariane_soc::DebugBase,
+      ariane_soc::PaperBase,
       ariane_soc::ROMBase,
       ariane_soc::CLINTBase,
       ariane_soc::PLICBase,
@@ -577,6 +579,7 @@ module ariane_testharness #(
     })),
     .end_addr_i   (addr_map_t'({
       ariane_soc::DebugBase    + ariane_soc::DebugLength - 1,
+      ariane_soc::PaperBase    + ariane_soc::PaperLength - 1,
       ariane_soc::ROMBase      + ariane_soc::ROMLength - 1,
       ariane_soc::CLINTBase    + ariane_soc::CLINTLength - 1,
       ariane_soc::PLICBase     + ariane_soc::PLICLength - 1,
@@ -651,6 +654,8 @@ module ariane_testharness #(
     .spi       ( master[ariane_soc::SPI]      ),
     .ethernet  ( master[ariane_soc::Ethernet] ),
     .timer     ( master[ariane_soc::Timer]    ),
+    .paper_ms  ( slave[2]                     ),
+    .paper_sl  ( master[ariane_soc::Paper]    ),
     .irq_o     ( irqs                         ),
     .rx_i      ( rx                           ),
     .tx_o      ( tx                           ),
@@ -668,7 +673,8 @@ module ariane_testharness #(
     .spi_clk_o ( ),
     .spi_mosi  ( ),
     .spi_miso  ( ),
-    .spi_ss    ( )
+    .spi_ss    ( ),
+    .px_clk_i  ( px_clk_i                     )
   );
 
   uart_bus #(.BAUD_RATE(115200), .PARITY_EN(0)) i_uart_bus (.rx(tx), .tx(rx), .rx_en(1'b1));

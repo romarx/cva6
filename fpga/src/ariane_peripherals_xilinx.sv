@@ -1,4 +1,4 @@
-// Copyright 2018 ETH Zurich and University of Bologna.
+
 // Copyright and related rights are licensed under the Solderpad Hardware
 // License, Version 0.51 (the "License"); you may not use this file except in
 // compliance with the License.  You may obtain a copy of the License at
@@ -19,7 +19,8 @@ module ariane_peripherals #(
     parameter bit InclSPI      = 0,
     parameter bit InclEthernet = 0,
     parameter bit InclGPIO     = 0,
-    parameter bit InclTimer    = 1
+    parameter bit InclTimer    = 1,
+    parameter bit InclPAPER    = 1
 ) (
     input  logic       clk_i           , // Clock
     input  logic       clk_200MHz_i    ,
@@ -30,6 +31,8 @@ module ariane_peripherals #(
     AXI_BUS.Slave      gpio            ,
     AXI_BUS.Slave      ethernet        ,
     AXI_BUS.Slave      timer           ,
+    AXI_BUS.Master     paper_ms        ,
+    AXI_BUS.Slave      paper_sl        ,
     output logic [1:0] irq_o           ,
     // UART
     input  logic       rx_i            ,
@@ -55,7 +58,14 @@ module ariane_peripherals #(
     // SD Card
     input  logic       sd_clk_i        ,
     output logic [7:0] leds_o          ,
-    input  logic [7:0] dip_switches_i
+    input  logic [7:0] dip_switches_i  ,
+    // Paper
+    input  logic       ser_px_clk_i    ,
+    input  logic       px_clk_i        ,
+    output logic       hdmi_tx_clk_n   ,	
+	output logic       hdmi_tx_clk_p   ,
+	output logic [2:0] hdmi_tx_n       ,
+	output logic [2:0] hdmi_tx_p
 );
 
     // ---------------
@@ -826,6 +836,28 @@ module ariane_peripherals #(
             .PREADY  ( timer_pready     ),
             .PSLVERR ( timer_pslverr    ),
             .irq_o   ( irq_sources[6:3] )
+        );
+    end
+    if (InclPAPER) begin : gen_paper
+        paper_xilinx #(
+            .AxiAddrWidth        ( AxiAddrWidth      ),
+            .AxiDataWidth        ( AxiDataWidth      ),
+            .AxiIdWidth          ( AxiIdWidth        ),
+            .AxiUserWidth        ( AxiUserWidth      ),
+            .ScDepth             ( 128               ),
+            .FillThresh          ( 64                ),
+            .DcDepth             ( 24                )
+        ) i_paper (
+            .axi_clk_i          ( clk_i             ),
+            .ser_px_clk_i       ( ser_px_clk_i      ),
+            .px_clk_i           ( px_clk_i          ),
+            .rst_ni             ( rst_ni            ),
+            .paper_ms           ( paper_ms          ),
+            .paper_sl           ( paper_sl          ),
+            .hdmi_tx_clk_n      ( hdmi_tx_clk_n     ),
+            .hdmi_tx_clk_p      ( hdmi_tx_clk_p     ),
+            .hdmi_tx_n          ( hdmi_tx_n         ),
+            .hdmi_tx_p          ( hdmi_tx_p         )
         );
     end
 endmodule
