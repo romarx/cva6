@@ -9,8 +9,8 @@
 //
 // PAPER's documentation can be found in Georg Rutishauser's master's thesis.
 #include "uart.h"
-#include "pepe.h"
-#include "slide0.h"
+#include "pepe.h"       // the header that contains the array of the rgb data
+#include "slide0.h"     // ""
 
 #define DRAM_BASE              0x80000000                           // DRAM base address
 #define UART_BASE              0x10000000                           // UART base address
@@ -33,17 +33,21 @@ int main()
 {
     init_uart(50000000, 115200);
     print_uart("Hello Paper!\r\n");
-
+    
+    // Write configuration to PAPER's registers
     write_reg_u32(H_VTOT_ADDR, (1056<<16) + 628);
     write_reg_u32(H_VACTIVE_ADDR, (800<<16) + 600);
     write_reg_u32(H_VFRONT_ADDR,(40<<16) + 1);
     write_reg_u32(H_VSYNC_ADDR, ((128<<16) + 4) | (1<<31) | (1<<15));
 
+    // Write the pointer to the picture to PAPER
     *pointer_addr = pepe;
     write_reg_u32(POWERREG, 1);
 
     print_uart("Bye Paper!\r\n");
     uint8_t byte;
+    
+    // Poll keystrokes to switch in between two different pictures
     while (1)
     {
         byte = read_uart_byte();
