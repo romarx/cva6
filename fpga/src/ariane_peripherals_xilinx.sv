@@ -24,6 +24,7 @@ module ariane_peripherals #(
 ) (
     input  logic       clk_i           , // Clock
     input  logic       clk_200MHz_i    ,
+    input  logic       paper_bus_clk   ,
     input  logic       rst_ni          , // Asynchronous reset active low
     AXI_BUS.Slave      plic            ,
     AXI_BUS.Slave      uart            ,
@@ -848,7 +849,7 @@ module ariane_peripherals #(
             .FillThresh          ( 64                ),
             .DcDepth             ( 24                )
         ) i_paper (
-            .axi_clk_i          ( clk_i             ),
+            .axi_clk_i          ( paper_bus_clk     ),
             .ser_px_clk_i       ( ser_px_clk_i      ),
             .px_clk_i           ( px_clk_i          ),
             .rst_ni             ( rst_ni            ),

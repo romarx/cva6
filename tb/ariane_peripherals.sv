@@ -657,9 +657,8 @@ module ariane_peripherals #(
             .FILL_THRESH(FILL_THRESH),
             .DC_FIFO_DEPTH(DC_DEPTH),
             .AXI_ARID(ARID),
-            .FONT_MEMINIT_FILE(0),
-            .XILINX(1'b0),
-            .RGB_ONLY(1'b1)
+            .FONT_MEMINIT_FILE("tb/font_meminit.txt"),
+            .XILINX(1'b0)
         )
         i_paper
         (

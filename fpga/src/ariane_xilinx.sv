@@ -47,9 +47,9 @@ module ariane_xilinx (
   input  logic         trst_n      ,
   // Paper
   output logic		     hdmi_tx_clk_n,
-	output logic		     hdmi_tx_clk_p,
-	output logic [2:0]	 hdmi_tx_n   ,
-	output logic [2:0]	 hdmi_tx_p   ,
+  output logic		     hdmi_tx_clk_p,
+  output logic [2:0]	 hdmi_tx_n   ,
+  output logic [2:0]	 hdmi_tx_p   ,
 `elsif KC705
   input  logic         sys_clk_p   ,
   input  logic         sys_clk_n   ,
@@ -179,6 +179,14 @@ AXI_BUS #(
     .AXI_USER_WIDTH ( AxiUserWidth     )
 ) master[ariane_soc::NB_PERIPHERALS-1:0]();
 
+AXI_BUS #(
+    .AXI_ADDR_WIDTH ( AxiAddrWidth     ),
+    .AXI_DATA_WIDTH ( AxiDataWidth     ),
+    .AXI_ID_WIDTH   ( AxiIdWidthSlaves ),
+    .AXI_USER_WIDTH ( AxiUserWidth     )
+) paper_master();
+
+
 // disable test-enable
 logic test_en;
 logic ndmreset;
@@ -195,6 +203,7 @@ logic sd_clk_sys;
 
 logic ser_px_clk;
 logic px_clk;
+logic dram_clk;
 
 logic ddr_sync_reset;
 logic ddr_clock_out;
@@ -524,17 +533,19 @@ ariane_peripherals #(
     .InclGPIO     ( 1'b1             ),
     `ifdef KINTEX7
     .InclSPI      ( 1'b1         ),
-    .InclEthernet ( 1'b1         )
+    .InclEthernet ( 1'b1         ),
     `elsif KC705
     .InclSPI      ( 1'b1         ),
-    .InclEthernet ( 1'b0         ) // Ethernet requires RAMB16 fpga/src/ariane-ethernet/dualmem_widen8.sv to be defined
+    .InclEthernet ( 1'b0         ), // Ethernet requires RAMB16 fpga/src/ariane-ethernet/dualmem_widen8.sv to be defined
     `elsif VC707
     .InclSPI      ( 1'b1         ),
-    .InclEthernet ( 1'b0         )
+    .InclEthernet ( 1'b0         ),
     `elsif VCU118
     .InclSPI      ( 1'b0         ),
-    .InclEthernet ( 1'b0         )
+    .InclEthernet ( 1'b0         ),
     `endif
+    .InclTimer    ( 1'b1         ),
+    .InclPAPER    ( 1'b1         )
 ) i_ariane_peripherals (
     .clk_i        ( clk                          ),
     .clk_200MHz_i ( ddr_clock_out                ),
@@ -546,20 +557,20 @@ ariane_peripherals #(
     .eth_clk_i    ( eth_clk                      ),
     .ethernet     ( master[ariane_soc::Ethernet] ),
     .timer        ( master[ariane_soc::Timer]    ),
-    .paper_ms     ( slave[2]                     ),
-    .paper_sl     ( master[ariane_soc::Paper]    ),
+    .paper_ms     ( dram_sl[1]                   ),
+    .paper_sl     ( paper_master                 ),
     .irq_o        ( irq                          ),
     .rx_i         ( rx                           ),
     .tx_o         ( tx                           ),
-    .eth_txck,
-    .eth_rxck,
-    .eth_rxctl,
-    .eth_rxd,
-    .eth_rst_n,
-    .eth_txctl,
-    .eth_txd,
-    .eth_mdio,
-    .eth_mdc,
+    .eth_txck     ( eth_txck                     ),
+    .eth_rxck     ( eth_rxck                     ),    
+    .eth_rxctl    ( eth_rxctl                    ),
+    .eth_rxd      ( eth_rxd                      ),
+    .eth_rst_n    ( eth_rst_n                    ),
+    .eth_txctl    ( eth_txctl                    ),
+    .eth_txd      ( eth_txd                      ),
+    .eth_mdio     ( eth_mdio                     ),
+    .eth_mdc      ( eth_mdc                      ),
     .phy_tx_clk_i   ( phy_tx_clk                  ),
     .sd_clk_i       ( sd_clk_sys                  ),
     .spi_clk_o      ( spi_clk_o                   ),
@@ -579,6 +590,21 @@ ariane_peripherals #(
     .hdmi_tx_clk_p  ( hdmi_tx_clk_p           ),
     .hdmi_tx_n      ( hdmi_tx_n               ),
     .hdmi_tx_p      ( hdmi_tx_p               )
+);
+
+axi_cdc_intf #(
+   .AXI_ID_WIDTH    ( AxiIdWidthSlaves  ),
+   .AXI_ADDR_WIDTH  ( AxiAddrWidth      ),
+   .AXI_DATA_WIDTH  ( AxiDataWidth      ),
+   .AXI_USER_WIDTH  ( AxiUserWidth      ),
+   .LOG_DEPTH       ( 7                 )
+) i_axi_cdc_paper (
+   .src_clk_i   ( clk                       ),
+   .src_rst_ni  ( ndmreset_n                ),
+   .src         ( master[ariane_soc::Paper] ),
+   .dst_clk_i   ( dram_clk                  ),
+   .dst_rst_ni  ( ndmreset_n                ),
+   .dst         ( paper_master              ) 
 );
 
 
@@ -635,6 +661,21 @@ AXI_BUS #(
     .AXI_USER_WIDTH ( AxiUserWidth     )
 ) dram();
 
+AXI_BUS #(
+    .AXI_ADDR_WIDTH ( AxiAddrWidth     ),
+    .AXI_DATA_WIDTH ( AxiDataWidth     ),
+    .AXI_ID_WIDTH   ( AxiIdWidthSlaves ),
+    .AXI_USER_WIDTH ( AxiUserWidth     )
+) dram_sl[1:0]();
+
+AXI_BUS #(
+    .AXI_ADDR_WIDTH ( AxiAddrWidth     ),
+    .AXI_DATA_WIDTH ( AxiDataWidth     ),
+    .AXI_ID_WIDTH   ( AxiIdWidthSlaves ),
+    .AXI_USER_WIDTH ( AxiUserWidth     )
+) dram_xbar();
+
+
 axi_riscv_atomics_wrap #(
     .AXI_ADDR_WIDTH ( AxiAddrWidth     ),
     .AXI_DATA_WIDTH ( AxiDataWidth     ),
@@ -646,8 +687,39 @@ axi_riscv_atomics_wrap #(
     .clk_i  ( clk                      ),
     .rst_ni ( ndmreset_n               ),
     .slv    ( master[ariane_soc::DRAM] ),
-    .mst    ( dram                     )
+    .mst    ( dram_xbar                )
 );
+
+axi_cdc_intf #(
+   .AXI_ID_WIDTH    ( AxiIdWidthSlaves  ),
+   .AXI_ADDR_WIDTH  ( AxiAddrWidth      ),
+   .AXI_DATA_WIDTH  ( AxiDataWidth      ),
+   .AXI_USER_WIDTH  ( AxiUserWidth      ),
+   .LOG_DEPTH       ( 7                 )
+) i_axi_cdc_dram (
+   .src_clk_i   ( clk         ),
+   .src_rst_ni  ( ndmreset_n  ),
+   .src         ( dram_xbar   ),
+   .dst_clk_i   ( dram_clk    ),
+   .dst_rst_ni  ( ndmreset_n  ),
+   .dst         ( dram_sl[0]  ) 
+);
+
+axi_mux_intf #(
+    .SLV_AXI_ID_WIDTH ( AxiIdWidthMaster  ),
+    .MST_AXI_ID_WIDTH ( AxiIdWidthSlaves  ),
+    .AXI_ADDR_WIDTH   ( AxiAddrWidth      ),
+    .AXI_DATA_WIDTH   ( AxiDataWidth      ),
+    .AXI_USER_WIDTH   ( AxiUserWidth      ),
+    .NO_SLV_PORTS     ( 2                 )
+) i_axi_mux (
+    .clk_i  ( dram_clk    ),
+    .rst_ni ( ndmreset_n  ),
+    .test_i ( test_en     ),
+    .slv    ( dram_sl     ),
+    .mst    ( dram        )
+);
+
 
 `ifdef PROTOCOL_CHECKER
 logic pc_status;
@@ -655,7 +727,7 @@ logic pc_status;
 xlnx_protocol_checker i_xlnx_protocol_checker (
   .pc_status(),
   .pc_asserted(pc_status),
-  .aclk(clk),
+  .aclk(dram_clk),
   .aresetn(ndmreset_n),
   .pc_axi_awid     (dram.aw_id),
   .pc_axi_awaddr   (dram.aw_addr),
@@ -708,7 +780,7 @@ assign dram.r_user = '0;
 assign dram.b_user = '0;
 
 xlnx_axi_clock_converter i_xlnx_axi_clock_converter_ddr (
-  .s_axi_aclk     ( clk              ),
+  .s_axi_aclk     ( dram_clk         ),
   .s_axi_aresetn  ( ndmreset_n       ),
   .s_axi_awid     ( dram.aw_id       ),
   .s_axi_awaddr   ( dram.aw_addr     ),
@@ -800,6 +872,7 @@ xlnx_clk_gen i_xlnx_clk_gen (
   .clk_out4 ( sd_clk_sys    ), // 50  MHz clock
   .clk_out5 ( ser_px_clk    ), // 200 MHz Paper serialized pixel clock
   .clk_out6 ( px_clk        ), // 40  Mhz Paper divided pixel clock
+  .clk_out7 ( dram_clk      ), // 160 Mhz dram clock (for faster Paper BUS clk)
   .reset    ( cpu_reset     ),
   .locked   ( pll_locked    ),
   .clk_in1  ( ddr_clock_out )
