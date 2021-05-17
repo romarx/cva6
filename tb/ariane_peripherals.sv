@@ -642,10 +642,15 @@ module ariane_peripherals #(
             .out                   ( paper_lite_sl      )
         );
 
-        logic [23:0] rgb;
-        logic        hsync;
-        logic        vsync;
-        logic        de;
+        logic [23:0] drgb;
+        logic        hsyncrgb;
+        logic        vsyncrgb;
+        logic        dergb;
+
+        logic [15:0] d422;
+        logic        hsync422;
+        logic        vsync422;
+        logic        de422;
 
         AXI2HDMI
         #(
@@ -668,10 +673,17 @@ module ariane_peripherals #(
             .LiteSlave(paper_lite_sl),
             .PixelClk_CI(px_clk_i),
             .PxClkRst_RBI(rst_ni),
-            .DOut_DO(rgb),
-            .DE_SO(de),
-            .HSync_SO(hsync),
-            .VSync_SO(vsync),
+            
+            .DOut_RGB_DO(drgb),
+            .DE_RGB_SO(dergb),
+            .HSync_RGB_SO(hsyncrgb),
+            .VSync_RGB_SO(vsyncrgb),
+            
+            .DOut_422_DO(d422),
+            .DE_422_SO(de422),
+            .HSync_422_SO(hsync422),
+            .VSync_422_SO(vsync422),
+            
             .SCEmpty_SO(paper_scempty_o),
             .DCEmpty_SO(paper_dcempty_o)
         );
@@ -683,10 +695,10 @@ module ariane_peripherals #(
             (
             .clk_i(px_clk_i),
             .rst_ni(rst_ni),
-            .data_i(rgb),
-            .DE_i(de),
-            .HSync_i(hsync),
-            .VSync_i(vsync),
+            .data_i(drgb),
+            .DE_i(dergb),
+            .HSync_i(hsyncrgb),
+            .VSync_i(vsyncrgb),
             .TMDS_CH0_o(tmds_0),
             .TMDS_CH1_o(tmds_1),
             .TMDS_CH2_o(tmds_2)

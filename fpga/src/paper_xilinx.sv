@@ -12,6 +12,8 @@ module paper_xilinx #(
     input  logic        ser_px_clk_i,
     input  logic        px_clk_i,
     input  logic        rst_ni,
+    input  logic        px_rst_ni,
+    input  logic        test_en_i,
     AXI_BUS.Master      paper_ms,
     AXI_BUS.Slave       paper_sl,
     output logic		hdmi_tx_clk_n,	
@@ -24,10 +26,13 @@ module paper_xilinx #(
 // Signals
 // ---------------
 
-	logic [23:0]	DataRGB;
-    logic [15:0]    Data422;
-	logic 	    	DE_422, VSync422, HSync422;
-    logic           DE_RGB, VSyncRGB, HSyncRGB;
+	
+    
+
+    logic [23:0]	Data_RGB; // for RGB output
+    logic           DE_RGB, HSync_RGB, VSync_RGB;
+    logic [15:0]    Data_422; // for 422 output
+    logic           DE_422, HSync_422, VSync_422;
 	logic		    SHIFT01, SHIFT02, SHIFT11, SHIFT12, SHIFT21, SHIFT22;
 	logic [9:0]	    TMDS_0, TMDS_1, TMDS_2;
     logic		    SER_0, SER_1, SER_2;
@@ -49,7 +54,7 @@ module paper_xilinx #(
     (
         .clk_i                 ( axi_clk_i          ),
         .rst_ni                ( rst_ni             ),
-        .testmode_i            ( 1'b0               ),
+        .testmode_i            ( test_en_i          ),
         .in                    ( paper_sl           ),
         .out                   ( paper_lite_sl      )
     );
@@ -76,15 +81,18 @@ module paper_xilinx #(
         .AXIMaster(paper_ms),
         .LiteSlave(paper_lite_sl),
         .PixelClk_CI(px_clk_i),
-        .PxClkRst_RBI(rst_ni),
-        .DOut422_DO(Data422), //422 output
-        .DE_422_SO(DE_422),
-        .HSync422_SO(HSync422),
-        .VSync422_SO(VSync422),
-        .DOutRGB_DO(DataRGB), //RGB output
+        .PxClkRst_RBI(px_rst_ni),
+        //RGB output
+        .DOut_RGB_DO(Data_RGB), 
         .DE_RGB_SO(DE_RGB),
-        .HSyncRGB_SO(HSyncRGB),
-        .VSyncRGB_SO(VSyncRGB),
+        .HSync_RGB_SO(HSync_RGB),
+        .VSync_RGB_SO(VSync_RGB),
+        //422 output
+        .DOut_422_DO(Data_422), 
+        .DE_422_SO(DE_422),
+        .HSync_422_SO(HSync_422),
+        .VSync_422_SO(VSync_422),
+        
         .SCEmpty_SO(),
         .DCEmpty_SO()
     );
@@ -98,11 +106,11 @@ module paper_xilinx #(
    	i_tmds_encoder
      	(
 		.clk_i(px_clk_i),
-		.rst_ni(rst_ni),
-   		.data_i(DataRGB),
+		.rst_ni(px_rst_ni),
+   		.data_i(Data_RGB),
 		.DE_i(DE_RGB),
-		.VSync_i(VSyncRGB),
-		.HSync_i(HSyncRGB),
+		.VSync_i(VSync_RGB),
+		.HSync_i(HSync_RGB),
 		.TMDS_CH0_o(TMDS_0),
 		.TMDS_CH1_o(TMDS_1),
 		.TMDS_CH2_o(TMDS_2)
@@ -137,7 +145,7 @@ module paper_xilinx #(
         .D7(TMDS_0[6]),
         .D8(TMDS_0[7]),
         .OCE(1'b1),
-        .RST(~rst_ni),
+        .RST(~px_rst_ni),
         .TCE(1'b0)
     );
 
@@ -158,7 +166,7 @@ module paper_xilinx #(
         .D3(TMDS_0[8]),
         .D4(TMDS_0[9]),
         .OCE(1'b1),
-        .RST(~rst_ni),
+        .RST(~px_rst_ni),
         .TCE(1'b0)
     );
 
@@ -189,7 +197,7 @@ module paper_xilinx #(
         .D7(TMDS_1[6]),
         .D8(TMDS_1[7]),
         .OCE(1'b1),
-        .RST(~rst_ni),
+        .RST(~px_rst_ni),
         .TCE(1'b0)
     );
 
@@ -210,7 +218,7 @@ module paper_xilinx #(
         .D3(TMDS_1[8]),
         .D4(TMDS_1[9]),
         .OCE(1'b1),
-        .RST(~rst_ni),
+        .RST(~px_rst_ni),
         .TCE(1'b0)
     );
 
@@ -240,7 +248,7 @@ module paper_xilinx #(
         .D7(TMDS_2[6]),
         .D8(TMDS_2[7]),
         .OCE(1'b1),
-        .RST(~rst_ni),
+        .RST(~px_rst_ni),
         .TCE(1'b0)
     );
 
@@ -261,7 +269,7 @@ module paper_xilinx #(
         .D3(TMDS_2[8]),
         .D4(TMDS_2[9]),
         .OCE(1'b1),
-        .RST(~rst_ni),
+        .RST(~px_rst_ni),
         .TCE(1'b0)
     );
 

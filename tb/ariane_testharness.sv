@@ -566,6 +566,7 @@ module ariane_testharness #(
     .master       ( master     ),
     .start_addr_i (addr_map_t'({
       ariane_soc::DebugBase,
+      ariane_soc::ClkgenBase,
       ariane_soc::PaperBase,
       ariane_soc::ROMBase,
       ariane_soc::CLINTBase,
@@ -579,6 +580,7 @@ module ariane_testharness #(
     })),
     .end_addr_i   (addr_map_t'({
       ariane_soc::DebugBase    + ariane_soc::DebugLength - 1,
+      ariane_soc::ClkgenBase   + ariane_soc::ClkgenLength - 1,
       ariane_soc::PaperBase    + ariane_soc::PaperLength - 1,
       ariane_soc::ROMBase      + ariane_soc::ROMLength - 1,
       ariane_soc::CLINTBase    + ariane_soc::CLINTLength - 1,
@@ -649,6 +651,7 @@ module ariane_testharness #(
   ) i_ariane_peripherals (
     .clk_i     ( clk_i                        ),
     .rst_ni    ( ndmreset_n                   ),
+
     .plic      ( master[ariane_soc::PLIC]     ),
     .uart      ( master[ariane_soc::UART]     ),
     .spi       ( master[ariane_soc::SPI]      ),
