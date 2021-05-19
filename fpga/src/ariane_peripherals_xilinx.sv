@@ -25,8 +25,6 @@ module ariane_peripherals #(
     input  logic       clk_i           , // Clock
     input  logic       clk_200MHz_i    ,
     input  logic       rst_ni          , // Asynchronous reset active low
-    input  logic       test_en_i       ,
-    AXI_BUS.Slave      clkgen          ,
     AXI_BUS.Slave      plic            ,
     AXI_BUS.Slave      uart            ,
     AXI_BUS.Slave      spi             ,
@@ -36,15 +34,6 @@ module ariane_peripherals #(
     AXI_BUS.Master     paper_ms        ,
     AXI_BUS.Slave      paper_sl        ,
     output logic [1:0] irq_o           ,
-    //Clock generator
-    output logic       clk_out1        ,
-    output logic       clk_out2        ,
-    output logic       clk_out3        ,
-    output logic       clk_out4        ,
-    output logic       clk_out5        ,
-    output logic       clk_out6        ,
-    output logic       clk_out7        ,
-    output logic       locked          ,
     // UART
     input  logic       rx_i            ,
     output logic       tx_o            ,
@@ -74,34 +63,11 @@ module ariane_peripherals #(
     input  logic       paper_bus_clk   ,
     input  logic       ser_px_clk_i    ,
     input  logic       px_clk_i        ,
-    input  logic       paper_rst_ni    ,
-    input  logic       px_rst_ni       ,
     output logic       hdmi_tx_clk_n   ,	
 	output logic       hdmi_tx_clk_p   ,
 	output logic [2:0] hdmi_tx_n       ,
-	output logic [2:0] hdmi_tx_p       
+	output logic [2:0] hdmi_tx_p
 );
-
-    clkgen_xilinx #(
-        .AxiAddrWidth   ( AxiAddrWidth   ),
-        .AxiDataWidth   ( AxiDataWidth   ),
-        .AxiIdWidth     ( AxiIdWidth     ),
-        .AxiUserWidth   ( AxiUserWidth   )
-    ) i_clkgen_xilinx (
-        .axi_clk    ( clk_i         ),
-        .axi_rst_n  ( rst_ni        ),
-        .axi_clkgen ( clkgen        ),    
-        .test_en    ( test_en_i     ),
-        .clk_in1    ( clk_200MHz_i  ),
-        .clk_out1   ( clk_out1      ),
-        .clk_out2   ( clk_out2      ),
-        .clk_out3   ( clk_out3      ),
-        .clk_out4   ( clk_out4      ),  
-        .clk_out5   ( clk_out5      ),
-        .clk_out6   ( clk_out6      ),  
-        .clk_out7   ( clk_out7      ),
-        .locked     ( locked        )
-    );
 
     // ---------------
     // 1. PLIC
@@ -306,8 +272,6 @@ module ariane_peripherals #(
         .PREADY    ( uart_pready    ),
         .PSLVERR   ( uart_pslverr   )
     );
-
-
 
     if (InclUART) begin : gen_uart
         apb_uart i_apb_uart (
@@ -888,9 +852,7 @@ module ariane_peripherals #(
             .axi_clk_i          ( paper_bus_clk     ),
             .ser_px_clk_i       ( ser_px_clk_i      ),
             .px_clk_i           ( px_clk_i          ),
-            .rst_ni             ( paper_rst_ni      ),
-            .px_rst_ni          ( px_rst_ni         ),
-            .test_en_i          ( test_en_i         ),
+            .rst_ni             ( rst_ni            ),
             .paper_ms           ( paper_ms          ),
             .paper_sl           ( paper_sl          ),
             .hdmi_tx_clk_n      ( hdmi_tx_clk_n     ),

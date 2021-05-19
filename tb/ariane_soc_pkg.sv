@@ -34,7 +34,6 @@ package ariane_soc;
     CLINT    = 7,
     ROM      = 8,
     Paper    = 9,
-    CLKGEN   = 10,
     Debug    = 11
   } axi_slaves_t;
 
@@ -52,14 +51,12 @@ package ariane_soc;
   localparam logic[63:0] GPIOLength     = 64'h1000;
   localparam logic[63:0] DRAMLength     = 64'h40000000; // 1GByte of DDR (split between two chips on Genesys2)
   localparam logic[63:0] SRAMLength     = 64'h1800000;  // 24 MByte of SRAM
-  localparam logic[63:0] PaperLength    = 64'h1000; 
-  localparam logic[63:0] ClkgenLength   = 64'h800;         
+  localparam logic[63:0] PaperLength    = 64'h1000;        
   // Instantiate AXI protocol checkers
   localparam bit GenProtocolChecker = 1'b0;
 
   typedef enum logic [63:0] {
     DebugBase    = 64'h0000_0000,
-    ClkgenBase   = 64'h1700_0000,   //TODO: Maybe somewhere else?
     PaperBase    = 64'h1900_0000,
     ROMBase      = 64'h0001_0000,
     CLINTBase    = 64'h0200_0000,
