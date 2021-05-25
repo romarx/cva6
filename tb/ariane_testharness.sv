@@ -79,7 +79,7 @@ module ariane_testharness #(
     .AXI_DATA_WIDTH ( AXI_DATA_WIDTH      ),
     .AXI_ID_WIDTH   ( ariane_soc::IdWidth ),
     .AXI_USER_WIDTH ( AXI_USER_WIDTH      )
-  ) slave[ariane_soc::NrSlaves-1:0]();
+  ) slave[ariane_soc::NrSlaves:0]();
 
   AXI_BUS #(
     .AXI_ADDR_WIDTH ( AXI_ADDRESS_WIDTH        ),
@@ -549,7 +549,7 @@ module ariane_testharness #(
   typedef logic [ariane_soc::NrRegion-1:0][ariane_soc::NB_PERIPHERALS-1:0][AXI_ADDRESS_WIDTH-1:0] addr_map_t;
   
   axi_node_intf_wrap #(
-    .NB_SLAVE           ( ariane_soc::NrSlaves       ),
+    .NB_SLAVE           ( ariane_soc::NrSlaves + 1   ), //paper slave is directly connected to ram in implementation
     .NB_MASTER          ( ariane_soc::NB_PERIPHERALS ),
     .NB_REGION          ( ariane_soc::NrRegion       ),
     .AXI_ADDR_WIDTH     ( AXI_ADDRESS_WIDTH          ),

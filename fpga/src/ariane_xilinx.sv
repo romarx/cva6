@@ -190,6 +190,8 @@ AXI_BUS #(
 logic test_en;
 logic ndmreset;
 logic ndmreset_n;
+logic px_ndmreset_n;
+logic paper_ndmreset_n;
 logic debug_req_irq;
 logic timer_irq;
 logic ipi;
@@ -226,6 +228,8 @@ assign trst_n = ~trst;
 
 logic pll_locked;
 
+logic px_pll_locked;
+
 // ROM
 logic                    rom_req;
 logic [AxiAddrWidth-1:0] rom_addr;
@@ -255,6 +259,24 @@ rstgen i_rstgen_main (
     .init_no      (                          ) // keep open
 );
 
+rstgen i_rstgen_pxclk (
+    .clk_i        ( px_clk                      ),
+    .rst_ni       ( px_pll_locked & (~ndmreset) ),
+    .test_mode_i  ( test_en                     ),
+    .rst_no       ( px_ndmreset_n               ),
+    .init_no      (                             ) // keep open
+);
+
+rstgen i_rstgen_paper_clk (
+    .clk_i        ( paper_clk                   ),
+    .rst_ni       ( px_pll_locked & (~ndmreset) ),
+    .test_mode_i  ( test_en                     ),
+    .rst_no       ( paper_ndmreset_n            ),
+    .init_no      (                             ) // keep open
+);
+
+
+
 assign rst_n = ~ddr_sync_reset;
 assign rst = ddr_sync_reset;
 
@@ -280,6 +302,7 @@ axi_node_wrap_with_slices #(
     .master       ( master     ),
     .start_addr_i ({
         ariane_soc::DebugBase,
+        ariane_soc::ClkgenBase,
         ariane_soc::PaperBase,
         ariane_soc::ROMBase,
         ariane_soc::CLINTBase,
@@ -293,6 +316,7 @@ axi_node_wrap_with_slices #(
     }),
     .end_addr_i   ({
         ariane_soc::DebugBase    + ariane_soc::DebugLength - 1,
+        ariane_soc::ClkgenBase   + ariane_soc::ClkgenLength -1,
         ariane_soc::PaperBase    + ariane_soc::PaperLength - 1,
         ariane_soc::ROMBase      + ariane_soc::ROMLength - 1,
         ariane_soc::CLINTBase    + ariane_soc::CLINTLength - 1,
@@ -532,21 +556,26 @@ ariane_peripherals #(
     .InclGPIO     ( 1'b1             ),
     `ifdef KINTEX7
     .InclSPI      ( 1'b1         ),
-    .InclEthernet ( 1'b1         )
+    .InclEthernet ( 1'b1         ),
     `elsif KC705
     .InclSPI      ( 1'b1         ),
-    .InclEthernet ( 1'b0         ) // Ethernet requires RAMB16 fpga/src/ariane-ethernet/dualmem_widen8.sv to be defined
+    .InclEthernet ( 1'b0         ), // Ethernet requires RAMB16 fpga/src/ariane-ethernet/dualmem_widen8.sv to be defined
     `elsif VC707
     .InclSPI      ( 1'b1         ),
-    .InclEthernet ( 1'b0         )
+    .InclEthernet ( 1'b0         ),
     `elsif VCU118
     .InclSPI      ( 1'b0         ),
-    .InclEthernet ( 1'b0         )
+    .InclEthernet ( 1'b0         ),
     `endif
+    .InclTimer    (1'b1          ),
+    .InclPAPER    (1'b1          ),
+    .InclCLKGen   (1'b1          )
+    
 ) i_ariane_peripherals (
     .clk_i        ( clk                          ),
     .clk_200MHz_i ( ddr_clock_out                ),
     .rst_ni       ( ndmreset_n                   ),
+    .clkgen       ( master[ariane_soc::CLKGEN]   ),
     .plic         ( master[ariane_soc::PLIC]     ),
     .uart         ( master[ariane_soc::UART]     ),
     .spi          ( master[ariane_soc::SPI]      ),
@@ -559,15 +588,15 @@ ariane_peripherals #(
     .irq_o        ( irq                          ),
     .rx_i         ( rx                           ),
     .tx_o         ( tx                           ),
-    .eth_txck,
-    .eth_rxck,
-    .eth_rxctl,
-    .eth_rxd,
-    .eth_rst_n,
-    .eth_txctl,
-    .eth_txd,
-    .eth_mdio,
-    .eth_mdc,
+    .eth_txck(eth_txck),
+    .eth_rxck(eth_rxck),
+    .eth_rxctl(eth_rxctl),
+    .eth_rxd(eth_rxd),
+    .eth_rst_n(eth_rst_n),
+    .eth_txctl(eth_txctl),
+    .eth_txd(eth_txd),
+    .eth_mdio(eth_mdio),
+    .eth_mdc(eth_mdc),
     .phy_tx_clk_i   ( phy_tx_clk                  ),
     .sd_clk_i       ( sd_clk_sys                  ),
     .spi_clk_o      ( spi_clk_o                   ),
@@ -582,12 +611,19 @@ ariane_peripherals #(
       .dip_switches_i ( sw                        ),
     `endif
     .paper_bus_clk  ( paper_clk               ),
-    .ser_px_clk_i   ( ser_px_clk                ),
+    .ser_px_clk_i   ( ser_px_clk              ),
     .px_clk_i       ( px_clk                  ),
+    .px_clk_rst     ( px_ndmreset_n           ),
+    .paper_rst_i    ( paper_ndmreset_n        ),
     .hdmi_tx_clk_n  ( hdmi_tx_clk_n           ),
     .hdmi_tx_clk_p  ( hdmi_tx_clk_p           ),
     .hdmi_tx_n      ( hdmi_tx_n               ),
-    .hdmi_tx_p      ( hdmi_tx_p               )
+    .hdmi_tx_p      ( hdmi_tx_p               ),
+
+    .clk_out1_o     ( px_clk         ),   
+    .clk_out2_o     ( ser_px_clk     ),
+    .locked_o       ( px_pll_locked  )  
+    
 );
 
 axi_cdc_intf #(
@@ -601,7 +637,7 @@ axi_cdc_intf #(
    .src_rst_ni  ( ndmreset_n                ),
    .src         ( master[ariane_soc::Paper] ),
    .dst_clk_i   ( paper_clk                 ),
-   .dst_rst_ni  ( ndmreset_n                ),
+   .dst_rst_ni  ( paper_ndmreset_n          ),
    .dst         ( paper_master              ) 
 );
 
@@ -696,12 +732,12 @@ axi_cdc_intf #(
    .AXI_USER_WIDTH  ( AxiUserWidth      ),
    .LOG_DEPTH       ( 1                 )
 ) i_axi_cdc_dram (
-   .src_clk_i   ( clk         ),
-   .src_rst_ni  ( ndmreset_n  ),
-   .src         ( dram_xbar   ),
-   .dst_clk_i   ( paper_clk   ),
-   .dst_rst_ni  ( ndmreset_n  ),
-   .dst         ( dram_sl[0]  ) 
+   .src_clk_i   ( clk                ),
+   .src_rst_ni  ( ndmreset_n         ),
+   .src         ( dram_xbar          ),
+   .dst_clk_i   ( paper_clk          ),
+   .dst_rst_ni  ( paper_ndmreset_n   ),
+   .dst         ( dram_sl[0]         ) 
 );
 
 axi_mux_intf #(
@@ -712,11 +748,11 @@ axi_mux_intf #(
     .AXI_USER_WIDTH   ( AxiUserWidth      ),
     .NO_SLV_PORTS     ( 2                 )
 ) i_axi_mux (
-    .clk_i  ( paper_clk   ),
-    .rst_ni ( ndmreset_n  ),
-    .test_i ( test_en     ),
-    .slv    ( dram_sl     ),
-    .mst    ( dram        )
+    .clk_i  ( paper_clk         ),
+    .rst_ni ( paper_ndmreset_n  ),
+    .test_i ( test_en           ),
+    .slv    ( dram_sl           ),
+    .mst    ( dram              )
 );
 
 `ifdef PROTOCOL_CHECKER
@@ -726,7 +762,7 @@ xlnx_protocol_checker i_xlnx_protocol_checker (
   .pc_status(),
   .pc_asserted(pc_status),
   .aclk(paper_clk),
-  .aresetn(ndmreset_n),
+  .aresetn(paper_ndmreset_n),
   .pc_axi_awid     (dram.aw_id),
   .pc_axi_awaddr   (dram.aw_addr),
   .pc_axi_awlen    (dram.aw_len),
@@ -779,7 +815,7 @@ assign dram.b_user = '0;
 
 xlnx_axi_clock_converter i_xlnx_axi_clock_converter_ddr (
   .s_axi_aclk     ( paper_clk        ),
-  .s_axi_aresetn  ( ndmreset_n       ),
+  .s_axi_aresetn  ( paper_ndmreset_n ),
   .s_axi_awid     ( dram.aw_id       ),
   .s_axi_awaddr   ( dram.aw_addr     ),
   .s_axi_awlen    ( dram.aw_len      ),
@@ -863,18 +899,18 @@ xlnx_axi_clock_converter i_xlnx_axi_clock_converter_ddr (
   .m_axi_rready   ( s_axi_rready     )
 );
 
+
 xlnx_clk_gen i_xlnx_clk_gen (
   .clk_out1 ( clk           ), // 50  MHz
   .clk_out2 ( phy_tx_clk    ), // 125 MHz (for RGMII PHY)
   .clk_out3 ( eth_clk       ), // 125 MHz quadrature (90 deg phase shift)
   .clk_out4 ( sd_clk_sys    ), // 50  MHz clock
-  .clk_out5 ( ser_px_clk    ), // 200 MHz Paper serialized pixel clock
-  .clk_out6 ( px_clk        ), // 40  Mhz Paper divided pixel clock
-  .clk_out7 ( paper_clk     ),
+  .clk_out5 ( paper_clk     ),
   .reset    ( cpu_reset     ),
   .locked   ( pll_locked    ),
   .clk_in1  ( ddr_clock_out )
 );
+
 
 `ifdef KINTEX7
 fan_ctrl i_fan_ctrl (
