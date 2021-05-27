@@ -269,7 +269,7 @@ rstgen i_rstgen_pxclk (
 
 rstgen i_rstgen_paper_clk (
     .clk_i        ( paper_clk                   ),
-    .rst_ni       ( px_pll_locked & (~ndmreset) ),
+    .rst_ni       ( pll_locked & (~ndmreset)    ),
     .test_mode_i  ( test_en                     ),
     .rst_no       ( paper_ndmreset_n            ),
     .init_no      (                             ) // keep open

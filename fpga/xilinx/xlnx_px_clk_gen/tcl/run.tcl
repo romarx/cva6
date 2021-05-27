@@ -12,8 +12,9 @@ set_property -dict [list CONFIG.PRIM_IN_FREQ {200.000} \
 			CONFIG.USE_DYN_RECONFIG {true} \
                         CONFIG.NUM_OUT_CLKS {2} \
                         CONFIG.CLKOUT2_USED {true} \
-                        CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {119} \
-                        CONFIG.CLKOUT2_REQUESTED_OUT_FREQ {595} \
+                        CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {40} \
+                        CONFIG.CLKOUT2_REQUESTED_OUT_FREQ {200} \
+                        CONFIG.CLKIN1_JITTER_PS {50.0} \
                        ] [get_ips $ipName]
 
 generate_target {instantiation_template} [get_files ./$ipName.srcs/sources_1/ip/$ipName/$ipName.xci]

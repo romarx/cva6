@@ -85,6 +85,10 @@
       interrupt-parent = <&PLIC0>;
       reg-names = "control";
     };
+    paper@19000000 {
+      compatible = "paper,paperfb";
+      reg = <0x00000000 0x19000000 0x00000000 0x00001000>;
+    };
     xps-spi@20000000 {
       compatible = "xlnx,xps-spi-2.00.b", "xlnx,xps-spi-2.00.a";
       #address-cells = <1>;
