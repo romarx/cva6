@@ -59,7 +59,7 @@ package ariane_soc;
 
   typedef enum logic [63:0] {
     DebugBase    = 64'h0000_0000,
-    ClkgenBase   = 64'h1700_0000, //maybe somewhere else????
+    ClkgenBase   = 64'h1700_0000,
     PaperBase    = 64'h1900_0000,
     ROMBase      = 64'h0001_0000,
     CLINTBase    = 64'h0200_0000,

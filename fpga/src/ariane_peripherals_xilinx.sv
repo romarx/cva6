@@ -982,8 +982,8 @@ module ariane_peripherals #(
 
     xlnx_px_clk_gen i_xlnx_px_clk_gen (
         .clk_in1        ( clk_200MHz_i      ),
-        .clk_out1       ( clk_out1_o        ), // px_clk
-        .clk_out2       ( clk_out2_o        ), // ser_px_clk
+        .clk_out1       ( clk_out1_o        ), // 40 Mhz initial px_clk
+        .clk_out2       ( clk_out2_o        ), // 200 Mhz initial ser_px_clk
         .locked         ( locked_o          ),
 
         .s_axi_aclk     ( clk_i             ),

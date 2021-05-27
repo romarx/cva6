@@ -905,7 +905,7 @@ xlnx_clk_gen i_xlnx_clk_gen (
   .clk_out2 ( phy_tx_clk    ), // 125 MHz (for RGMII PHY)
   .clk_out3 ( eth_clk       ), // 125 MHz quadrature (90 deg phase shift)
   .clk_out4 ( sd_clk_sys    ), // 50  MHz clock
-  .clk_out5 ( paper_clk     ),
+  .clk_out5 ( paper_clk     ), // 166 Mhz clock
   .reset    ( cpu_reset     ),
   .locked   ( pll_locked    ),
   .clk_in1  ( ddr_clock_out )
