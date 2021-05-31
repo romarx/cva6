@@ -6,6 +6,7 @@ module paper_xilinx #(
     parameter int ScDepth      = 1,
     parameter int FillThresh   = 1,
     parameter int DcDepth      = 1,
+    parameter int XILINX_IP    = 0,
     parameter int AxiArId      = 1337
 ) (
     input  logic        axi_clk_i,
@@ -68,6 +69,7 @@ module paper_xilinx #(
         .SC_FIFO_DEPTH(ScDepth),
         .FILL_THRESH(FillThresh),
         .DC_FIFO_DEPTH(DcDepth),
+        .XILINX_IP(XILINX_IP),
         .AXI_ARID(AxiArId),
         .XILINX(1'b0)
     )

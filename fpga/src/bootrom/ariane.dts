@@ -41,6 +41,20 @@
       retain-state-suspended;
     };
   };
+  clocks {
+    ref_clk: ref_clk {
+      compatible = "fixed-clock";
+      #clock-cells = <1>;
+      clock-frequency = <200000000>;
+      clock-output-names = "ref_clk";
+    };
+    axi_clk: axi_clk {
+      compatible = "fixed-clock";
+      #clock-cells = <1>;
+      clock-frequency = <50000000>;
+      clock-output-names = "axi_clk";
+    };
+  };
   L26: soc {
     #address-cells = <2>;
     #size-cells = <2>;
@@ -77,6 +91,17 @@
       interrupts = <1>;
       reg-shift = <2>; // regs are spaced on 32 bit boundary
       reg-io-width = <4>; // only 32-bit access are supported
+    };
+    clock-generator@17000000 {
+      #clock-cells = <1>;
+      reg = <0x00000000 0x17000000 0x00000000 0x00001000>;
+      compatible = "xlnx,clocking-wizard";
+      speed-grade = <1>;
+      clock-names = "clk_in1", "s_axi_aclk";
+      clocks = <&ref_clk 0>, <&axi_clk 0>;
+      clock-output-names = "clk_out1", "clk_out2",
+                          "clk_out3", "clk_out4", "clk_out5",
+                          "clk_out6", "clk_out7";
     };
     timer@18000000 {
       compatible = "pulp,apb_timer";

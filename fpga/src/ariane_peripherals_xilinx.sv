@@ -854,7 +854,8 @@ module ariane_peripherals #(
             .AxiUserWidth        ( AxiUserWidth      ),
             .ScDepth             ( 128               ),
             .FillThresh          ( 64                ),
-            .DcDepth             ( 24                )
+            .DcDepth             ( 24                ),
+            .XILINX_IP           ( 1'b0              )
         ) i_paper (
             .axi_clk_i          ( paper_bus_clk     ),
             .ser_px_clk_i       ( ser_px_clk_i      ),
