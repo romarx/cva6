@@ -1,7 +1,7 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
--- Date        : Mon May 31 20:47:10 2021
+-- Date        : Tue Jun  1 15:30:33 2021
 -- Host        : badile08.ee.ethz.ch running 64-bit CentOS Linux release 7.9.2009 (Core)
 -- Command     : write_vhdl -force -mode synth_stub
 --               /home/bsc21f22/projects/cva6/fpga/xilinx/xlnx_axi_quad_spi/xlnx_axi_quad_spi.srcs/sources_1/ip/xlnx_axi_quad_spi/xlnx_axi_quad_spi_stub.vhdl

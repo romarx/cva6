@@ -1,7 +1,7 @@
 -- Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -- --------------------------------------------------------------------------------
 -- Tool Version: Vivado v.2018.3 (lin64) Build 2405991 Thu Dec  6 23:36:41 MST 2018
--- Date        : Mon May 31 20:48:01 2021
+-- Date        : Tue Jun  1 15:31:24 2021
 -- Host        : badile08.ee.ethz.ch running 64-bit CentOS Linux release 7.9.2009 (Core)
 -- Command     : write_vhdl -force -mode funcsim
 --               /home/bsc21f22/projects/cva6/fpga/xilinx/xlnx_axi_gpio/xlnx_axi_gpio.srcs/sources_1/ip/xlnx_axi_gpio/xlnx_axi_gpio_sim_netlist.vhdl

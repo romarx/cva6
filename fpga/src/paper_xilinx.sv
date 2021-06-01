@@ -1,13 +1,13 @@
 module paper_xilinx #(
-    parameter int AxiAddrWidth = -1,
-    parameter int AxiDataWidth = -1,
-    parameter int AxiIdWidth   = -1,
-    parameter int AxiUserWidth = 1,
-    parameter int ScDepth      = 1,
-    parameter int FillThresh   = 1,
-    parameter int DcDepth      = 1,
-    parameter int XILINX_IP    = 0,
-    parameter int AxiArId      = 1337
+    parameter int AxiAddrWidth      = -1,
+    parameter int AxiDataWidth      = -1,
+    parameter int AxiIdWidth        = -1,
+    parameter int AxiUserWidth      = 1,
+    parameter int ScDepth           = 1,
+    parameter int FillThresh        = 1,
+    parameter int DcDepth           = 1,
+    parameter int XILINX_7SERIES_IP = 0,
+    parameter int AxiArId           = 1337
 ) (
     input  logic        axi_clk_i,
     input  logic        ser_px_clk_i,
@@ -69,7 +69,7 @@ module paper_xilinx #(
         .SC_FIFO_DEPTH(ScDepth),
         .FILL_THRESH(FillThresh),
         .DC_FIFO_DEPTH(DcDepth),
-        .XILINX_IP(XILINX_IP),
+        .XILINX_7SERIES_IP(XILINX_7SERIES_IP),
         .AXI_ARID(AxiArId),
         .XILINX(1'b0)
     )

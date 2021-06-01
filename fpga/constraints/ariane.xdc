@@ -77,14 +77,14 @@ set_false_path -from [get_clocks sys_clk] -through [get_nets  -filter { NAME =~ 
 
 set_property DONT_TOUCH true [get_cells -hierarchical *i_paper*]
 
-set_bus_skew -from [get_clocks  p_bus_clk] -through [get_nets  -filter { NAME =~  "*Sync*" }  -of_objects [get_cells -hierarchical -filter { NAME =~  "*i_paper*" } ]] -to [get_clocks sys_clk] [get_property PERIOD [get_clocks p_bus_clk]]
-set_bus_skew -from [get_clocks  sys_clk] -through [get_nets  -filter { NAME =~  "*Sync*" }  -of_objects [get_cells -hierarchical -filter { NAME =~  "*i_paper*" } ]] -to [get_clocks p_bus_clk] [get_property PERIOD [get_clocks p_bus_clk]]
+set_bus_skew -from [get_clocks  p_bus_clk] -through [get_nets  -filter { NAME =~  "*Sync*" }  -of_objects [get_cells -hierarchical -filter { NAME =~  "*i_paper*" } ]] -to [get_clocks px_clk] [get_property PERIOD [get_clocks p_bus_clk]]
+set_bus_skew -from [get_clocks  px_clk] -through [get_nets  -filter { NAME =~  "*Sync*" }  -of_objects [get_cells -hierarchical -filter { NAME =~  "*i_paper*" } ]] -to [get_clocks p_bus_clk] [get_property PERIOD [get_clocks p_bus_clk]]
 
-set_max_delay -from [get_clocks p_bus_clk] -through [get_nets  -filter { NAME =~  "*Sync*" }  -of_objects [get_cells -hierarchical -filter { NAME =~  "*i_paper*" } ]] -to [get_clocks sys_clk] [get_property PERIOD [get_clocks p_bus_clk]]
-set_max_delay -from [get_clocks sys_clk] -through [get_nets  -filter { NAME =~  "*Sync*" }  -of_objects [get_cells -hierarchical -filter { NAME =~  "*i_paper*" } ]] -to [get_clocks p_bus_clk] [get_property PERIOD [get_clocks p_bus_clk]]
+set_max_delay -from [get_clocks p_bus_clk] -through [get_nets  -filter { NAME =~  "*Sync*" }  -of_objects [get_cells -hierarchical -filter { NAME =~  "*i_paper*" } ]] -to [get_clocks px_clk] [get_property PERIOD [get_clocks p_bus_clk]]
+set_max_delay -from [get_clocks px_clk] -through [get_nets  -filter { NAME =~  "*Sync*" }  -of_objects [get_cells -hierarchical -filter { NAME =~  "*i_paper*" } ]] -to [get_clocks p_bus_clk] [get_property PERIOD [get_clocks p_bus_clk]]
 
-set_false_path -from [get_clocks p_bus_clk] -through [get_nets  -filter { NAME =~  "*Sync*" }  -of_objects [get_cells -hierarchical -filter { NAME =~  "*i_paper*" } ]] -to [get_clocks sys_clk] -hold
-set_false_path -from [get_clocks sys_clk] -through [get_nets  -filter { NAME =~  "*Sync*" }  -of_objects [get_cells -hierarchical -filter { NAME =~  "*i_paper*" } ]] -to [get_clocks p_bus_clk] -hold
+set_false_path -from [get_clocks p_bus_clk] -through [get_nets  -filter { NAME =~  "*Sync*" }  -of_objects [get_cells -hierarchical -filter { NAME =~  "*i_paper*" } ]] -to [get_clocks px_clk] -hold
+set_false_path -from [get_clocks px_clk] -through [get_nets  -filter { NAME =~  "*Sync*" }  -of_objects [get_cells -hierarchical -filter { NAME =~  "*i_paper*" } ]] -to [get_clocks p_bus_clk] -hold
 
-set_false_path -from [get_clocks p_bus_clk] -through [get_nets  -filter { NAME =~  "*Sync*" }  -of_objects [get_cells -hierarchical -filter { NAME =~  "*i_paper*" } ]] -to [get_clocks sys_clk] -setup
-set_false_path -from [get_clocks sys_clk] -through [get_nets  -filter { NAME =~  "*Sync*" }  -of_objects [get_cells -hierarchical -filter { NAME =~  "*i_paper*" } ]] -to [get_clocks p_bus_clk] -setup
+set_false_path -from [get_clocks p_bus_clk] -through [get_nets  -filter { NAME =~  "*Sync*" }  -of_objects [get_cells -hierarchical -filter { NAME =~  "*i_paper*" } ]] -to [get_clocks px_clk] -setup
+set_false_path -from [get_clocks px_clk] -through [get_nets  -filter { NAME =~  "*Sync*" }  -of_objects [get_cells -hierarchical -filter { NAME =~  "*i_paper*" } ]] -to [get_clocks p_bus_clk] -setup
