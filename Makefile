@@ -231,6 +231,7 @@ src :=  $(filter-out src/ariane_regfile.sv, $(wildcard src/*.sv))              \
         src/PAPER_hw/hdl/7series_wrappers/FIFO7Series_sync.sv                  \
         src/PAPER_hw/ips/common_cells/src/gray_to_binary.sv                    \
         src/PAPER_hw/ips/common_cells/src/binary_to_gray.sv					   \
+        src/PAPER_hw/ips/common_cells/src/spill_register_flushable.sv          \
         src/PAPER_hw/ips/axi/src/axi_mux.sv                                    \
         src/PAPER_hw/ips/axi/src/axi_id_prepend.sv                             \
         src/PAPER_hw/ips/axi/src/axi_cdc.sv                                    

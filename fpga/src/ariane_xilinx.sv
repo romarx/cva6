@@ -41,15 +41,19 @@ module ariane_xilinx (
   output wire [3:0]    eth_txd     ,
   inout  wire          eth_mdio    ,
   output logic         eth_mdc     ,
-  output logic [ 7:0]  led         ,
-  input  logic [ 7:0]  sw          ,
+  //leds and switches for gpio
+  output logic [7:0]   led         ,
+  input  logic [7:0]   sw          ,
   output logic         fan_pwm     ,
   input  logic         trst_n      ,
   // Paper
   output logic		     hdmi_tx_clk_n,
-	output logic		     hdmi_tx_clk_p,
-	output logic [2:0]	 hdmi_tx_n   ,
-	output logic [2:0]	 hdmi_tx_p   ,
+  output logic		     hdmi_tx_clk_p,
+  output logic [2:0]	 hdmi_tx_n   ,
+  output logic [2:0]	 hdmi_tx_p   ,
+  //HID
+  //inout logic          ps2_clk     ,
+  //inout logic          ps2_data    ,
 `elsif KC705
   input  logic         sys_clk_p   ,
   input  logic         sys_clk_n   ,
@@ -622,7 +626,9 @@ ariane_peripherals #(
 
     .clk_out1_o     ( px_clk         ),   
     .clk_out2_o     ( ser_px_clk     ),
-    .locked_o       ( px_pll_locked  )  
+    .locked_o       ( px_pll_locked  )
+//    .ps2_clk_io     ( ps2_clk        ),
+//    .ps2_data_io    ( ps2_data       )
     
 );
 

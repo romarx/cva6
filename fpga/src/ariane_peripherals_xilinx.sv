@@ -73,7 +73,11 @@ module ariane_peripherals #(
     //Clkgen
     output logic clk_out1_o            ,         
     output logic clk_out2_o            ,
-    output logic locked_o
+    output logic locked_o              
+    //HID
+    //inout logic ps2_clk_io             ,       
+    //inout logic ps2_data_io
+    
 );
 
     // ---------------
@@ -197,7 +201,7 @@ module ariane_peripherals #(
       .rst_ni,
       .req_i         ( plic_req    ),
       .resp_o        ( plic_resp   ),
-      .le_i          ( '0          ), // 0:level 1:edge
+      .le_i          ( 8'b10000000 ), // 0:level 1:edge
       .irq_sources_i ( irq_sources ),
       .eip_targets_o ( irq_o       )
     );
@@ -721,7 +725,9 @@ module ariane_peripherals #(
             .m_axi_rvalid   ( s_axi_gpio_rvalid  ),
             .m_axi_rready   ( s_axi_gpio_rready  )
         );
-
+        
+        logic [7:0] gpio_tristate; //use this with IOBUFT's for bidirectional logic
+        logic [7:0] leds_i;
         xlnx_axi_gpio i_xlnx_axi_gpio (
             .s_axi_aclk    ( clk_i                  ),
             .s_axi_aresetn ( rst_ni                 ),
@@ -742,15 +748,15 @@ module ariane_peripherals #(
             .s_axi_rresp   ( s_axi_gpio_rresp       ),
             .s_axi_rvalid  ( s_axi_gpio_rvalid      ),
             .s_axi_rready  ( s_axi_gpio_rready      ),
-            .gpio_io_i     ( '0                     ),
+            .gpio_io_i     ( leds_i                 ),
             .gpio_io_o     ( leds_o                 ),
-            .gpio_io_t     (                        ),
+            .gpio_io_t     ( gpio_tristate          ),
             .gpio2_io_i    ( dip_switches_i         )
         );
-
+        
+        
         assign s_axi_gpio_rlast = 1'b1;
-
-    end
+end
 
     // 6. Timer
     if (InclTimer) begin : gen_timer
@@ -852,9 +858,9 @@ module ariane_peripherals #(
             .AxiDataWidth        ( AxiDataWidth      ),
             .AxiIdWidth          ( AxiIdWidth        ),
             .AxiUserWidth        ( AxiUserWidth      ),
-            .ScDepth             ( 128               ),
-            .FillThresh          ( 64                ),
-            .DcDepth             ( 24                ),
+            .ScDepth             ( 128               ), //128
+            .FillThresh          ( 64                ), //64
+            .DcDepth             ( 24                ), //24
             .XILINX_7SERIES_IP   ( 1'b1              )
         ) i_paper (
             .axi_clk_i          ( paper_bus_clk     ),

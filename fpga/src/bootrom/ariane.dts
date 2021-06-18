@@ -36,11 +36,12 @@
   leds {
     compatible = "gpio-leds";
     heartbeat-led {
-      gpios = <&xlnx_gpio 1 0>;
+      gpios = <&xlnx_gpio 1 0 0>;
       linux,default-trigger = "heartbeat";
       retain-state-suspended;
     };
   };
+  /* for clocking wizard
   clocks {
     ref_clk: ref_clk {
       compatible = "fixed-clock";
@@ -55,6 +56,7 @@
       clock-output-names = "axi_clk";
     };
   };
+  */
   L26: soc {
     #address-cells = <2>;
     #size-cells = <2>;
@@ -92,6 +94,7 @@
       reg-shift = <2>; // regs are spaced on 32 bit boundary
       reg-io-width = <4>; // only 32-bit access are supported
     };
+    /*
     clock-generator@17000000 {
       #clock-cells = <1>;
       reg = <0x00000000 0x17000000 0x00000000 0x00001000>;
@@ -103,6 +106,7 @@
                           "clk_out3", "clk_out4", "clk_out5",
                           "clk_out6", "clk_out7";
     };
+    */
     timer@18000000 {
       compatible = "pulp,apb_timer";
       interrupts = <0x00000004 0x00000005 0x00000006 0x00000007>;
@@ -155,7 +159,7 @@
     xlnx_gpio: gpio@40000000 {
       #gpio-cells = <2>;
       compatible = "xlnx,xps-gpio-1.00.a";
-      gpio-controller ;
+      gpio-controller;
       reg = <0x0 0x40000000 0x0 0x10000 >;
       xlnx,all-inputs = <0x0>;
       xlnx,all-inputs-2 = <0x0>;

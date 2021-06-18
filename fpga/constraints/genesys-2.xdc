@@ -141,4 +141,15 @@ set_property -dict {PACKAGE_PIN AA22 IOSTANDARD TMDS_33} [get_ports {hdmi_tx_p[1
 set_property -dict {PACKAGE_PIN AC25 IOSTANDARD TMDS_33} [get_ports {hdmi_tx_n[2]}]
 set_property -dict {PACKAGE_PIN AB24 IOSTANDARD TMDS_33} [get_ports {hdmi_tx_p[2]}]
 
+## USB HIDs For Both Mouse and Keyboard
+#set_property PACKAGE_PIN AD23 [get_ports {ps2_clk}]
+#set_property IOSTANDARD LVCMOS33 [get_ports {ps2_clk}]
+#set_property PULLUP true [get_ports {ps2_clk}]
+#set_property PACKAGE_PIN AE20 [get_ports {ps2_data}]
+#set_property IOSTANDARD LVCMOS33 [get_ports {ps2_data}]
+#set_property PULLUP true [get_ports {ps2_data}]
+
+
+
+
 
