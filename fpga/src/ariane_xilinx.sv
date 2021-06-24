@@ -627,7 +627,7 @@ ariane_peripherals #(
     .clk_out1_o     ( px_clk         ),   
     .clk_out2_o     ( ser_px_clk     ),
     .locked_o       ( px_pll_locked  )
-//    .ps2_clk_io     ( ps2_clk        ),
+ //   .ps2_clk_io     ( ps2_clk        ),
 //    .ps2_data_io    ( ps2_data       )
     
 );

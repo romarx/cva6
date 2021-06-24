@@ -73,10 +73,10 @@ module ariane_peripherals #(
     //Clkgen
     output logic clk_out1_o            ,         
     output logic clk_out2_o            ,
-    output logic locked_o              
+    output logic locked_o              ,
     //HID
-    //inout logic ps2_clk_io             ,       
-    //inout logic ps2_data_io
+    inout logic ps2_clk_io             ,       
+    inout logic ps2_data_io
     
 );
 
@@ -726,8 +726,9 @@ module ariane_peripherals #(
             .m_axi_rready   ( s_axi_gpio_rready  )
         );
         
-        logic [7:0] gpio_tristate; //use this with IOBUFT's for bidirectional logic
-        logic [7:0] leds_i;
+        logic [9:0] gpio_tristate; //use this with IOBUFT's for bidirectional logic
+        logic ps2_data_i, ps2_data_o, ps2_clk_i, ps2_clk_o;
+        
         xlnx_axi_gpio i_xlnx_axi_gpio (
             .s_axi_aclk    ( clk_i                  ),
             .s_axi_aresetn ( rst_ni                 ),
@@ -748,14 +749,60 @@ module ariane_peripherals #(
             .s_axi_rresp   ( s_axi_gpio_rresp       ),
             .s_axi_rvalid  ( s_axi_gpio_rvalid      ),
             .s_axi_rready  ( s_axi_gpio_rready      ),
-            .gpio_io_i     ( leds_i                 ),
-            .gpio_io_o     ( leds_o                 ),
+            .gpio_io_i     ( { ps2_data_i, ps2_clk_i, 8'b0 }  ),
+            .gpio_io_o     ( { ps2_data_o, ps2_clk_o, leds_o} ),
             .gpio_io_t     ( gpio_tristate          ),
             .gpio2_io_i    ( dip_switches_i         )
         );
         
-        
         assign s_axi_gpio_rlast = 1'b1;
+
+        /*
+
+        //inout buffers for ps2_gpio
+        
+        IOBUF #(
+            .IOSTANDARD("LVCMOS33"),    // Specify the I/O standard
+        ) IOBUF_inst (
+            .O(ps2_clk_i),              // Buffer output
+            .IO(ps2_clk_io),            // Buffer inout port (connect directly to top-level port)
+            .I(ps2_clk_o),              // Buffer input
+            .T(gpio_tristate[8])        // 3-state enable input, high=input, low=output
+        );
+
+        IOBUF #(
+            .IOSTANDARD("LVCMOS33"),    // Specify the I/O standard
+        ) IOBUF_inst (
+            .O(ps2_data_i),             // Buffer output
+            .IO(ps2_data_io),           // Buffer inout port (connect directly to top-level port)
+            .I(ps2_data_o),             // Buffer input
+            .T(gpio_tristate[9])        // 3-state enable input, high=input, low=output
+        );
+
+        
+        
+        //interrupt generation for the ps2_gpio driver
+        
+        logic ps2irq, ps2_clkstate;
+        assign irq_sources[7] = ps2irq;
+        always_ff @(posedge clk_i, negedge rst_ni) begin
+            if(~rst_ni) begin
+                ps2irq <= 0;
+                ps2_clkstate <= 0;
+            end else begin
+                if(~ps2_clk_i && ps2_clkstate) begin
+                    ps2irq <= 1; //interrupt on falling edge
+                end else begin
+                    ps2irq <= 0;
+                end
+                clkstate <= ps2_clk_i;
+            end
+            
+        end
+        */
+
+    
+
 end
 
     // 6. Timer

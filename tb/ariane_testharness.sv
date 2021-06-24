@@ -659,6 +659,7 @@ module ariane_testharness #(
     .timer     ( master[ariane_soc::Timer]    ),
     .paper_ms  ( slave[2]                     ),
     .paper_sl  ( master[ariane_soc::Paper]    ),
+    .clkgen    ( master[ariane_soc::CLKGEN]   ),
     .irq_o     ( irqs                         ),
     .rx_i      ( rx                           ),
     .tx_o      ( tx                           ),
