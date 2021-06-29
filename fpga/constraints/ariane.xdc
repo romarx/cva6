@@ -18,13 +18,38 @@ set_max_delay -datapath_only -from [get_pins i_dmi_jtag/i_dmi_cdc/i_cdc_req/i_ds
 set_multicycle_path -from [get_pins {i_rstgen_main/i_rstgen_bypass/synch_regs_q_reg[3]/C}] 4
 set_multicycle_path -hold -from [get_pins {i_rstgen_main/i_rstgen_bypass/synch_regs_q_reg[3]/C}] 3 
 
-set_multicycle_path -from [get_pins {i_rstgen_paper_clk/i_rstgen_bypass/synch_regs_q_reg[3]/C}] 4
-set_multicycle_path -hold -from [get_pins {i_rstgen_paper_clk/i_rstgen_bypass/synch_regs_q_reg[3]/C}] 3
-
-set_multicycle_path -from [get_pins {i_rstgen_pxclk/i_rstgen_bypass/synch_regs_q_reg[3]/C}] 4
-set_multicycle_path -hold -from [get_pins {i_rstgen_pxclk/i_rstgen_bypass/synch_regs_q_reg[3]/C}] 3
+set_multicycle_path -to [get_pins {i_rstgen_main/i_rstgen_bypass/synch_regs_q_reg[3]/CLR}] 4
+set_multicycle_path -hold -to [get_pins {i_rstgen_main/i_rstgen_bypass/synch_regs_q_reg[3]/CLR}] 3 
 
 
+set_multicycle_path -to [get_pins {i_rstgen_paper_clk/i_rstgen_bypass/synch_regs_q_reg[0]/CLR}] 4
+set_multicycle_path -hold -to [get_pins {i_rstgen_paper_clk/i_rstgen_bypass/synch_regs_q_reg[0]/CLR}] 3
+set_multicycle_path -to [get_pins {i_rstgen_paper_clk/i_rstgen_bypass/synch_regs_q_reg[1]/CLR}] 4
+set_multicycle_path -hold -to [get_pins {i_rstgen_paper_clk/i_rstgen_bypass/synch_regs_q_reg[1]/CLR}] 3
+set_multicycle_path -to [get_pins {i_rstgen_paper_clk/i_rstgen_bypass/synch_regs_q_reg[2]/CLR}] 4
+set_multicycle_path -hold -to [get_pins {i_rstgen_paper_clk/i_rstgen_bypass/synch_regs_q_reg[2]/CLR}] 3
+set_multicycle_path -to [get_pins {i_rstgen_paper_clk/i_rstgen_bypass/synch_regs_q_reg[3]/CLR}] 4
+set_multicycle_path -hold -to [get_pins {i_rstgen_paper_clk/i_rstgen_bypass/synch_regs_q_reg[3]/CLR}] 3
+
+set_multicycle_path -to [get_pins {i_rstgen_pxclk/i_rstgen_bypass/synch_regs_q_reg[0]/CLR}] 4
+set_multicycle_path -hold -to [get_pins {i_rstgen_pxclk/i_rstgen_bypass/synch_regs_q_reg[0]/CLR}] 3
+set_multicycle_path -to [get_pins {i_rstgen_pxclk/i_rstgen_bypass/synch_regs_q_reg[1]/CLR}] 4
+set_multicycle_path -hold -to [get_pins {i_rstgen_pxclk/i_rstgen_bypass/synch_regs_q_reg[1]/CLR}] 3
+set_multicycle_path -to [get_pins {i_rstgen_pxclk/i_rstgen_bypass/synch_regs_q_reg[2]/CLR}] 4
+set_multicycle_path -hold -to [get_pins {i_rstgen_pxclk/i_rstgen_bypass/synch_regs_q_reg[2]/CLR}] 3
+set_multicycle_path -to [get_pins {i_rstgen_pxclk/i_rstgen_bypass/synch_regs_q_reg[3]/CLR}] 4
+set_multicycle_path -hold -to [get_pins {i_rstgen_pxclk/i_rstgen_bypass/synch_regs_q_reg[3]/CLR}] 3
+
+#asynchronous resets over clock domains
+#set_max_delay -from [get_pins {i_dm_top/i_dm_csrs/dmcontrol_q_reg[ndmreset]/C}] -to [get_pins {i_rstgen_pxclk/i_rstgen_bypass/synch_regs_q_reg[0]/CLR}] 25.378
+#set_max_delay -from [get_pins {i_dm_top/i_dm_csrs/dmcontrol_q_reg[ndmreset]/C}] -to [get_pins {i_rstgen_pxclk/i_rstgen_bypass/synch_regs_q_reg[1]/CLR}] 25.378
+#set_max_delay -from [get_pins {i_dm_top/i_dm_csrs/dmcontrol_q_reg[ndmreset]/C}] -to [get_pins {i_rstgen_pxclk/i_rstgen_bypass/synch_regs_q_reg[2]/CLR}] 25.378
+#set_max_delay -from [get_pins {i_dm_top/i_dm_csrs/dmcontrol_q_reg[ndmreset]/C}] -to [get_pins {i_rstgen_pxclk/i_rstgen_bypass/synch_regs_q_reg[3]/CLR}] 25.378
+
+#set_max_delay -from [get_pins {i_dm_top/i_dm_csrs/dmcontrol_q_reg[ndmreset]/C}] -to [get_pins {i_rstgen_paper_clk/i_rstgen_bypass/synch_regs_q_reg[0]/CLR}] 25.378
+#set_max_delay -from [get_pins {i_dm_top/i_dm_csrs/dmcontrol_q_reg[ndmreset]/C}] -to [get_pins {i_rstgen_paper_clk/i_rstgen_bypass/synch_regs_q_reg[1]/CLR}] 25.378
+#set_max_delay -from [get_pins {i_dm_top/i_dm_csrs/dmcontrol_q_reg[ndmreset]/C}] -to [get_pins {i_rstgen_paper_clk/i_rstgen_bypass/synch_regs_q_reg[2]/CLR}] 25.378
+#set_max_delay -from [get_pins {i_dm_top/i_dm_csrs/dmcontrol_q_reg[ndmreset]/C}] -to [get_pins {i_rstgen_paper_clk/i_rstgen_bypass/synch_regs_q_reg[3]/CLR}] 25.378
 
 # name pixel clock, paper_bus_clk and system clock for easier identification
 create_generated_clock -name px_clk -source [get_pins i_ariane_peripherals/gen_clkgen.i_xlnx_px_clk_gen/inst/CLK_CORE_DRP_I/clk_inst/mmcm_adv_inst/CLKIN1] -master_clock i_ariane_peripherals/gen_clkgen.i_xlnx_px_clk_gen/inst/clk_in1 [get_pins i_ariane_peripherals/gen_clkgen.i_xlnx_px_clk_gen/inst/CLK_CORE_DRP_I/clk_inst/mmcm_adv_inst/CLKOUT0]
