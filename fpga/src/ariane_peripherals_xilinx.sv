@@ -1,4 +1,3 @@
-
 // Copyright and related rights are licensed under the Solderpad Hardware
 // License, Version 0.51 (the "License"); you may not use this file except in
 // compliance with the License.  You may obtain a copy of the License at
@@ -20,7 +19,8 @@ module ariane_peripherals #(
     parameter bit InclEthernet = 0,
     parameter bit InclGPIO     = 0,
     parameter bit InclTimer    = 1,
-    parameter bit InclPAPER    = 1
+    parameter bit InclPAPER    = 1,
+    parameter bit InclCLKGen   = 1
 ) (
     input  logic       clk_i           , // Clock
     input  logic       clk_200MHz_i    ,
@@ -33,6 +33,7 @@ module ariane_peripherals #(
     AXI_BUS.Slave      timer           ,
     AXI_BUS.Master     paper_ms        ,
     AXI_BUS.Slave      paper_sl        ,
+    AXI_BUS.Slave      clkgen          ,
     output logic [1:0] irq_o           ,
     // UART
     input  logic       rx_i            ,
@@ -60,12 +61,23 @@ module ariane_peripherals #(
     output logic [7:0] leds_o          ,
     input  logic [7:0] dip_switches_i  ,
     // Paper
+    input  logic       paper_bus_clk   ,
     input  logic       ser_px_clk_i    ,
     input  logic       px_clk_i        ,
+    input  logic       px_clk_rst      ,
+    input  logic       paper_rst_i     ,
     output logic       hdmi_tx_clk_n   ,	
 	output logic       hdmi_tx_clk_p   ,
 	output logic [2:0] hdmi_tx_n       ,
-	output logic [2:0] hdmi_tx_p
+	output logic [2:0] hdmi_tx_p       ,
+    //Clkgen
+    output logic clk_out1_o            ,         
+    output logic clk_out2_o            ,
+    output logic locked_o              ,
+    //HID
+    inout logic ps2_clk_io             ,       
+    inout logic ps2_data_io
+    
 );
 
     // ---------------
@@ -189,7 +201,7 @@ module ariane_peripherals #(
       .rst_ni,
       .req_i         ( plic_req    ),
       .resp_o        ( plic_resp   ),
-      .le_i          ( '0          ), // 0:level 1:edge
+      .le_i          ( 8'b10000000 ), // 0:level 1:edge
       .irq_sources_i ( irq_sources ),
       .eip_targets_o ( irq_o       )
     );
@@ -713,7 +725,10 @@ module ariane_peripherals #(
             .m_axi_rvalid   ( s_axi_gpio_rvalid  ),
             .m_axi_rready   ( s_axi_gpio_rready  )
         );
-
+        
+        logic [9:0] gpio_tristate; //use this with IOBUFT's for bidirectional logic
+        logic ps2_data_i, ps2_data_o, ps2_clk_i, ps2_clk_o;
+        
         xlnx_axi_gpio i_xlnx_axi_gpio (
             .s_axi_aclk    ( clk_i                  ),
             .s_axi_aresetn ( rst_ni                 ),
@@ -734,15 +749,61 @@ module ariane_peripherals #(
             .s_axi_rresp   ( s_axi_gpio_rresp       ),
             .s_axi_rvalid  ( s_axi_gpio_rvalid      ),
             .s_axi_rready  ( s_axi_gpio_rready      ),
-            .gpio_io_i     ( '0                     ),
-            .gpio_io_o     ( leds_o                 ),
-            .gpio_io_t     (                        ),
+            .gpio_io_i     ( { ps2_data_i, ps2_clk_i, 8'b0 }  ),
+            .gpio_io_o     ( { ps2_data_o, ps2_clk_o, leds_o} ),
+            .gpio_io_t     ( gpio_tristate          ),
             .gpio2_io_i    ( dip_switches_i         )
         );
-
+        
         assign s_axi_gpio_rlast = 1'b1;
 
-    end
+        /*
+
+        //inout buffers for ps2_gpio
+        
+        IOBUF #(
+            .IOSTANDARD("LVCMOS33"),    // Specify the I/O standard
+        ) IOBUF_inst (
+            .O(ps2_clk_i),              // Buffer output
+            .IO(ps2_clk_io),            // Buffer inout port (connect directly to top-level port)
+            .I(ps2_clk_o),              // Buffer input
+            .T(gpio_tristate[8])        // 3-state enable input, high=input, low=output
+        );
+
+        IOBUF #(
+            .IOSTANDARD("LVCMOS33"),    // Specify the I/O standard
+        ) IOBUF_inst (
+            .O(ps2_data_i),             // Buffer output
+            .IO(ps2_data_io),           // Buffer inout port (connect directly to top-level port)
+            .I(ps2_data_o),             // Buffer input
+            .T(gpio_tristate[9])        // 3-state enable input, high=input, low=output
+        );
+
+        
+        
+        //interrupt generation for the ps2_gpio driver
+        
+        logic ps2irq, ps2_clkstate;
+        assign irq_sources[7] = ps2irq;
+        always_ff @(posedge clk_i, negedge rst_ni) begin
+            if(~rst_ni) begin
+                ps2irq <= 0;
+                ps2_clkstate <= 0;
+            end else begin
+                if(~ps2_clk_i && ps2_clkstate) begin
+                    ps2irq <= 1; //interrupt on falling edge
+                end else begin
+                    ps2irq <= 0;
+                end
+                clkstate <= ps2_clk_i;
+            end
+            
+        end
+        */
+
+    
+
+end
 
     // 6. Timer
     if (InclTimer) begin : gen_timer
@@ -844,14 +905,16 @@ module ariane_peripherals #(
             .AxiDataWidth        ( AxiDataWidth      ),
             .AxiIdWidth          ( AxiIdWidth        ),
             .AxiUserWidth        ( AxiUserWidth      ),
-            .ScDepth             ( 128               ),
-            .FillThresh          ( 64                ),
-            .DcDepth             ( 24                )
+            .ScDepth             ( 128               ), //128
+            .FillThresh          ( 64                ), //64
+            .DcDepth             ( 24                ), //24
+            .XILINX_7SERIES_IP   ( 1'b1              )
         ) i_paper (
-            .axi_clk_i          ( clk_i             ),
+            .axi_clk_i          ( paper_bus_clk     ),
             .ser_px_clk_i       ( ser_px_clk_i      ),
             .px_clk_i           ( px_clk_i          ),
-            .rst_ni             ( rst_ni            ),
+            .rst_ni             ( paper_rst_i       ),
+            .px_rst_ni          ( px_clk_rst        ),
             .paper_ms           ( paper_ms          ),
             .paper_sl           ( paper_sl          ),
             .hdmi_tx_clk_n      ( hdmi_tx_clk_n     ),
@@ -859,5 +922,142 @@ module ariane_peripherals #(
             .hdmi_tx_n          ( hdmi_tx_n         ),
             .hdmi_tx_p          ( hdmi_tx_p         )
         );
+    end
+
+    if (InclCLKGen) begin : gen_clkgen
+    
+    AXI_BUS #(
+        .AXI_ADDR_WIDTH ( AxiAddrWidth     ),
+        .AXI_DATA_WIDTH ( 32               ),
+        .AXI_ID_WIDTH   ( AxiIdWidth       ),
+        .AXI_USER_WIDTH ( AxiUserWidth     )
+    ) clk_gen_sl();
+
+    AXI_LITE #(
+        .AXI_ADDR_WIDTH     ( AxiAddrWidth      ),
+        .AXI_DATA_WIDTH     ( 32                )
+    ) clk_gen_lite_sl ();
+
+    xlnx_axi_dwidth_converter i_xlnx_axi_dwidth_converter_clkgen (
+        .s_axi_aclk     ( clk_i              ),
+        .s_axi_aresetn  ( rst_ni            ),
+        .s_axi_awid     ( clkgen.aw_id          ),
+        .s_axi_awaddr   ( clkgen.aw_addr[31:0]  ),
+        .s_axi_awlen    ( clkgen.aw_len         ),
+        .s_axi_awsize   ( clkgen.aw_size        ),
+        .s_axi_awburst  ( clkgen.aw_burst       ),
+        .s_axi_awlock   ( clkgen.aw_lock        ),
+        .s_axi_awcache  ( clkgen.aw_cache       ),
+        .s_axi_awprot   ( clkgen.aw_prot        ),
+        .s_axi_awregion ( clkgen.aw_region      ),
+        .s_axi_awqos    ( clkgen.aw_qos         ),
+        .s_axi_awvalid  ( clkgen.aw_valid       ),
+        .s_axi_awready  ( clkgen.aw_ready       ),
+        .s_axi_wdata    ( clkgen.w_data         ),
+        .s_axi_wstrb    ( clkgen.w_strb         ),
+        .s_axi_wlast    ( clkgen.w_last         ),
+        .s_axi_wvalid   ( clkgen.w_valid        ),
+        .s_axi_wready   ( clkgen.w_ready        ),
+        .s_axi_bid      ( clkgen.b_id           ),
+        .s_axi_bresp    ( clkgen.b_resp         ),
+        .s_axi_bvalid   ( clkgen.b_valid        ),
+        .s_axi_bready   ( clkgen.b_ready        ),
+        .s_axi_arid     ( clkgen.ar_id          ),
+        .s_axi_araddr   ( clkgen.ar_addr[31:0]  ),
+        .s_axi_arlen    ( clkgen.ar_len         ),
+        .s_axi_arsize   ( clkgen.ar_size        ),
+        .s_axi_arburst  ( clkgen.ar_burst       ),
+        .s_axi_arlock   ( clkgen.ar_lock        ),
+        .s_axi_arcache  ( clkgen.ar_cache       ),
+        .s_axi_arprot   ( clkgen.ar_prot        ),
+        .s_axi_arregion ( clkgen.ar_region      ),
+        .s_axi_arqos    ( clkgen.ar_qos         ),
+        .s_axi_arvalid  ( clkgen.ar_valid       ),
+        .s_axi_arready  ( clkgen.ar_ready       ),
+        .s_axi_rid      ( clkgen.r_id           ),
+        .s_axi_rdata    ( clkgen.r_data         ),
+        .s_axi_rresp    ( clkgen.r_resp         ),
+        .s_axi_rlast    ( clkgen.r_last         ),
+        .s_axi_rvalid   ( clkgen.r_valid        ),
+        .s_axi_rready   ( clkgen.r_ready        ),
+
+        .m_axi_awaddr   ( clk_gen_sl.aw_addr   ),
+        .m_axi_awlen    ( clk_gen_sl.aw_len    ),
+        .m_axi_awsize   ( clk_gen_sl.aw_size   ),
+        .m_axi_awburst  ( clk_gen_sl.aw_burst  ),
+        .m_axi_awlock   ( clk_gen_sl.aw_lock   ),
+        .m_axi_awcache  ( clk_gen_sl.aw_cache  ),
+        .m_axi_awprot   ( clk_gen_sl.aw_prot   ),
+        .m_axi_awregion ( clk_gen_sl.aw_region ),
+        .m_axi_awqos    ( clk_gen_sl.aw_qos    ),
+        .m_axi_awvalid  ( clk_gen_sl.aw_valid  ),
+        .m_axi_awready  ( clk_gen_sl.aw_ready  ),
+        .m_axi_wdata    ( clk_gen_sl.w_data    ),
+        .m_axi_wstrb    ( clk_gen_sl.w_strb    ),
+        .m_axi_wlast    ( clk_gen_sl.w_last    ),
+        .m_axi_wvalid   ( clk_gen_sl.w_valid   ),
+        .m_axi_wready   ( clk_gen_sl.w_ready   ),
+        .m_axi_bresp    ( clk_gen_sl.b_resp    ),
+        .m_axi_bvalid   ( clk_gen_sl.b_valid   ),
+        .m_axi_bready   ( clk_gen_sl.b_ready   ),
+        .m_axi_araddr   ( clk_gen_sl.ar_addr   ),
+        .m_axi_arlen    ( clk_gen_sl.ar_len    ),
+        .m_axi_arsize   ( clk_gen_sl.ar_size   ),
+        .m_axi_arburst  ( clk_gen_sl.ar_burst  ),
+        .m_axi_arlock   ( clk_gen_sl.ar_lock   ),
+        .m_axi_arcache  ( clk_gen_sl.ar_cache  ),
+        .m_axi_arprot   ( clk_gen_sl.ar_prot   ),
+        .m_axi_arregion ( clk_gen_sl.ar_region ),
+        .m_axi_arqos    ( clk_gen_sl.ar_qos    ),
+        .m_axi_arvalid  ( clk_gen_sl.ar_valid  ),
+        .m_axi_arready  ( clk_gen_sl.ar_ready  ),
+        .m_axi_rdata    ( clk_gen_sl.r_data    ),
+        .m_axi_rresp    ( clk_gen_sl.r_resp    ),
+        .m_axi_rlast    ( clk_gen_sl.r_last    ),
+        .m_axi_rvalid   ( clk_gen_sl.r_valid   ),
+        .m_axi_rready   ( clk_gen_sl.r_ready   )
+    );
+    
+    
+    
+    axi_to_axi_lite #(
+        .NUM_PENDING_RD   ( 1   ),
+        .NUM_PENDING_WR   ( 1   )
+    )
+    i_axi_to_axi_lite_paper_sl  
+    (
+        .clk_i                 ( clki_i          ),
+        .rst_ni                ( rst_ni          ),
+        .testmode_i            ( 1'b0            ),
+        .in                    ( clk_gen_sl      ),
+        .out                   ( clk_gen_lite_sl )
+    );
+
+    xlnx_px_clk_gen i_xlnx_px_clk_gen (
+        .clk_in1        ( clk_200MHz_i      ),
+        .clk_out1       ( clk_out1_o        ), // 40 Mhz initial px_clk
+        .clk_out2       ( clk_out2_o        ), // 200 Mhz initial ser_px_clk
+        .locked         ( locked_o          ),
+
+        .s_axi_aclk     ( clk_i             ),
+        .s_axi_aresetn  ( rst_ni            ),
+        .s_axi_awaddr   ( clk_gen_lite_sl.aw_addr[10:0]  ),
+        .s_axi_awvalid  ( clk_gen_lite_sl.aw_valid       ),
+        .s_axi_awready  ( clk_gen_lite_sl.aw_ready       ),
+        .s_axi_wdata    ( clk_gen_lite_sl.w_data[31:0]   ), 
+        .s_axi_wstrb    ( clk_gen_lite_sl.w_strb[3:0]    ), 
+        .s_axi_wvalid   ( clk_gen_lite_sl.w_valid        ),
+        .s_axi_wready   ( clk_gen_lite_sl.w_ready        ),
+        .s_axi_bresp    ( clk_gen_lite_sl.b_resp[1:0]    ), 
+        .s_axi_bvalid   ( clk_gen_lite_sl.b_valid        ),
+        .s_axi_bready   ( clk_gen_lite_sl.b_ready        ),
+        .s_axi_araddr   ( clk_gen_lite_sl.ar_addr[10:0]  ),
+        .s_axi_arvalid  ( clk_gen_lite_sl.ar_valid       ),
+        .s_axi_arready  ( clk_gen_lite_sl.ar_ready       ),
+        .s_axi_rdata    ( clk_gen_lite_sl.r_data[31:0]   ),
+        .s_axi_rresp    ( clk_gen_lite_sl.r_resp[1:0]    ),
+        .s_axi_rvalid   ( clk_gen_lite_sl.r_valid        ),
+        .s_axi_rready   ( clk_gen_lite_sl.r_ready        )   
+    );
     end
 endmodule

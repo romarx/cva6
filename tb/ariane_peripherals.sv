@@ -19,7 +19,8 @@ module ariane_peripherals #(
     parameter bit InclEthernet = 0,
     parameter bit InclGPIO     = 0,
     parameter bit InclTimer    = 1,
-    parameter bit InclPAPER    = 1
+    parameter bit InclPAPER    = 1,
+    parameter bit InclCLKGen   = 0
 ) (
     input  logic       clk_i           , // Clock
     input  logic       rst_ni          , // Asynchronous reset active low
@@ -30,6 +31,7 @@ module ariane_peripherals #(
     AXI_BUS.Slave      timer           ,
     AXI_BUS.Master     paper_ms        ,
     AXI_BUS.Slave      paper_sl        ,
+    AXI_BUS.Slave      clkgen          ,
     output logic [1:0] irq_o           ,
     // UART
     input  logic       rx_i            ,
@@ -642,10 +644,15 @@ module ariane_peripherals #(
             .out                   ( paper_lite_sl      )
         );
 
-        logic [23:0] rgb;
-        logic        hsync;
-        logic        vsync;
-        logic        de;
+        logic [23:0] drgb;
+        logic        hsyncrgb;
+        logic        vsyncrgb;
+        logic        dergb;
+
+        logic [15:0] d422;
+        logic        hsync422;
+        logic        vsync422;
+        logic        de422;
 
         AXI2HDMI
         #(
@@ -657,9 +664,8 @@ module ariane_peripherals #(
             .FILL_THRESH(FILL_THRESH),
             .DC_FIFO_DEPTH(DC_DEPTH),
             .AXI_ARID(ARID),
-            .FONT_MEMINIT_FILE(0),
-            .XILINX(1'b0),
-            .RGB_ONLY(1'b1)
+            .FONT_MEMINIT_FILE("tb/font_meminit.txt"),
+            .XILINX(1'b0)
         )
         i_paper
         (
@@ -669,31 +675,54 @@ module ariane_peripherals #(
             .LiteSlave(paper_lite_sl),
             .PixelClk_CI(px_clk_i),
             .PxClkRst_RBI(rst_ni),
-            .DOut_DO(rgb),
-            .DE_SO(de),
-            .HSync_SO(hsync),
-            .VSync_SO(vsync),
+            
+            .DOut_RGB_DO(drgb),
+            .DE_RGB_SO(dergb),
+            .HSync_RGB_SO(hsyncrgb),
+            .VSync_RGB_SO(vsyncrgb),
+            
+            .DOut_422_DO(d422),
+            .DE_422_SO(de422),
+            .HSync_422_SO(hsync422),
+            .VSync_422_SO(vsync422),
+            
             .SCEmpty_SO(paper_scempty_o),
             .DCEmpty_SO(paper_dcempty_o)
         );
 
-    
+        logic [9:0] tmds_0;
+        logic [9:0] tmds_1;
+        logic [9:0] tmds_2;
         RGB2DVI	#(
         )
         i_tmds_encoder
             (
             .clk_i(px_clk_i),
             .rst_ni(rst_ni),
-            .data_i(rgb),
-            .DE_i(de),
-            .HSync_i(hsync),
-            .VSync_i(vsync),
+            .data_i(drgb),
+            .DE_i(dergb),
+            .HSync_i(hsyncrgb),
+            .VSync_i(vsyncrgb),
             .TMDS_CH0_o(tmds_0),
             .TMDS_CH1_o(tmds_1),
             .TMDS_CH2_o(tmds_2)
         );
-        logic [9:0] tmds_0;
-        logic [9:0] tmds_1;
-        logic [9:0] tmds_2;
+        
     end
+
+    if (InclCLKGen) begin : gen_clkgen
+    end else begin
+        assign clkgen.aw_ready = 1'b1;
+        assign clkgen.ar_ready = 1'b1;
+        assign clkgen.w_ready = 1'b1;
+        assign clkgen.b_valid = spi.aw_valid;
+        assign clkgen.b_id = spi.aw_id;
+        assign clkgen.b_resp = axi_pkg::RESP_SLVERR;
+        assign clkgen.b_user = '0;
+        assign clkgen.r_valid = spi.ar_valid;
+        assign clkgen.r_resp = axi_pkg::RESP_SLVERR;
+        assign clkgen.r_data = 'hdeadbeef;
+        assign clkgen.r_last = 1'b1;
+    end
+
 endmodule

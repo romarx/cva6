@@ -1,5 +1,5 @@
 VIVADO ?= vivado
-VIVADOFLAGS ?= -nojournal -mode batch -source scripts/prologue.tcl
+VIVADOFLAGS ?= -nojournal -mode gui -source scripts/prologue.tcl 
 
 work-dir := work-fpga
 bit := $(work-dir)/ariane_xilinx.bit
@@ -10,6 +10,7 @@ ips := xlnx_axi_clock_converter.xci  \
        xlnx_axi_quad_spi.xci         \
        xlnx_axi_gpio.xci             \
        xlnx_clk_gen.xci              \
+       xlnx_px_clk_gen.xci			 \
        xlnx_mig_7_ddr3.xci
 
 ips := $(addprefix $(work-dir)/, $(ips))

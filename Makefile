@@ -227,8 +227,15 @@ src :=  $(filter-out src/ariane_regfile.sv, $(wildcard src/*.sv))              \
         src/PAPER_hw/hdl/BehavRAM.sv                                           \
         src/PAPER_hw/hdl/RGB2DVI.sv                                            \
         src/PAPER_hw/hdl/RGB2DVI_CH0.sv                                        \
+        src/PAPER_hw/hdl/7series_wrappers/FIFO7Series_dualclock.sv             \
+        src/PAPER_hw/hdl/7series_wrappers/FIFO7Series_sync.sv                  \
         src/PAPER_hw/ips/common_cells/src/gray_to_binary.sv                    \
-        src/PAPER_hw/ips/common_cells/src/binary_to_gray.sv
+        src/PAPER_hw/ips/common_cells/src/binary_to_gray.sv					   \
+        src/PAPER_hw/ips/common_cells/src/spill_register_flushable.sv          \
+        src/PAPER_hw/ips/axi/src/axi_mux.sv                                    \
+        src/PAPER_hw/ips/axi/src/axi_id_prepend.sv                             \
+        src/PAPER_hw/ips/axi/src/axi_cdc.sv                                    
+
 
 src := $(addprefix $(root-dir), $(src))
 
@@ -256,7 +263,7 @@ riscv-fp-tests            := $(shell xargs printf '\n%s' < $(riscv-fp-tests-list
 riscv-benchmarks          := $(shell xargs printf '\n%s' < $(riscv-benchmarks-list) | cut -b 1-)
 
 # Search here for include files (e.g.: non-standalone components)
-incdir := src/common_cells/include/
+incdir := src/common_cells/include/ src/PAPER_hw/ips/axi/include/
 # Compile and sim flags
 compile_flag     += +cover=bcfst+/dut -incr -64 -nologo -quiet -suppress 13262 -permissive +define+$(defines)
 uvm-flags        += +UVM_NO_RELNOTES +UVM_VERBOSITY=LOW

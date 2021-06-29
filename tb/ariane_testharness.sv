@@ -79,7 +79,7 @@ module ariane_testharness #(
     .AXI_DATA_WIDTH ( AXI_DATA_WIDTH      ),
     .AXI_ID_WIDTH   ( ariane_soc::IdWidth ),
     .AXI_USER_WIDTH ( AXI_USER_WIDTH      )
-  ) slave[ariane_soc::NrSlaves-1:0]();
+  ) slave[ariane_soc::NrSlaves:0]();
 
   AXI_BUS #(
     .AXI_ADDR_WIDTH ( AXI_ADDRESS_WIDTH        ),
@@ -549,7 +549,7 @@ module ariane_testharness #(
   typedef logic [ariane_soc::NrRegion-1:0][ariane_soc::NB_PERIPHERALS-1:0][AXI_ADDRESS_WIDTH-1:0] addr_map_t;
   
   axi_node_intf_wrap #(
-    .NB_SLAVE           ( ariane_soc::NrSlaves       ),
+    .NB_SLAVE           ( ariane_soc::NrSlaves + 1   ), //paper slave is directly connected to ram in implementation
     .NB_MASTER          ( ariane_soc::NB_PERIPHERALS ),
     .NB_REGION          ( ariane_soc::NrRegion       ),
     .AXI_ADDR_WIDTH     ( AXI_ADDRESS_WIDTH          ),
@@ -566,6 +566,7 @@ module ariane_testharness #(
     .master       ( master     ),
     .start_addr_i (addr_map_t'({
       ariane_soc::DebugBase,
+      ariane_soc::ClkgenBase,
       ariane_soc::PaperBase,
       ariane_soc::ROMBase,
       ariane_soc::CLINTBase,
@@ -579,6 +580,7 @@ module ariane_testharness #(
     })),
     .end_addr_i   (addr_map_t'({
       ariane_soc::DebugBase    + ariane_soc::DebugLength - 1,
+      ariane_soc::ClkgenBase   + ariane_soc::ClkgenLength - 1,
       ariane_soc::PaperBase    + ariane_soc::PaperLength - 1,
       ariane_soc::ROMBase      + ariane_soc::ROMLength - 1,
       ariane_soc::CLINTBase    + ariane_soc::CLINTLength - 1,
@@ -649,6 +651,7 @@ module ariane_testharness #(
   ) i_ariane_peripherals (
     .clk_i     ( clk_i                        ),
     .rst_ni    ( ndmreset_n                   ),
+
     .plic      ( master[ariane_soc::PLIC]     ),
     .uart      ( master[ariane_soc::UART]     ),
     .spi       ( master[ariane_soc::SPI]      ),
@@ -656,6 +659,7 @@ module ariane_testharness #(
     .timer     ( master[ariane_soc::Timer]    ),
     .paper_ms  ( slave[2]                     ),
     .paper_sl  ( master[ariane_soc::Paper]    ),
+    .clkgen    ( master[ariane_soc::CLKGEN]   ),
     .irq_o     ( irqs                         ),
     .rx_i      ( rx                           ),
     .tx_o      ( tx                           ),

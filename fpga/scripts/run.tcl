@@ -32,16 +32,17 @@ read_ip xilinx/xlnx_axi_dwidth_converter/ip/xlnx_axi_dwidth_converter.xci
 read_ip xilinx/xlnx_axi_gpio/ip/xlnx_axi_gpio.xci
 read_ip xilinx/xlnx_axi_quad_spi/ip/xlnx_axi_quad_spi.xci
 read_ip xilinx/xlnx_clk_gen/ip/xlnx_clk_gen.xci
+read_ip xilinx/xlnx_px_clk_gen/ip/xlnx_px_clk_gen.xci
 # read_ip xilinx/xlnx_protocol_checker/ip/xlnx_protocol_checker.xci
 
-set_property include_dirs { "src/axi_sd_bridge/include" "../src/common_cells/include" } [current_fileset]
+set_property include_dirs { "src/axi_sd_bridge/include" "../src/common_cells/include" "../src/PAPER_hw/ips/axi/include"} [current_fileset]
 
 source scripts/add_sources.tcl
 
 set_property top ${project}_xilinx [current_fileset]
 
 if {$::env(BOARD) eq "genesys2"} {
-    read_verilog -sv {src/genesysii.svh ../src/common_cells/include/common_cells/registers.svh}
+    read_verilog -sv {src/genesysii.svh ../src/common_cells/include/common_cells/registers.svh ../src/PAPER_hw/ips/axi/include/axi/assign.svh ../src/PAPER_hw/ips/axi/include/axi/typedef.svh}
     set file "src/genesysii.svh"
     set registers "../src/common_cells/include/common_cells/registers.svh"
 } elseif {$::env(BOARD) eq "kc705"} {

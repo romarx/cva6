@@ -39,15 +39,28 @@ xlnx_clk_gen:
   vendor: xilinx.com
   config:
     prim_in_freq: 200
-    num_out_clks: 4
+    num_out_clks: 5
     clkout2_used: true
     clkout3_used: true
     clkout4_used: true
+    clkout5_used: true
     clkout1_requested_out_freq: 50
     clkout2_requested_out_freq: 125
     clkout3_requested_out_freq: 125
     clkout3_requested_phase: 90
     clkout4_requested_out_freq: 50
+    clkout5_requested_out_freq: 166
+    clkin1_jitter_ps: 50
+
+xlnx_px_clk_gen:
+  ip: clk_wiz
+  vendor: xilinx.com
+  config:
+    prim_in_freq: 200
+    num_out_clks: 2
+    clkout2_used: true
+    clkout1_requested_out_freq: 40
+    clkout2_requested_out_freq: 200
     clkin1_jitter_ps: 50
 
 xlnx_ila:
