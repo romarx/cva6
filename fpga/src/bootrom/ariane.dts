@@ -41,6 +41,15 @@
       retain-state-suspended;
     };
   };
+  /*for keyboard driver
+  ps2@0 {
+	  compatible = "ps2-gpio";
+	  interrupt-parent = <&PLIC0>;
+	  interrupts = <8>;
+	  data-gpios = <&xlnx_gpio 9 0 0>;
+	  clk-gpios = <&xlnx_gpio 8 0 0>;
+  };
+  */
   /* for clocking wizard
   clocks {
     ref_clk: ref_clk {

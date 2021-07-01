@@ -795,7 +795,7 @@ module ariane_peripherals #(
                 end else begin
                     ps2irq <= 0;
                 end
-                clkstate <= ps2_clk_i;
+                ps2_clkstate <= ps2_clk_i;
             end
             
         end
